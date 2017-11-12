@@ -6,16 +6,20 @@ import java.awt.Point;
 public class Map {
 
 	private Tile[][] tiles;
-	private Point coordStart;
-	private Point coordEnd;
+	private int xStart;
+	private int yStart;
+	private int xEnd;
+	private int yEnd;
 
-	public Map(int[][] tilesId, Point coordStart, Point coordEnd) {
-		this.coordStart = coordStart;
-		this.coordEnd = coordEnd;
+	public Map(int[][] tilesId, int xStart, int yStart, int xEnd, int yEnd) {
+		this.xStart = xStart;
+		this.yStart = yStart;
+		this.xEnd = xEnd;
+		this.yEnd = yEnd;
 		tiles = new Tile[tilesId.length][tilesId[0].length];
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[0].length; j++) {
-				tiles[i][j] = new Tile(tilesId[i][j], new Point(j * Tile.WIDTH_TILE, i * Tile.HEIGHT_TILE));
+				tiles[i][j] = new Tile(tilesId[i][j], j * Tile.WIDTH_TILE, i * Tile.HEIGHT_TILE);
 			}
 		}
 	}

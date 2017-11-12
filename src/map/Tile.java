@@ -12,22 +12,26 @@ public class Tile {
 	public static final int WIDTH_TILE = 48;
 
 	private int id;
-	private Point coord;
+	private int x, y;
 	private BufferedImage image;
 
-	public Tile(int id, Point coord) {
+	public Tile(int id, int x, int y) {
 		this.id = id;
-		this.coord = coord;
+		this.x = x;
+		this.y = y;
 		this.image = Assets.tileImages.get(id - 1);
 	}
 
 	// check entity
 	public boolean isSoLid() {
+		if(id > 34) {
+			return true;
+		}
 		return false;
 	}
 	
 	//draw image
 	public void draw(Graphics g) {
-		g.drawImage(image, coord.x, coord.y, null);
+		g.drawImage(image, x, y, null);
 	}
 }
