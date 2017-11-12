@@ -12,7 +12,7 @@ public class Assets {
 	public static void init() {
 		tileImages = new ArrayList<>();
 
-		SpriteSheet sheetTile = new SpriteSheet(ImageLoader.loadImage(""), 48, 48);// Not file
+		SpriteSheet sheetTile = new SpriteSheet(ImageLoader.loadImage("/textures/tile0.png"), 48, 48);// Not file
 		for (int i = 0; i < sheetTile.getHeight() / 48; i++) {
 			tileImages.add(sheetTile.crop(0, i * 48));
 		}
