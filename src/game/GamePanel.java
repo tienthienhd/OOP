@@ -10,6 +10,11 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
+import gfx.Assets;
+import manager.EntityManager;
+import manager.MapManager;
+import manager.SceneManager;
+
 /**
  * Main panel of game and game loop
  * @author tienthien
@@ -32,10 +37,10 @@ public class GamePanel extends JPanel implements Runnable {
 	private Graphics2D dbg;
 	
 	// manager components
-//	private EntityManager entityManager;
+	private EntityManager entityManager;
 //	private InputManager inputManager;
-//	private SceneManager sceneManager;
-//	private MapManager mapManager;
+	private SceneManager sceneManager;
+	private MapManager mapManager;
 	
 	
 	// constructor
@@ -49,15 +54,15 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	// initialize of game
 	private void init() {
-//		Assets.init();
-//		this.entityManager = new EntityManager();
+		Assets.init();
+		this.entityManager = new EntityManager();
 //		this.inputManager = new InputManager(this, entityManager);
-//		this.sceneManager = new SceneManager();
-//		this.mapManager = new MapManager("map/listmap.txt");
+		this.mapManager = new MapManager("map/listmap.txt");
 //		
 //		this.sceneManager.setGameScene(mapManager, entityManager);
 //		
-//		mapManager.loadMap(1);
+		this.sceneManager = new SceneManager(this.mapManager, this.entityManager);
+		mapManager.loadMap(1);
 	}
 	
 	// update data of game
@@ -84,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
 		dbg.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		// draw here
-//		this.sceneManager.draw(dbg);
+		this.sceneManager.draw(dbg);
 		
 		
 	}
@@ -109,14 +114,14 @@ public class GamePanel extends JPanel implements Runnable {
 			render();
 			paintScreen();
 			try {
-				Thread.sleep(10);
+				Thread.sleep(15);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	// start game is called when run programe
+	// start game is called when run program
 	public synchronized void startGame() {
 		if(thread == null && !running) {
 			running = true;

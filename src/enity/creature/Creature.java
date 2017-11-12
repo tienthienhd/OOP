@@ -3,18 +3,18 @@ package enity.creature;
 import enity.Entity;
 
 public abstract class Creature extends Entity {
-	
+
 	protected int hp;
 	protected int speed;
 	protected int defense;
 	protected int damage;
 	protected int attackRadius;
 	protected int dx, dy;
-	
+
 	protected Direction direction;
-	
-	public Creature(String name, int x, int y, int width, int height, 
-			int hp, int speed, int defense, int damage, int attackRadius) {
+
+	public Creature(String name, int x, int y, int width, int height, int hp, int speed, int defense, int damage,
+			int attackRadius) {
 		super(name, x, y, width, height);
 		this.hp = hp;
 		this.speed = speed;
@@ -23,7 +23,7 @@ public abstract class Creature extends Entity {
 		this.attackRadius = attackRadius;
 		this.direction = Direction.RIGHT;
 	}
-	
+
 	public void move() {
 		// TODO: xu ly va cham voi map
 		if (this.dx > 0) {
@@ -46,7 +46,7 @@ public abstract class Creature extends Entity {
 			this.dy += this.speed;
 		}
 	}
-	
+
 	public void fight(Creature target) {
 		target.getHit(this.damage);
 	}
@@ -58,10 +58,19 @@ public abstract class Creature extends Entity {
 			this.hp -= (damage - this.defense);
 		}
 	}
+
+	public boolean collisionWithTile(int x, int y) {
+		// TODO: get tile isSolid from map
+		return false;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
 	
 	
-	 public boolean collisionWithTile(int x, int y){
-		 	// TODO: get tile isSolid from map
-	       	return false;
-	    }
 }

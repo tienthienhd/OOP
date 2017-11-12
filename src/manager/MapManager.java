@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import map.Map;
 import utils.Utils;
 
-public class MapManager extends Manager implements MapNotify {
+public class MapManager extends Manager implements IMapManager {
 	private ArrayList<String> listmap;
 	private Map currentMap;
 	
@@ -19,7 +19,7 @@ public class MapManager extends Manager implements MapNotify {
 			fr = new FileReader(listName);
 			BufferedReader br = new BufferedReader(fr);
 			while(br.ready()) {
-				listmap.add(System.getProperty("user.dir") + "/resource/" + br.readLine());
+				listmap.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -36,6 +36,7 @@ public class MapManager extends Manager implements MapNotify {
 	public Map loadMap(int indexOfMap) {
 		String filepath = listmap.get(indexOfMap);
 		ArrayList<int[]> matrix = new ArrayList<>();
+		
 		if(Utils.loadMapFromFile(filepath, matrix)) {
 			int[][] tileId = new int[matrix.size()][matrix.get(0).length];
 			for(int i = 0; i < matrix.size(); i ++) {

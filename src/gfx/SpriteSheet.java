@@ -6,10 +6,10 @@ public class SpriteSheet {
 	private BufferedImage sheet;
 	private int width, height;
 	
-	public SpriteSheet(BufferedImage sheet, int width, int height) {
+	public SpriteSheet(BufferedImage sheet, int widthTile, int heightTile) {
 		this.sheet = sheet;
-		this.width = width;
-		this.height = height;
+		this.width = widthTile;
+		this.height = heightTile;
 	}
 	
 	public BufferedImage crop(int x, int y) {
@@ -21,11 +21,11 @@ public class SpriteSheet {
 	}
 
 	public int getWidth() {
-		return width;
+		return sheet.getWidth();
 	}
 
 	public int getHeight() {
-		return height;
+		return sheet.getHeight();
 	}
 	
 	
