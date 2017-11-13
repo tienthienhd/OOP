@@ -39,7 +39,7 @@ public class AStarSearch {
 				for (AStarNode neighbor : curr.getNeighbors()) {
 					double costFromStart = curr.costFromStart + curr.getCost(neighbor);
 					if (!open.contains(neighbor) && !closed.contains(neighbor)
-							|| neighbor.getEstimatedCost(goalNode) + costFromStart < curr.getCost()) {
+							|| neighbor.getCost() < costFromStart) {
 
 						neighbor.pathParent = curr;
 						neighbor.costFromStart = costFromStart;
