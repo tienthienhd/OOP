@@ -71,10 +71,10 @@ public class GameScene extends Scene {
 
 		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
-		g.setColor(Color.blue);
-		
-		g.drawImage(buffer, state.getX(), state.getY(), null);
-		g.fillRect(state.getX(), state.getY(), 5, 5);
+//		g.setColor(Color.blue);
+//		
+//		g.drawImage(buffer, state.getX(), state.getY(), null);
+//		g.fillRect(state.getX(), state.getY(), 5, 5);
 
 
 	}

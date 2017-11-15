@@ -14,6 +14,7 @@ public class MapManager extends Manager implements IMapManager {
 	private GameCamera gameCamera;
 	
 	public MapManager(String listName) {
+		
 		listName = System.getProperty("user.dir") + "/resource/" + listName;
 		this.listmap = new ArrayList<>();
 		FileReader fr;
@@ -67,4 +68,7 @@ public class MapManager extends Manager implements IMapManager {
 		return currentMap.isSolid(x, y);
 	}
 
+	public void setGameCamera(GameCamera gameCamera) {
+		this.gameCamera = gameCamera;
+	}
 }
