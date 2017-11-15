@@ -1,5 +1,6 @@
 package scenes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -67,13 +68,22 @@ public class GameScene extends Scene {
 			break;
 
 		}
+
 		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
+
+		g.setColor(Color.blue);
+		
+		g.drawImage(buffer, state.getX(), state.getY(), null);
+		g.fillRect(state.getX(), state.getY(), 5, 5);
+
 
 	}
 
 	private void drawMonster(Graphics g) {
 		ArrayList<EntityState> states = this.entities.getMonsterState();
-
+		for(EntityState state: states) {
+			g.drawImage(Assets.monster, state.getX(), state.getY(), null);
+		}
 	}
 
 	private void drawMap(Graphics g) {

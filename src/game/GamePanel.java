@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// initialize of game
 	private void init() {
 		Assets.init();
+
 		
 		this.entityManager = new EntityManager();
 		this.inputManager = new InputManager(this, entityManager);
@@ -71,6 +72,12 @@ public class GamePanel extends JPanel implements Runnable {
 		mapManager.loadMap(1);
 		this.gameCamera = new GameCamera(mapManager, 0, 0);
 		this.entityManager.setGameCamera(gameCamera);
+
+		this.mapManager = new MapManager("map/listmap.txt");
+		mapManager.loadMap(5);
+		this.entityManager = new EntityManager(this.mapManager);
+		this.inputManager = new InputManager(this, entityManager);
+		this.sceneManager = new SceneManager(this.mapManager, this.entityManager);
 	}
 	
 	// update data of game
