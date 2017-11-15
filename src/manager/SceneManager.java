@@ -20,7 +20,7 @@ public class SceneManager extends Manager {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		this.currentScene.update();
 		
 	}
 	

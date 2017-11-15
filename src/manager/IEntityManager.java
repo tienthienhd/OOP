@@ -8,4 +8,5 @@ public interface IEntityManager {
 
 	public EntityState getPlayerState();
 	public ArrayList<EntityState> getMonsterState();
+	public boolean isPlayerMoving();
 }

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import gfx.Assets;
 import manager.EntityManager;
+import manager.InputManager;
 import manager.MapManager;
 import manager.SceneManager;
 
@@ -38,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	// manager components
 	private EntityManager entityManager;
-//	private InputManager inputManager;
+	private InputManager inputManager;
 	private SceneManager sceneManager;
 	private MapManager mapManager;
 	
@@ -56,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private void init() {
 		Assets.init();
 		this.entityManager = new EntityManager();
-//		this.inputManager = new InputManager(this, entityManager);
+		this.inputManager = new InputManager(this, entityManager);
 		this.mapManager = new MapManager("map/listmap.txt");
 //		
 //		this.sceneManager.setGameScene(mapManager, entityManager);
@@ -67,10 +68,10 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	// update data of game
 	private void update() {
-//		entityManager.update();
-//		inputManager.update();
-//		sceneManager.update();
-//		mapManager.update();
+		entityManager.update();
+		inputManager.update();
+		sceneManager.update();
+		mapManager.update();
 	}
 	
 	// draw graphics to buffer

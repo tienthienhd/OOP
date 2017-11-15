@@ -6,7 +6,7 @@ import enity.creature.Direction;
 import enity.creature.Monster;
 import enity.creature.Player;
 
-public class EntityManager extends Manager implements IEntityManager {
+public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
 	private Player player;
 	private ArrayList<Monster> monsters;
@@ -40,6 +40,24 @@ public class EntityManager extends Manager implements IEntityManager {
 		return states;
 	}
 
+	@Override
+	public void PlayerMove(Direction dir) {
+		this.player.getInput(dir);
+		
+	}
+	
+	int x, y;
+	@Override
+	public boolean isPlayerMoving() {
+		if(x == player.getX() && y == player.getY()) {
+			return false;
+		} else {
+			x = player.getX();
+			y = player.getY();
+			return true;
+		}
+	}
+	
 	public static class EntityState {
 		private int x, y;
 		private Direction direction;
@@ -73,6 +91,6 @@ public class EntityManager extends Manager implements IEntityManager {
 		public void setDirection(Direction direction) {
 			this.direction = direction;
 		}
-
 	}
+
 }

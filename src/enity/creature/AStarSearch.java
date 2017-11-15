@@ -1,14 +1,35 @@
 package enity.creature;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
+import javax.swing.Timer;
+
 public class AStarSearch {
-	
+
+	private static Timer timer;
+	static boolean isTimeOut = false;
+
+	public static void initTimer() {
+		timer = new Timer(1000, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!isTimeOut)
+					System.out.println("Time out");
+				isTimeOut = true;
+			}
+		});
+	}
+
 	public static LinkedList<Point> findPathAStar(Point start, Point goal) {
+		isTimeOut = false;
+		timer.start();
 
 		AStarNode goalNode = new AStarNode(goal);
 		goalNode.estimatedCostToGoal = 0;
@@ -32,14 +53,24 @@ public class AStarSearch {
 		ArrayList<AStarNode> closed = new ArrayList<>();
 
 		while (!open.isEmpty()) {
+			if (isTimeOut) {
+				timer.stop();
+				return null;
+			}
+
 			AStarNode curr = open.remove();
 			if (curr.coord.equals(goal)) {
 				return curr.buildPath();
 			} else {
 				for (AStarNode neighbor : curr.getNeighbors()) {
+					if (isTimeOut) {
+						timer.stop();
+						return null;
+					}
+
 					double costFromStart = curr.costFromStart + curr.getCost(neighbor);
 					if (!open.contains(neighbor) && !closed.contains(neighbor)
-							|| neighbor.getCost() < costFromStart) {
+							|| neighbor.getEstimatedCost(goalNode) + costFromStart < costFromStart) {
 
 						neighbor.pathParent = curr;
 						neighbor.costFromStart = costFromStart;
@@ -58,7 +89,6 @@ public class AStarSearch {
 		return null;
 	}
 }
-
 
 class AStarNode {
 
@@ -103,11 +133,11 @@ class AStarNode {
 		list.add(new AStarNode(this.coord.x - 0, this.coord.y - 1)); // up
 		list.add(new AStarNode(this.coord.x - 0, this.coord.y + 1)); // down
 
-		list.add(new AStarNode(this.coord.x - 1, this.coord.y - 1)); // left up
-		list.add(new AStarNode(this.coord.x + 1, this.coord.y - 1)); // right up
-
-		list.add(new AStarNode(this.coord.x - 1, this.coord.y + 1)); // left down
-		list.add(new AStarNode(this.coord.x + 1, this.coord.y + 1)); // right, down
+		// list.add(new AStarNode(this.coord.x - 1, this.coord.y - 1)); // left up
+		// list.add(new AStarNode(this.coord.x + 1, this.coord.y - 1)); // right up
+		//
+		// list.add(new AStarNode(this.coord.x - 1, this.coord.y + 1)); // left down
+		// list.add(new AStarNode(this.coord.x + 1, this.coord.y + 1)); // right, down
 		return list;
 	}
 

@@ -10,6 +10,7 @@ public class Main {
 		frame.setTitle(GamePanel.title);
 		frame.add(game);
 		frame.pack();
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

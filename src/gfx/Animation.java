@@ -16,12 +16,13 @@ public class Animation {
 	}
 
 	public void update() {
-		timer += System.currentTimeMillis() - lastTime;
-		lastTime = 0;
+		long currTime = System.currentTimeMillis();
+		timer += currTime - lastTime;
+		lastTime = currTime;
 		if (timer > speed) {
 			index++;
 			timer = 0;
-			if (index > frames.length) {
+			if (index >= frames.length) {
 				index = 0;
 			}
 		}

@@ -26,6 +26,26 @@ public class Player extends Creature {
 		move();
 	}
 	
+	public void getInput(Direction dir) {
+		this.dy = 0;
+		this.dx = 0;
+		this.direction = dir;
+		switch (dir) {
+		case DOWN:
+			this.dy += this.speed;
+			break;
+		case UP:
+			this.dy -= this.speed;
+			break;
+		case LEFT:
+			this.dx -= this.speed;
+			break;
+		case RIGHT:
+			this.dx += this.speed;
+			break;
+		}
+	}
+	
 	public void switchMap() {
 		//TODO: chuyen map
 	}
