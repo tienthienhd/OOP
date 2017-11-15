@@ -24,6 +24,7 @@ public class Player extends Creature {
 	@Override
 	public void update() {
 		move();
+		
 	}
 	
 	public void getInput(Direction dir) {

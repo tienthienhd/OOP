@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import enity.creature.Direction;
 import enity.creature.Monster;
 import enity.creature.Player;
+import gfx.GameCamera;
 
 public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
 	private Player player;
 	private ArrayList<Monster> monsters;
+	private GameCamera gameCamera;
 
 	public EntityManager() {
 		// TODO Auto-generated constructor stub
@@ -20,6 +22,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	@Override
 	public void update() {
 		player.update();
+		gameCamera.centerOnEntity(player);
 		for (Monster m : monsters) {
 			m.update();
 		}
@@ -58,6 +61,10 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		}
 	}
 	
+	public void setGameCamera(GameCamera gameCamera) {
+		this.gameCamera = gameCamera;
+	}
+	
 	public static class EntityState {
 		private int x, y;
 		private Direction direction;
@@ -92,5 +99,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			this.direction = direction;
 		}
 	}
+	
+
 
 }
