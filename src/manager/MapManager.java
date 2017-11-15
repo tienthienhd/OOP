@@ -11,7 +11,6 @@ import utils.Utils;
 public class MapManager extends Manager implements IMapManager {
 	private ArrayList<String> listmap;
 	private Map currentMap;
-	private GameCamera gameCamera;
 	
 	public MapManager(String listName) {
 		
@@ -47,7 +46,7 @@ public class MapManager extends Manager implements IMapManager {
 					tileId[i][j] = matrix.get(i)[j];
 				}
 			}
-			this.currentMap = new Map(gameCamera,tileId, 0, 0, 10, 10);
+			this.currentMap = new Map(tileId, 0, 0, 10, 10);
 		}
 		return null;
 	}
@@ -66,9 +65,5 @@ public class MapManager extends Manager implements IMapManager {
 	@Override
 	public boolean isSolid(int x, int y) {
 		return currentMap.isSolid(x, y);
-	}
-
-	public void setGameCamera(GameCamera gameCamera) {
-		this.gameCamera = gameCamera;
 	}
 }

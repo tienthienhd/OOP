@@ -83,5 +83,7 @@ public abstract class Creature extends Entity {
 		this.dy = dy;
 	}
 	
-	
+	public int getSpeed() {
+		return this.speed;
+	}
 }

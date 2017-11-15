@@ -13,10 +13,8 @@ public class Map {
 	private int xEnd;
 	private int yEnd;
 	
-	private GameCamera gameCamera;
 
-	public Map(GameCamera gameCamera, int[][] tilesId, int xStart, int yStart, int xEnd, int yEnd) {
-		this.gameCamera = gameCamera;
+	public Map(int[][] tilesId, int xStart, int yStart, int xEnd, int yEnd) {
 		this.xStart = xStart;
 		this.yStart = yStart;
 		this.xEnd = xEnd;
@@ -29,21 +27,21 @@ public class Map {
 		}
 	}
 
-	// draw map
-	public void draw(Graphics g) {
-
-		int xStart = (int) Math.max(0, gameCamera.getxOffset() / Tile.WIDTH_TILE);
-		int xEnd = (int) Math.min(tiles[0].length, (gameCamera.getxOffset() + gameCamera.CAMERA_WIDTH ) / Tile.WIDTH_TILE + 1);
-		int yStart = (int) Math.max(0, gameCamera.getyOffset() / Tile.HEIGHT_TILE);
-		int yEnd = (int) Math.min(tiles.length, (gameCamera.getyOffset() + gameCamera.CAMERA_HEIGHT) / Tile.HEIGHT_TILE + 1);
-		
-		for(int y = yStart;y < yEnd;y++){
-			for(int x = xStart;x < xEnd;x++){
-				tiles[y][x].draw(g, (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
-						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()));
-			}
-		}
-	}
+//	// draw map
+//	public void draw(Graphics g) {
+//
+//		int xStart = (int) Math.max(0, gameCamera.getxOffset() / Tile.WIDTH_TILE);
+//		int xEnd = (int) Math.min(tiles[0].length, (gameCamera.getxOffset() + gameCamera.CAMERA_WIDTH ) / Tile.WIDTH_TILE + 1);
+//		int yStart = (int) Math.max(0, gameCamera.getyOffset() / Tile.HEIGHT_TILE);
+//		int yEnd = (int) Math.min(tiles.length, (gameCamera.getyOffset() + gameCamera.CAMERA_HEIGHT) / Tile.HEIGHT_TILE + 1);
+//		
+//		for(int y = yStart;y < yEnd;y++){
+//			for(int x = xStart;x < xEnd;x++){
+//				tiles[y][x].draw(g, (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()));
+//			}
+//		}
+//	}
 	
 
 	public int getWidthMap() {
@@ -58,5 +56,9 @@ public class Map {
 		if(x < 0 || y < 0 || x >= tiles[0].length || y >= tiles.length) return true;
 		return tiles[y][x].isSoLid();
 
+	}
+	
+	public Tile getTile(int y, int x) {
+		return tiles[y][x];
 	}
 }

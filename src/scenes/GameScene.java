@@ -9,6 +9,7 @@ import gfx.Animation;
 import gfx.Assets;
 import gfx.GameCamera;
 import manager.EntityManager.EntityState;
+import map.Tile;
 import manager.IEntityManager;
 import manager.IMapManager;
 
@@ -71,24 +72,43 @@ public class GameScene extends Scene {
 
 		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
-//		g.setColor(Color.blue);
-//		
-//		g.drawImage(buffer, state.getX(), state.getY(), null);
-//		g.fillRect(state.getX(), state.getY(), 5, 5);
-
+		// g.setColor(Color.blue);
+		//
+		// g.drawImage(buffer, state.getX(), state.getY(), null);
+		// g.fillRect(state.getX(), state.getY(), 5, 5);
 
 	}
 
 	private void drawMonster(Graphics g) {
 		ArrayList<EntityState> states = this.entities.getMonsterState();
-		for(EntityState state: states) {
-			g.drawImage(Assets.monster, state.getX(), state.getY(), null);
+		for (EntityState state : states) {
+			g.drawImage(Assets.monster, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(),
+					null);
 		}
 	}
 
 	private void drawMap(Graphics g) {
-		map.getCurrentMap().draw(g);
+		// map.getCurrentMap().draw(g);
 
+		int widthMap = map.getCurrentMap().getWidthMap();
+		int heightMap = map.getCurrentMap().getHeightMap();
+
+		int xStart = (int) Math.max(0, gameCamera.getxOffset() / Tile.WIDTH_TILE);
+		int xEnd = (int) Math.min(widthMap, (gameCamera.getxOffset() + GameCamera.CAMERA_WIDTH) / Tile.WIDTH_TILE + 1);
+		int yStart = (int) Math.max(0, gameCamera.getyOffset() / Tile.HEIGHT_TILE);
+		int yEnd = (int) Math.min(heightMap,
+				(gameCamera.getyOffset() + GameCamera.CAMERA_HEIGHT) / Tile.HEIGHT_TILE + 1);
+
+		for (int y = yStart; y < yEnd; y++) {
+			for (int x = xStart; x < xEnd; x++) {
+				// tiles[y][x].draw(g, (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
+				// (int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()));
+
+				Tile t = map.getCurrentMap().getTile(y, x);
+				g.drawImage(t.getImage(), (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
+						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()), null);
+			}
+		}
 	}
 
 }
