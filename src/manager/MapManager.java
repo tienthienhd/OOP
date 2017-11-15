@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+import gfx.GameCamera;
 import map.Map;
 import utils.Utils;
 
 public class MapManager extends Manager implements IMapManager {
 	private ArrayList<String> listmap;
 	private Map currentMap;
+	private GameCamera gameCamera;
 	
 	public MapManager(String listName) {
 		listName = System.getProperty("user.dir") + "/resource/" + listName;
@@ -44,7 +46,7 @@ public class MapManager extends Manager implements IMapManager {
 					tileId[i][j] = matrix.get(i)[j];
 				}
 			}
-			this.currentMap = new Map(tileId, 0, 0, 10, 10);
+			this.currentMap = new Map(gameCamera,tileId, 0, 0, 10, 10);
 		}
 		return null;
 	}

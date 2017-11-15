@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import gfx.Animation;
 import gfx.Assets;
+import gfx.GameCamera;
 import manager.EntityManager.EntityState;
 import manager.IEntityManager;
 import manager.IMapManager;
@@ -15,12 +16,14 @@ public class GameScene extends Scene {
 
 	IMapManager map;
 	IEntityManager entities;
+	GameCamera gameCamera;
 	Animation playerUp;
 	Animation playerDown;
 	Animation playerRight;
 	Animation playerLeft;
 
-	public GameScene(IMapManager map, IEntityManager entities) {
+	public GameScene(GameCamera gameCamera, IMapManager map, IEntityManager entities) {
+		this.gameCamera = gameCamera;
 		this.map = map;
 		this.entities = entities;
 		this.playerDown = new Animation(Assets.playerDown, 300);
@@ -65,10 +68,14 @@ public class GameScene extends Scene {
 			break;
 
 		}
+
+		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
+
 		g.setColor(Color.blue);
 		
 		g.drawImage(buffer, state.getX(), state.getY(), null);
 		g.fillRect(state.getX(), state.getY(), 5, 5);
+
 
 	}
 

@@ -7,15 +7,23 @@ import enity.creature.Creature;
 import enity.creature.Direction;
 import enity.creature.Monster;
 import enity.creature.Player;
+
+import gfx.GameCamera;
+
 import gfx.Assets;
 import map.Tile;
+
 
 public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
 	private Player player;
 	int xPlayerLast, yPlayerLast;
 	private ArrayList<Monster> monsters;
+
+	private GameCamera gameCamera;
+
 	private IMapManager map;
+
 
 	public EntityManager(IMapManager map) {
 		// TODO Auto-generated constructor stub
@@ -29,6 +37,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	public void update() {
 		this.checkCollisionWithTile(player);
 		player.update();
+		gameCamera.centerOnEntity(player);
 		for (Monster m : monsters) {
 			this.checkCollisionWithTile(m);
 			m.update();
@@ -107,6 +116,12 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		}
 	}
 
+	
+	public void setGameCamera(GameCamera gameCamera) {
+		this.gameCamera = gameCamera;
+	}
+	
+
 	public static class EntityState {
 		private int x, y;
 		private Direction direction;
@@ -141,5 +156,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			this.direction = direction;
 		}
 	}
+	
+
 
 }

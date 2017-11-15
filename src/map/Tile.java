@@ -31,8 +31,14 @@ public class Tile {
 		return false;
 	}
 
+	
+	//draw image
+	public void draw(Graphics g,int x, int y) {
+
+
 	// draw image
 	public void draw(Graphics g) {
+
 		g.drawImage(image, x, y, null);
 
 //		g.setColor(Color.red);
