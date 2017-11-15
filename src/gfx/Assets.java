@@ -8,11 +8,13 @@ public class Assets {
 	public static final int HEIGHT_TILE = 48;
 
 	public static ArrayList<BufferedImage> tileImages;
-	public static BufferedImage player;
+	
 	public static BufferedImage[] playerUp; 
 	public static BufferedImage[] playerDown;
 	public static BufferedImage[] playerLeft;
 	public static BufferedImage[] playerRight;
+	
+	public static BufferedImage monster;
 
 	public static void init() {
 		
@@ -43,5 +45,9 @@ public class Assets {
 		playerUp[0] = sheetPlayer.crop(0, 288);
 		playerUp[1] = sheetPlayer.crop(48, 288);
 		playerUp[2] = sheetPlayer.crop(96, 288);
+		
+		
+		SpriteSheet sheetMonster = new SpriteSheet(ImageLoader.loadImage("/textures/monster.png"), 48, 48);
+		monster = sheetMonster.crop(0, 0);
 	}
 }

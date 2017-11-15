@@ -59,17 +59,28 @@ public abstract class Creature extends Entity {
 		}
 	}
 
-	public boolean collisionWithTile(int x, int y) {
-		// TODO: get tile isSolid from map
-		return false;
-	}
-
 	public Direction getDirection() {
 		return direction;
 	}
 
 	public void setDirection(Direction direction) {
 		this.direction = direction;
+	}
+
+	public int getDx() {
+		return dx;
+	}
+
+	public void setDx(int dx) {
+		this.dx = dx;
+	}
+
+	public int getDy() {
+		return dy;
+	}
+
+	public void setDy(int dy) {
+		this.dy = dy;
 	}
 	
 	

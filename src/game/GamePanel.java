@@ -56,14 +56,11 @@ public class GamePanel extends JPanel implements Runnable {
 	// initialize of game
 	private void init() {
 		Assets.init();
-		this.entityManager = new EntityManager();
-		this.inputManager = new InputManager(this, entityManager);
 		this.mapManager = new MapManager("map/listmap.txt");
-//		
-//		this.sceneManager.setGameScene(mapManager, entityManager);
-//		
+		mapManager.loadMap(5);
+		this.entityManager = new EntityManager(this.mapManager);
+		this.inputManager = new InputManager(this, entityManager);
 		this.sceneManager = new SceneManager(this.mapManager, this.entityManager);
-		mapManager.loadMap(1);
 	}
 	
 	// update data of game

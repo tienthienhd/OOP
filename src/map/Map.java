@@ -32,4 +32,9 @@ public class Map {
 			}
 		}
 	}
+	
+	public boolean isSolid(int x, int y) {
+		if(x < 0 || y < 0 || x >= tiles[0].length || y >= tiles.length) return true;
+		return tiles[y][x].isSoLid();
+	}
 }

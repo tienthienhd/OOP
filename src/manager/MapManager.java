@@ -59,5 +59,10 @@ public class MapManager extends Manager implements IMapManager {
 
 		return this.currentMap;
 	}
+	
+	@Override
+	public boolean isSolid(int x, int y) {
+		return currentMap.isSolid(x, y);
+	}
 
 }

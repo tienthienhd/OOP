@@ -1,28 +1,78 @@
 package manager;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import enity.creature.Creature;
 import enity.creature.Direction;
 import enity.creature.Monster;
 import enity.creature.Player;
+import gfx.Assets;
+import map.Tile;
 
 public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
 	private Player player;
+	int xPlayerLast, yPlayerLast;
 	private ArrayList<Monster> monsters;
+	private IMapManager map;
 
-	public EntityManager() {
+	public EntityManager(IMapManager map) {
 		// TODO Auto-generated constructor stub
+		this.map = map;
 		player = new Player("", 0, 0);
 		monsters = new ArrayList<>();
+		monsters.add(new Monster("", 100, 400));
 	}
 
 	@Override
 	public void update() {
+		this.checkCollisionWithTile(player);
 		player.update();
 		for (Monster m : monsters) {
+			this.checkCollisionWithTile(m);
 			m.update();
 		}
+	}
+
+	private void checkCollisionWithTile(Creature creature) {
+		int dx = creature.getDx();
+		int dy = creature.getDy();
+		int x = creature.getX();
+		int y = creature.getY();
+		Rectangle bounds = creature.getBound();
+
+		if (dy < 0) {// Up
+			int ty = (y +72) / Assets.HEIGHT_TILE;
+
+			if (collisionWithTile((x+17)/ Assets.HEIGHT_TILE, ty)||collisionWithTile((x+30)/ Assets.HEIGHT_TILE, ty)) {
+				creature.setDy(0);
+			}
+		} else if (dy > 0) {// Down
+			int ty = (y+ 90) / Assets.HEIGHT_TILE;
+
+			if (collisionWithTile((x+17) / Assets.WIDTH_TILE, ty)||collisionWithTile((x+30)/ Assets.HEIGHT_TILE, ty)){
+				creature.setDy(0);
+			}
+		}
+
+		if (dx > 0) {// moving right
+			int tx = (x  + 36) / Assets.WIDTH_TILE;
+			if (collisionWithTile(tx, (y+72) / Assets.HEIGHT_TILE)||
+					collisionWithTile(tx, (y+79) / Assets.HEIGHT_TILE)) {
+				creature.setDx(0);
+			}
+		} else if (dx < 0) { // Moving left
+			int tx = (x ) / Assets.WIDTH_TILE;
+			if (collisionWithTile(tx, (y+72) / Assets.HEIGHT_TILE)||
+					collisionWithTile(tx, (y+79) / Assets.HEIGHT_TILE)) {
+				creature.setDx(0);
+			}
+		}
+	}
+
+	private boolean collisionWithTile(int x, int y) {
+		return map.isSolid(x, y);
 	}
 
 	@Override
@@ -43,21 +93,20 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	@Override
 	public void PlayerMove(Direction dir) {
 		this.player.getInput(dir);
-		
+
 	}
-	
-	int x, y;
+
 	@Override
 	public boolean isPlayerMoving() {
-		if(x == player.getX() && y == player.getY()) {
+		if (xPlayerLast == player.getX() && yPlayerLast == player.getY()) {
 			return false;
 		} else {
-			x = player.getX();
-			y = player.getY();
+			xPlayerLast = player.getX();
+			yPlayerLast = player.getY();
 			return true;
 		}
 	}
-	
+
 	public static class EntityState {
 		private int x, y;
 		private Direction direction;
