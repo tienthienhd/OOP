@@ -18,6 +18,7 @@ public class KeyManager implements KeyListener {
 		keys.put(KeyEvent.VK_D, false);
 		keys.put(KeyEvent.VK_S, false);
 		keys.put(KeyEvent.VK_ENTER, false);
+		keys.put(KeyEvent.VK_M, false);
 	}
 
 	@Override
@@ -40,7 +41,6 @@ public class KeyManager implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		System.out.println("dfofajkdfja");
 	}
 	
 	public boolean isKeyPressed(int keyCode) {

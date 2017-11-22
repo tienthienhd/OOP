@@ -23,7 +23,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	private IMapManager map;
 
 	public EntityManager(IMapManager map) {
-		// TODO Auto-generated constructor stub
 		this.map = map;
 		player = new Player("", 0, 0);
 		monsters = new ArrayList<>();
@@ -36,6 +35,9 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 
 	@Override
 	public void update() {
+		if(player.getHp() <= 0) {
+			
+		}
 		this.checkCollisionWithTile(player);
 		player.update();
 		gameCamera.centerOnEntity(player);
@@ -48,12 +50,22 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			if(checkCollisionWithEntity(player, m)) {
 				m.setDx(0);
 				m.setDy(0);
+				m.attack(player);
+//				System.out.println("m attack : player's hp: " + player.getHp());
 			}
 			
 			m.update();
 			
 		}
 		
+	}
+	
+	@Override
+	public void switchMap() {
+		if(map.switchMap(player.getX(), player.getY())) {
+			player.setX(map.getXStart());
+			player.setY(map.getYStart());
+		}
 	}
 	
 	private boolean checkCollisionWithEntity(Entity a, Entity b) {

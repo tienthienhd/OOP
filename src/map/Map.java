@@ -1,9 +1,6 @@
 package map;
 
-import java.awt.Graphics;
 import java.awt.Point;
-
-import gfx.GameCamera;
 
 public class Map {
 
@@ -43,6 +40,24 @@ public class Map {
 //		}
 //	}
 	
+	public boolean checkOnGateNext(int x, int y) {
+		Point p = new Point(x, y);
+		
+		if(p.distance(new Point(this.xEnd, this.yEnd)) > 50) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean checkOnGatePrev(int x, int y) {
+		Point p = new Point(x, y);
+		
+		if(p.distance(new Point(this.xStart, this.yStart)) > 50) {
+			return false;
+		}
+		return true;
+	}
+	
 
 	public int getWidthMap() {
 		return tiles[0].length;
@@ -60,5 +75,13 @@ public class Map {
 	
 	public Tile getTile(int y, int x) {
 		return tiles[y][x];
+	}
+
+	public int getXStart() {
+		return xStart;
+	}
+
+	public int getYStart() {
+		return yStart;
 	}
 }

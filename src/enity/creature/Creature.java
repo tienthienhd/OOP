@@ -72,7 +72,7 @@ public abstract class Creature extends Entity {
 	}
 
 	public void beHurted(int damage) {
-		if (damage < this.defense) {
+		if (damage <= this.defense) {
 			this.hp -= 1;
 		} else {
 			this.hp -= (damage - this.defense);

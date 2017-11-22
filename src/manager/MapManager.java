@@ -10,6 +10,7 @@ import utils.Utils;
 public class MapManager extends Manager implements IMapManager {
 	private ArrayList<String> listmap;
 	private Map currentMap;
+	private int indexCurrentMap;
 	
 	public MapManager(String listName) {
 		
@@ -27,14 +28,16 @@ public class MapManager extends Manager implements IMapManager {
 		}
 	}
 
-	public void changeMap(int indexOfMap) {
+	public boolean changeMap(int indexOfMap) {
 		if(indexOfMap < 0 || indexOfMap >= listmap.size()) {
-			return;
+			return false;
 		}
-		this.currentMap = loadMap(indexOfMap);
+		loadMap(indexOfMap);
+		return true;
 	}
 	
-	public Map loadMap(int indexOfMap) {
+	public void loadMap(int indexOfMap) {
+		this.indexCurrentMap = indexOfMap;
 		String filepath = listmap.get(indexOfMap);
 		ArrayList<int[]> matrix = new ArrayList<>();
 		
@@ -45,10 +48,9 @@ public class MapManager extends Manager implements IMapManager {
 					tileId[i][j] = matrix.get(i)[j];
 				}
 			}
-			this.currentMap = new Map(tileId, 0, 0, 10, 10);
-			
+			this.currentMap = new Map(tileId, 0, 0, 2304, 1000);
+			System.out.print(filepath+"    "+indexOfMap);
 		}
-		return null;
 	}
 	
 	@Override
@@ -65,5 +67,25 @@ public class MapManager extends Manager implements IMapManager {
 	@Override
 	public boolean isSolid(int x, int y) {
 		return currentMap.isSolid(x, y);
+	}
+	
+	@Override
+	public boolean switchMap(int x, int y) {
+		if(this.currentMap.checkOnGateNext(x, y)) {
+			return changeMap(this.indexCurrentMap+1);
+		}
+		else if(this.currentMap.checkOnGatePrev(x, y)) {
+			return changeMap(this.indexCurrentMap-1);
+		}
+		return false;
+	}
+	
+	@Override
+	public int getXStart() {
+		return currentMap.getXStart();
+	}
+	@Override 
+	public int getYStart() {
+		return currentMap.getYStart();
 	}
 }

@@ -53,6 +53,8 @@ public class InputManager extends Manager {
 		} else if (isKeyPressed(KeyEvent.VK_ENTER)) {
 			handler.playerAttack();
 			keyManager.setKeyReleased(KeyEvent.VK_ENTER);
+		} else if(isKeyPressed(KeyEvent.VK_M)) {
+			handler.switchMap();
 		}
 	}
 }
