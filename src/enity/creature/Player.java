@@ -26,8 +26,8 @@ public class Player extends Creature {
 		move();
 		
 	}
-	
-	public void switchMap() {
-		//TODO: chuyen map
-	}
+//	
+//	public void switchMap() {
+//		//TODO: chuyen map
+//	}
 }

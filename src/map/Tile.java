@@ -55,4 +55,18 @@ public class Tile {
 	public BufferedImage getImage() {
 		return this.image;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+	
+	
 }

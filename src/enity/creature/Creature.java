@@ -28,30 +28,50 @@ public abstract class Creature extends Entity {
 		// TODO: xu ly va cham voi map
 		if (this.dx > 0) {
 			this.direction = Direction.RIGHT;
+			if(Math.abs(this.dx) < this.speed) {
+				this.x += this.dx;
+				this.dx = 0;
+				return;
+			}
 			this.x += this.speed;
 			this.dx -= speed;
 		} else if (this.dx < 0) {
 			this.direction = Direction.LEFT;
+			if(Math.abs(this.dx) < this.speed) {
+				this.x += this.dx;
+				this.dx = 0;
+				return;
+			}
 			this.x -= this.speed;
 			this.dx += this.speed;
 		}
 
 		if (this.dy > 0) {
 			this.direction = Direction.DOWN;
+			if(Math.abs(this.dy) < this.speed) {
+				this.y += this.dy;
+				this.dy = 0;
+				return;
+			}
 			this.y += this.speed;
 			this.dy -= speed;
 		} else if (this.dy < 0) {
 			this.direction = Direction.UP;
+			if(Math.abs(this.dy) < this.speed) {
+				this.y += this.dy;
+				this.dy = 0;
+				return;
+			}
 			this.y -= this.speed;
 			this.dy += this.speed;
 		}
 	}
 
-	public void fight(Creature target) {
-		target.getHit(this.damage);
+	public void attack(Creature target) {
+		target.beHurted(this.damage);
 	}
 
-	public void getHit(int damage) {
+	public void beHurted(int damage) {
 		if (damage < this.defense) {
 			this.hp -= 1;
 		} else {
@@ -86,4 +106,10 @@ public abstract class Creature extends Entity {
 	public int getSpeed() {
 		return this.speed;
 	}
+
+	public int getHp() {
+		return hp;
+	}
+	
+	
 }

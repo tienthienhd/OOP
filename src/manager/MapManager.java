@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-import gfx.GameCamera;
 import map.Map;
 import utils.Utils;
 
@@ -47,6 +46,7 @@ public class MapManager extends Manager implements IMapManager {
 				}
 			}
 			this.currentMap = new Map(tileId, 0, 0, 10, 10);
+			
 		}
 		return null;
 	}

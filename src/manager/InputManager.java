@@ -24,6 +24,10 @@ public class InputManager extends Manager {
 		return keyManager.isKeyPressed(keyCode);
 	}
 
+	public boolean isKeyReleased(int keyCode) {
+		return keyManager.isKeyReleased(keyCode);
+	}
+
 	public boolean isMousePressed(int mouseBtn) {
 		return mouseManager.isMousePressed(mouseBtn);
 	}
@@ -46,6 +50,9 @@ public class InputManager extends Manager {
 			handler.PlayerMove(Direction.UP);
 		} else if (isKeyPressed(KeyEvent.VK_S)) {
 			handler.PlayerMove(Direction.DOWN);
+		} else if (isKeyPressed(KeyEvent.VK_ENTER)) {
+			handler.playerAttack();
+			keyManager.setKeyReleased(KeyEvent.VK_ENTER);
 		}
 	}
 }

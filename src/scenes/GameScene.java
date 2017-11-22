@@ -70,20 +70,28 @@ public class GameScene extends Scene {
 
 		}
 
-		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
-
-		// g.setColor(Color.blue);
-		//
-		// g.drawImage(buffer, state.getX(), state.getY(), null);
-		// g.fillRect(state.getX(), state.getY(), 5, 5);
+		g.setColor(Color.blue);
+		g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset()
+				, 48, 96);
+		
+		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), 
+				state.getY() - gameCamera.getyOffset(), null);
+		
 
 	}
 
 	private void drawMonster(Graphics g) {
 		ArrayList<EntityState> states = this.entities.getMonsterState();
 		for (EntityState state : states) {
+			
+			g.setColor(Color.RED);
+			g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset()
+					, 48, 48);
+			
 			g.drawImage(Assets.monster, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(),
 					null);
+			
+			
 		}
 	}
 
@@ -101,12 +109,32 @@ public class GameScene extends Scene {
 
 		for (int y = yStart; y < yEnd; y++) {
 			for (int x = xStart; x < xEnd; x++) {
-				// tiles[y][x].draw(g, (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
-				// (int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()));
 
 				Tile t = map.getCurrentMap().getTile(y, x);
 				g.drawImage(t.getImage(), (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
 						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()), null);
+				
+//				g.setColor(Color.red);
+//				g.drawString(t.getX()/48 + "," + t.getY()/48,
+//						(int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()) + 10,
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()) + 20);
+//						
+//				g.drawLine((int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()), 
+//						(int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()) + 48,
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()));
+//				g.drawLine((int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()), 
+//						(int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()) + 48);
+//				g.drawLine((int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()) + 48,
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()), 
+//						(int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()) + 48,
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()) + 48);
+//				g.drawLine((int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()) + 48, 
+//						(int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()) + 48,
+//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()) + 48);
 			}
 		}
 	}
