@@ -15,8 +15,11 @@ import gfx.GameCamera;
 public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
 	private Player player;
-	int xPlayerLast, yPlayerLast;
+	private int xPlayerLast, yPlayerLast;
 	private ArrayList<Monster> monsters;
+	private ArrayList<Integer> xMonsterLast;
+	private ArrayList<Integer> yMonsterLast;
+	
 
 	private GameCamera gameCamera;
 
@@ -29,7 +32,10 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		monsters.add(new Monster("", 100, 300));
 		Random r = new Random();
 		for(int i = 0; i < 10; i++) {
-			monsters.add(new Monster("", r.nextInt(2400), r.nextInt(1344)));
+			Monster m = new Monster("", r.nextInt(2400), r.nextInt(1344));
+			monsters.add(m);
+//			this.xMonsterLast.add(m.getX());
+//			this.yMonsterLast.add(m.getY());
 		}
 	}
 
@@ -62,9 +68,13 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	
 	@Override
 	public void switchMap() {
-		if(map.switchMap(player.getX(), player.getY())) {
+		if(map.switchNextMap(player.getX(), player.getY())) {
 			player.setX(map.getXStart());
 			player.setY(map.getYStart());
+		}
+		else if(map.switchPrevMap(player.getX(), player.getY())) {
+			player.setX(map.getXEnd());
+			player.setY(map.getYEnd());
 		}
 	}
 	

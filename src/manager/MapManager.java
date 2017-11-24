@@ -70,11 +70,17 @@ public class MapManager extends Manager implements IMapManager {
 	}
 	
 	@Override
-	public boolean switchMap(int x, int y) {
+	public boolean switchNextMap(int x, int y) {
 		if(this.currentMap.checkOnGateNext(x, y)) {
 			return changeMap(this.indexCurrentMap+1);
 		}
-		else if(this.currentMap.checkOnGatePrev(x, y)) {
+		
+		return false;
+	}
+	
+	@Override
+	public boolean switchPrevMap(int x, int y) {
+		if(this.currentMap.checkOnGatePrev(x, y)) {
 			return changeMap(this.indexCurrentMap-1);
 		}
 		return false;
@@ -88,4 +94,16 @@ public class MapManager extends Manager implements IMapManager {
 	public int getYStart() {
 		return currentMap.getYStart();
 	}
+
+	@Override
+	public int getXEnd() {
+		return currentMap.getXEnd();
+	}
+
+	@Override
+	public int getYEnd() {
+		return currentMap.getYEnd();
+	}
+	
+	
 }

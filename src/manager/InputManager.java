@@ -55,6 +55,7 @@ public class InputManager extends Manager {
 			keyManager.setKeyReleased(KeyEvent.VK_ENTER);
 		} else if(isKeyPressed(KeyEvent.VK_M)) {
 			handler.switchMap();
+			keyManager.setKeyReleased(KeyEvent.VK_M);
 		}
 	}
 }

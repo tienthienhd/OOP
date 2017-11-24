@@ -84,4 +84,12 @@ public class Map {
 	public int getYStart() {
 		return yStart;
 	}
+	
+	public int getXEnd() {
+		return xEnd;
+	}
+	
+	public int getYEnd() {
+		return yEnd;
+	}
 }
