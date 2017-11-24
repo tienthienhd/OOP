@@ -47,7 +47,7 @@ public class Assets {
 		playerUp[2] = sheetPlayer.crop(96, 288);
 		
 		
-		SpriteSheet sheetMonster = new SpriteSheet(ImageLoader.loadImage("/textures/monster.png"), 48, 48);
+		SpriteSheet sheetMonster = new SpriteSheet(ImageLoader.loadImage("/textures/dragon.png"), 48, 48);
 		monster = sheetMonster.crop(0, 0);
 	}
 }
