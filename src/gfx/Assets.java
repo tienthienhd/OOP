@@ -14,7 +14,11 @@ public class Assets {
 	public static BufferedImage[] playerLeft;
 	public static BufferedImage[] playerRight;
 	
-	public static BufferedImage monster;
+	public static BufferedImage[] dragonUp;
+	public static BufferedImage[] dragonDown;
+	public static BufferedImage[] dragonRight;
+	public static BufferedImage[] dragonLeft;
+	
 
 	public static void init() {
 		
@@ -47,7 +51,24 @@ public class Assets {
 		playerUp[2] = sheetPlayer.crop(96, 288);
 		
 		
+		dragonUp = new BufferedImage[4];
+		dragonDown = new BufferedImage[4];
+		dragonLeft = new BufferedImage[4];
+		dragonRight = new BufferedImage[4];
+		
 		SpriteSheet sheetMonster = new SpriteSheet(ImageLoader.loadImage("/textures/dragon.png"), 48, 48);
-		monster = sheetMonster.crop(0, 0);
+		for(int i = 0; i < 4; i++) {
+			dragonDown[i] = sheetMonster.crop(48 * i, 0);
+		}
+		for(int i = 0; i < 4; i++) {
+			dragonLeft[i] = sheetMonster.crop(48 * i, 48);
+		}
+		for(int i = 0; i < 4; i++) {
+			dragonRight[i] = sheetMonster.crop(48 * i, 96);
+		}
+		for(int i = 0; i < 4; i++) {
+			dragonUp[i] = sheetMonster.crop(48 * i, 144);
+		}
+		
 	}
 }

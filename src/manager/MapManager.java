@@ -49,7 +49,7 @@ public class MapManager extends Manager implements IMapManager {
 				}
 			}
 			this.currentMap = new Map(tileId, 0, 0, 2304, 1000);
-			System.out.print(filepath+"    "+indexOfMap);
+//			System.out.print(filepath+"    "+indexOfMap);
 		}
 	}
 	

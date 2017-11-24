@@ -29,13 +29,14 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		this.map = map;
 		player = new Player("", 0, 0);
 		monsters = new ArrayList<>();
-		monsters.add(new Monster("", 100, 300));
+		xMonsterLast = new ArrayList<>();
+		yMonsterLast = new ArrayList<>();
 		Random r = new Random();
 		for(int i = 0; i < 10; i++) {
 			Monster m = new Monster("", r.nextInt(2400), r.nextInt(1344));
 			monsters.add(m);
-//			this.xMonsterLast.add(m.getX());
-//			this.yMonsterLast.add(m.getY());
+			this.xMonsterLast.add(m.getX());
+			this.yMonsterLast.add(m.getY());
 		}
 	}
 
@@ -158,16 +159,16 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	}
 
 	@Override
-	public EntityState getPlayerState() {
-		EntityState state = new EntityState(player.getX(), player.getY(), player.getDirection());
+	public CreatureState getPlayerState() {
+		CreatureState state = new CreatureState(player.getX(), player.getY(), player.getDirection(), player.getHp());
 		return state;
 	}
 
 	@Override
-	public ArrayList<EntityState> getMonsterState() {
-		ArrayList<EntityState> states = new ArrayList<>();
+	public ArrayList<CreatureState> getMonsterState() {
+		ArrayList<CreatureState> states = new ArrayList<>();
 		for (Monster m : monsters) {
-			states.add(new EntityState(m.getX(), m.getY(), m.getDirection()));
+			states.add(new CreatureState(m.getX(), m.getY(), m.getDirection(), m.getHp()));
 		}
 		return states;
 	}
@@ -201,7 +202,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		for(Monster m: monsters) {
 			if(checkCollisionWithEntity(player, m)) {
 				player.attack(m);
-				System.out.println("player attack : monster's hp: " + m.getHp());
+//				System.out.println("player attack : monster's hp: " + m.getHp());
 			}
 		}
 	}
@@ -235,20 +236,39 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			return true;
 		}
 	}
+	
+	@Override
+	public ArrayList<Boolean> isMonstersMoving(){
+		ArrayList<Boolean> isMonstersMoving = new ArrayList<>();
+		for(int i = 0; i < monsters.size(); i++) {
+			Monster m = monsters.get(i);
+			if(m.getX() == xMonsterLast.get(i) && m.getY() == yMonsterLast.get(i)) {
+				isMonstersMoving.add(false);
+			} else {
+				xMonsterLast.set(i, m.getX());
+				yMonsterLast.set(i, m.getY());
+				isMonstersMoving.add(true);
+				
+			}
+		}
+		return isMonstersMoving;
+	}
 
 	public void setGameCamera(GameCamera gameCamera) {
 		this.gameCamera = gameCamera;
 	}
 
-	public static class EntityState {
+	public static class CreatureState {
 		private int x, y;
 		private Direction direction;
+		private int hp;
 		
 
-		public EntityState(int x, int y, Direction direction) {
+		public CreatureState(int x, int y, Direction direction, int hp) {
 			this.x = x;
 			this.y = y;
 			this.direction = direction;
+			this.hp = hp;
 		}
 
 		public int getX() {
@@ -274,6 +294,16 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		public void setDirection(Direction direction) {
 			this.direction = direction;
 		}
+
+		public int getHp() {
+			return hp;
+		}
+
+		public void setHp(int hp) {
+			this.hp = hp;
+		}
+		
+		
 	}
 
 }

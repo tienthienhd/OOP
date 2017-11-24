@@ -2,11 +2,12 @@ package manager;
 
 import java.util.ArrayList;
 
-import manager.EntityManager.EntityState;
+import manager.EntityManager.CreatureState;
 
 public interface IEntityManager {
 
-	public EntityState getPlayerState();
-	public ArrayList<EntityState> getMonsterState();
+	public CreatureState getPlayerState();
+	public ArrayList<CreatureState> getMonsterState();
 	public boolean isPlayerMoving();
+	public ArrayList<Boolean> isMonstersMoving();
 }
