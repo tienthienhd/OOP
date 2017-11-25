@@ -93,11 +93,11 @@ public class GameScene extends Scene {
 	public void drawItem(Graphics g) {
 		ArrayList<ItemState> stateMana = this.entities.getManas();
 		for(ItemState it : stateMana) {
-			g.drawImage(Assets.blood, it.getX() - gameCamera.getxOffset(), it.getY() - gameCamera.getyOffset(), null);	
+			g.drawImage(Assets.mana, it.getX() - gameCamera.getxOffset(), it.getY() - gameCamera.getyOffset(), null);	
 		}
 		ArrayList<ItemState> stateBlood = this.entities.getBloods();
 		for(ItemState it : stateBlood) {
-			g.drawImage(Assets.mana, it.getX() - gameCamera.getxOffset(), it.getY() - gameCamera.getyOffset(), null);
+			g.drawImage(Assets.blood, it.getX() - gameCamera.getxOffset(), it.getY() - gameCamera.getyOffset(), null);
 		}
 	}
 	

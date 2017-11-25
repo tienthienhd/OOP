@@ -65,7 +65,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		for (int i = 0; i < monsters.size(); i++) {
 			Monster m = monsters.get(i);
 			if (m.getHp() <= 0) {
-				Mana mana = new Mana("", m.getX(), m.getY(), 48, 48);
+				Mana mana = new Mana("", m.getX(), m.getY(), 24, 24);
 				manas.add(mana);
 				monsters.remove(m);
 			}
