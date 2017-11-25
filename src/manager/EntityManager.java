@@ -58,30 +58,27 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	public void update() {
 		if (player.getHp() <= 0) {
 			System.out.println("Ngu thì chết");
-			if (player.getHp() <= 0) {
-
+		}
+		this.checkCollisionWithTile(player);
+		player.update();
+		gameCamera.centerOnEntity(player);
+		for (int i = 0; i < monsters.size(); i++) {
+			Monster m = monsters.get(i);
+			if (m.getHp() <= 0) {
+				Mana mana = new Mana("", m.getX(), m.getY(), 48, 48);
+				manas.add(mana);
+				monsters.remove(m);
 			}
-			this.checkCollisionWithTile(player);
-			player.update();
-			gameCamera.centerOnEntity(player);
-			for (int i = 0; i < monsters.size(); i++) {
-				Monster m = monsters.get(i);
-				if (m.getHp() <= 0) {
-					Mana mana = new Mana("", m.getX(), m.getY(), 48, 48);
-					manas.add(mana);
-					monsters.remove(m);
-				}
-				this.checkCollisionWithTile(m);
-				if (checkCollisionWithEntity(player, m)) {
-					m.setDx(0);
-					m.setDy(0);
-					m.attack(player);
-					// System.out.println("m attack : player's hp: " + player.getHp());
-				}
-
-				m.update();
-
+			this.checkCollisionWithTile(m);
+			if (checkCollisionWithEntity(player, m)) {
+				m.setDx(0);
+				m.setDy(0);
+				m.attack(player);
+				// System.out.println("m attack : player's hp: " + player.getHp());
 			}
+
+			m.update();
+
 		}
 
 	}
@@ -249,6 +246,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		for (Monster m : monsters) {
 			m.playerHasMoved(player.getX(), player.getY());
 		}
+		// System.out.println("Move" + this.player.getDx() + ":" + this.player.getDy());
 	}
 
 	@Override
