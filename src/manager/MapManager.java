@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import map.Map;
 import utils.Utils;
 
-public class MapManager extends Manager implements MapNotify {
+public class MapManager extends Manager implements IMapManager {
 	private ArrayList<String> listmap;
 	private Map currentMap;
+	private int indexCurrentMap;
 	
 	public MapManager(String listName) {
+		
 		listName = System.getProperty("user.dir") + "/resource/" + listName;
 		this.listmap = new ArrayList<>();
 		FileReader fr;
@@ -19,23 +21,26 @@ public class MapManager extends Manager implements MapNotify {
 			fr = new FileReader(listName);
 			BufferedReader br = new BufferedReader(fr);
 			while(br.ready()) {
-				listmap.add(System.getProperty("user.dir") + "/resource/" + br.readLine());
+				listmap.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void changeMap(int indexOfMap) {
+	public boolean changeMap(int indexOfMap) {
 		if(indexOfMap < 0 || indexOfMap >= listmap.size()) {
-			return;
+			return false;
 		}
-		this.currentMap = loadMap(indexOfMap);
+		loadMap(indexOfMap);
+		return true;
 	}
 	
-	public Map loadMap(int indexOfMap) {
+	public void loadMap(int indexOfMap) {
+		this.indexCurrentMap = indexOfMap;
 		String filepath = listmap.get(indexOfMap);
 		ArrayList<int[]> matrix = new ArrayList<>();
+		
 		if(Utils.loadMapFromFile(filepath, matrix)) {
 			int[][] tileId = new int[matrix.size()][matrix.get(0).length];
 			for(int i = 0; i < matrix.size(); i ++) {
@@ -43,9 +48,9 @@ public class MapManager extends Manager implements MapNotify {
 					tileId[i][j] = matrix.get(i)[j];
 				}
 			}
-			this.currentMap = new Map(tileId, 0, 0, 10, 10);
+			this.currentMap = new Map(tileId, 0, 0, 2304, 1000);
+//			System.out.print(filepath+"    "+indexOfMap);
 		}
-		return null;
 	}
 	
 	@Override
@@ -58,5 +63,47 @@ public class MapManager extends Manager implements MapNotify {
 
 		return this.currentMap;
 	}
+	
+	@Override
+	public boolean isSolid(int x, int y) {
+		return currentMap.isSolid(x, y);
+	}
+	
+	@Override
+	public boolean switchNextMap(int x, int y) {
+		if(this.currentMap.checkOnGateNext(x, y)) {
+			return changeMap(this.indexCurrentMap+1);
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public boolean switchPrevMap(int x, int y) {
+		if(this.currentMap.checkOnGatePrev(x, y)) {
+			return changeMap(this.indexCurrentMap-1);
+		}
+		return false;
+	}
+	
+	@Override
+	public int getXStart() {
+		return currentMap.getXStart();
+	}
+	@Override 
+	public int getYStart() {
+		return currentMap.getYStart();
+	}
 
+	@Override
+	public int getXEnd() {
+		return currentMap.getXEnd();
+	}
+
+	@Override
+	public int getYEnd() {
+		return currentMap.getYEnd();
+	}
+	
+	
 }

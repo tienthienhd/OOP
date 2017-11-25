@@ -17,6 +17,8 @@ public class KeyManager implements KeyListener {
 		keys.put(KeyEvent.VK_W, false);
 		keys.put(KeyEvent.VK_D, false);
 		keys.put(KeyEvent.VK_S, false);
+		keys.put(KeyEvent.VK_ENTER, false);
+		keys.put(KeyEvent.VK_M, false);
 	}
 
 	@Override
@@ -39,8 +41,6 @@ public class KeyManager implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public boolean isKeyPressed(int keyCode) {
@@ -48,5 +48,16 @@ public class KeyManager implements KeyListener {
 			return keys.get(keyCode);
 		}
 		return false;
+	}
+	
+	public boolean isKeyReleased(int keyCode) {
+		if(keys.containsKey(keyCode)) {
+			return !keys.get(keyCode);
+		}
+		return false;
+	}
+	
+	public void setKeyReleased(int keyCode) {
+		keys.replace(keyCode, false);
 	}
 }
