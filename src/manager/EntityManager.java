@@ -9,6 +9,10 @@ import enity.creature.Creature;
 import enity.creature.Direction;
 import enity.creature.Monster;
 import enity.creature.Player;
+import enity.item.Blood;
+import enity.item.Clothes;
+import enity.item.Mana;
+import enity.item.Weapon;
 import gfx.Assets;
 import gfx.GameCamera;
 
@@ -17,9 +21,13 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	private Player player;
 	private int xPlayerLast, yPlayerLast;
 	private ArrayList<Monster> monsters;
+	private ArrayList<Weapon> weapons;
+	private ArrayList<Clothes> clothes;
+	private ArrayList<Mana> manas;
+	private ArrayList<Blood> bloods;
+	
 	private ArrayList<Integer> xMonsterLast;
 	private ArrayList<Integer> yMonsterLast;
-	
 
 	private GameCamera gameCamera;
 
@@ -32,53 +40,60 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		xMonsterLast = new ArrayList<>();
 		yMonsterLast = new ArrayList<>();
 		Random r = new Random();
-		for(int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			Monster m = new Monster("", r.nextInt(2400), r.nextInt(1344));
 			monsters.add(m);
 			this.xMonsterLast.add(m.getX());
 			this.yMonsterLast.add(m.getY());
 		}
+		
+		weapons = new ArrayList<>();
+		clothes = new ArrayList<>();
+		manas = new ArrayList<>();
+		bloods = new ArrayList<>();
+		
 	}
 
 	@Override
 	public void update() {
-		if(player.getHp() <= 0) {
-			
+		if (player.getHp() <= 0) {
+
 		}
 		this.checkCollisionWithTile(player);
 		player.update();
 		gameCamera.centerOnEntity(player);
 		for (int i = 0; i < monsters.size(); i++) {
 			Monster m = monsters.get(i);
-			if(m.getHp()  <= 0) {
+			if (m.getHp() <= 0) {
+				Mana mana = new Mana("", m.getX(), m.getY(), 48, 48);
+				manas.add(mana);
 				monsters.remove(m);
 			}
 			this.checkCollisionWithTile(m);
-			if(checkCollisionWithEntity(player, m)) {
+			if (checkCollisionWithEntity(player, m)) {
 				m.setDx(0);
 				m.setDy(0);
 				m.attack(player);
-//				System.out.println("m attack : player's hp: " + player.getHp());
+				// System.out.println("m attack : player's hp: " + player.getHp());
 			}
-			
+
 			m.update();
-			
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public void switchMap() {
-		if(map.switchNextMap(player.getX(), player.getY())) {
+		if (map.switchNextMap(player.getX(), player.getY())) {
 			player.setX(map.getXStart());
 			player.setY(map.getYStart());
-		}
-		else if(map.switchPrevMap(player.getX(), player.getY())) {
+		} else if (map.switchPrevMap(player.getX(), player.getY())) {
 			player.setX(map.getXEnd());
 			player.setY(map.getYEnd());
 		}
 	}
-	
+
 	private boolean checkCollisionWithEntity(Entity a, Entity b) {
 		Rectangle ra = getBound(a);
 		Rectangle rb = getBound(b);
@@ -91,36 +106,36 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		int x = creature.getX();
 		int y = creature.getY();
 
-		if(creature instanceof Player) {
-		if (dy < 0) {// Up
-			int ty = (y + 72) / Assets.HEIGHT_TILE;
+		if (creature instanceof Player) {
+			if (dy < 0) {// Up
+				int ty = (y + 72) / Assets.HEIGHT_TILE;
 
-			if (collisionWithTile((x + 17) / Assets.HEIGHT_TILE, ty)
-					|| collisionWithTile((x + 30) / Assets.HEIGHT_TILE, ty) || y <= 0) {
-				creature.setDy(0);
-			}
-		} else if (dy > 0) {// Down
-			int ty = (y + 90) / Assets.HEIGHT_TILE;
+				if (collisionWithTile((x + 17) / Assets.HEIGHT_TILE, ty)
+						|| collisionWithTile((x + 30) / Assets.HEIGHT_TILE, ty) || y <= 0) {
+					creature.setDy(0);
+				}
+			} else if (dy > 0) {// Down
+				int ty = (y + 90) / Assets.HEIGHT_TILE;
 
-			if (collisionWithTile((x + 17) / Assets.WIDTH_TILE, ty)
-					|| collisionWithTile((x + 30) / Assets.HEIGHT_TILE, ty)) {
-				creature.setDy(0);
+				if (collisionWithTile((x + 17) / Assets.WIDTH_TILE, ty)
+						|| collisionWithTile((x + 30) / Assets.HEIGHT_TILE, ty)) {
+					creature.setDy(0);
+				}
 			}
-		}
 
-		if (dx > 0) {// moving right
-			int tx = (x + 36) / Assets.WIDTH_TILE;
-			if (collisionWithTile(tx, (y + 72) / Assets.HEIGHT_TILE)
-					|| collisionWithTile(tx, (y + 79) / Assets.HEIGHT_TILE)) {
-				creature.setDx(0);
+			if (dx > 0) {// moving right
+				int tx = (x + 36) / Assets.WIDTH_TILE;
+				if (collisionWithTile(tx, (y + 72) / Assets.HEIGHT_TILE)
+						|| collisionWithTile(tx, (y + 79) / Assets.HEIGHT_TILE)) {
+					creature.setDx(0);
+				}
+			} else if (dx < 0) { // Moving left
+				int tx = (x) / Assets.WIDTH_TILE;
+				if (collisionWithTile(tx, (y + 72) / Assets.HEIGHT_TILE)
+						|| collisionWithTile(tx, (y + 79) / Assets.HEIGHT_TILE) || x <= 0) {
+					creature.setDx(0);
+				}
 			}
-		} else if (dx < 0) { // Moving left
-			int tx = (x) / Assets.WIDTH_TILE;
-			if (collisionWithTile(tx, (y + 72) / Assets.HEIGHT_TILE)
-					|| collisionWithTile(tx, (y + 79) / Assets.HEIGHT_TILE) || x <= 0) {
-				creature.setDx(0);
-			}
-		}
 		} else {
 			if (dy < 0) {// Up
 				int ty = (y + 30) / Assets.HEIGHT_TILE;
@@ -172,7 +187,40 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		}
 		return states;
 	}
-
+	
+	@Override
+	public ArrayList<ItemState> getWeapons(){
+		ArrayList<ItemState> states = new ArrayList<>();
+		for(Weapon w : weapons) {
+			states.add(new ItemState(w.getX(), w.getY()));
+		}
+		return states;
+	}
+	@Override
+	public ArrayList<ItemState> getClothes(){
+		ArrayList<ItemState> states = new ArrayList<>();
+		for(Clothes c : clothes) {
+			states.add(new ItemState(c.getX(), c.getY()));
+		}
+		return states;
+	}
+	@Override
+	public ArrayList<ItemState> getManas(){
+		ArrayList<ItemState> states = new ArrayList<>();
+		for(Mana m : manas) {
+			states.add(new ItemState(m.getX(), m.getY()));
+		}
+		return states;
+	}
+	@Override
+	public ArrayList<ItemState> getBloods(){
+		ArrayList<ItemState> states = new ArrayList<>();
+		for(Blood b : bloods) {
+			states.add(new ItemState(b.getX(), b.getY()));
+		}
+		return states;
+	}
+	
 	@Override
 	public void PlayerMove(Direction dir) {
 		this.player.setDx(0);
@@ -192,30 +240,29 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			this.player.setDx(this.player.getDx() + this.player.getSpeed());
 			break;
 		}
-		for(Monster m: monsters) {
+		for (Monster m : monsters) {
 			m.playerHasMoved(player.getX(), player.getY());
 		}
 	}
-	
+
 	@Override
 	public void playerAttack() {
-		for(Monster m: monsters) {
-			if(checkCollisionWithEntity(player, m)) {
+		for (Monster m : monsters) {
+			if (checkCollisionWithEntity(player, m)) {
 				player.attack(m);
-//				System.out.println("player attack : monster's hp: " + m.getHp());
+				// System.out.println("player attack : monster's hp: " + m.getHp());
 			}
 		}
 	}
-	
+
 	public static Rectangle getBound(Entity entity) {
 		Rectangle r = new Rectangle();
-		if(entity instanceof Player) {
+		if (entity instanceof Player) {
 			r.x = entity.getX() + 10;
 			r.y = entity.getY() + 20;
 			r.width = entity.getWidth() - 20;
-			r.height = entity.getHeight() -22;
-		}
-		else if(entity instanceof Monster) {
+			r.height = entity.getHeight() - 22;
+		} else if (entity instanceof Monster) {
 			r.x = entity.getX();
 			r.y = entity.getY();
 			r.width = entity.getWidth();
@@ -223,8 +270,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		}
 		return r;
 	}
-	
-	
 
 	@Override
 	public boolean isPlayerMoving() {
@@ -236,19 +281,19 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			return true;
 		}
 	}
-	
+
 	@Override
-	public ArrayList<Boolean> isMonstersMoving(){
+	public ArrayList<Boolean> isMonstersMoving() {
 		ArrayList<Boolean> isMonstersMoving = new ArrayList<>();
-		for(int i = 0; i < monsters.size(); i++) {
+		for (int i = 0; i < monsters.size(); i++) {
 			Monster m = monsters.get(i);
-			if(m.getX() == xMonsterLast.get(i) && m.getY() == yMonsterLast.get(i)) {
+			if (m.getX() == xMonsterLast.get(i) && m.getY() == yMonsterLast.get(i)) {
 				isMonstersMoving.add(false);
 			} else {
 				xMonsterLast.set(i, m.getX());
 				yMonsterLast.set(i, m.getY());
 				isMonstersMoving.add(true);
-				
+
 			}
 		}
 		return isMonstersMoving;
@@ -262,7 +307,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		private int x, y;
 		private Direction direction;
 		private int hp;
-		
 
 		public CreatureState(int x, int y, Direction direction, int hp) {
 			this.x = x;
@@ -302,8 +346,33 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		public void setHp(int hp) {
 			this.hp = hp;
 		}
-		
-		
+
 	}
 
+	public static class ItemState {
+		private int x;
+		private int y;
+
+		public ItemState(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public void setX(int x) {
+			this.x = x;
+		}
+
+		public int getY() {
+			return y;
+		}
+
+		public void setY(int y) {
+			this.y = y;
+		}
+
+	}
 }
