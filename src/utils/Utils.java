@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Utils {
-	public static boolean loadMapFromFile(String filepath, ArrayList<int[]> matrix) {
+	public static int loadMapFromFile(String filepath, ArrayList<int[]> matrix) {
 		FileReader fr;
+		int tileSet = -1;
 		try {
 			fr = new FileReader(filepath);
 			Scanner scanner = new Scanner(fr);
 			
+			tileSet = scanner.nextInt();
 			int width = scanner.nextInt();
 			int height = scanner.nextInt();
 			
@@ -21,10 +23,10 @@ public class Utils {
 				}
 				matrix.add(row);
 			}
-			return true;
+			return tileSet;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 }

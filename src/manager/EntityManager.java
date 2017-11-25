@@ -43,7 +43,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	@Override
 	public void update() {
 		if(player.getHp() <= 0) {
-			
+			System.out.println("Ngu thì chết");
 		}
 		this.checkCollisionWithTile(player);
 		player.update();

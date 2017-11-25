@@ -13,11 +13,11 @@ public class Tile {
 	private int x, y;
 	private BufferedImage image;
 
-	public Tile(int id, int x, int y) {
+	public Tile(int nbTileSet, int id, int x, int y) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.image = Assets.tileImages.get(id - 1);
+		this.image = Assets.tileImages.get(nbTileSet).get(id - 1);
 	}
 
 	// check entity
