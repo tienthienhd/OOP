@@ -98,19 +98,19 @@ public class Assets {
 			stoneHumanUp[i] = sheetStoneHuman.crop(48 * i, 144);
 		}
 
-		SpriteSheet sheetItems = new SpriteSheet(ImageLoader.loadImage("/textures/items.png"), 48, 48);
+		SpriteSheet sheetItems = new SpriteSheet(ImageLoader.loadImage("/textures/item.png"), 24, 24);
 
 		clothes = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {
-			clothes.add(sheetItems.crop(48 * i, 0));
+			clothes.add(sheetItems.crop(24 * i, 0));
 		}
 
 		weapons = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
-			weapons.add(sheetItems.crop(48 * i, 48));
+			weapons.add(sheetItems.crop(24 * i, 24));
 		}
 
-		blood = sheetItems.crop(48, 96);
-		mana = sheetItems.crop(0, 96);
+		blood = sheetItems.crop(24, 48);
+		mana = sheetItems.crop(0, 48);
 	}
 }
