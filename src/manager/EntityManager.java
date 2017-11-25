@@ -25,7 +25,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	private ArrayList<Clothes> clothes;
 	private ArrayList<Mana> manas;
 	private ArrayList<Blood> bloods;
-	
+
 	private ArrayList<Integer> xMonsterLast;
 	private ArrayList<Integer> yMonsterLast;
 
@@ -46,44 +46,42 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			this.xMonsterLast.add(m.getX());
 			this.yMonsterLast.add(m.getY());
 		}
-		
+
 		weapons = new ArrayList<>();
 		clothes = new ArrayList<>();
 		manas = new ArrayList<>();
 		bloods = new ArrayList<>();
-		
+
 	}
 
 	@Override
 	public void update() {
-<<<<<<< HEAD
-		if(player.getHp() <= 0) {
-			System.out.println("Ngu thì chết");
-=======
 		if (player.getHp() <= 0) {
+			System.out.println("Ngu thì chết");
+			if (player.getHp() <= 0) {
 
->>>>>>> 45b136c7dbd85bd5510319b4f37f4325ec86746e
-		}
-		this.checkCollisionWithTile(player);
-		player.update();
-		gameCamera.centerOnEntity(player);
-		for (int i = 0; i < monsters.size(); i++) {
-			Monster m = monsters.get(i);
-			if (m.getHp() <= 0) {
-				Mana mana = new Mana("", m.getX(), m.getY(), 48, 48);
-				manas.add(mana);
-				monsters.remove(m);
 			}
-			this.checkCollisionWithTile(m);
-			if (checkCollisionWithEntity(player, m)) {
-				m.setDx(0);
-				m.setDy(0);
-				m.attack(player);
-				// System.out.println("m attack : player's hp: " + player.getHp());
+			this.checkCollisionWithTile(player);
+			player.update();
+			gameCamera.centerOnEntity(player);
+			for (int i = 0; i < monsters.size(); i++) {
+				Monster m = monsters.get(i);
+				if (m.getHp() <= 0) {
+					Mana mana = new Mana("", m.getX(), m.getY(), 48, 48);
+					manas.add(mana);
+					monsters.remove(m);
+				}
+				this.checkCollisionWithTile(m);
+				if (checkCollisionWithEntity(player, m)) {
+					m.setDx(0);
+					m.setDy(0);
+					m.attack(player);
+					// System.out.println("m attack : player's hp: " + player.getHp());
+				}
+
+				m.update();
+
 			}
-
-			m.update();
-
 		}
 
 	}
@@ -192,40 +190,43 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		}
 		return states;
 	}
-	
+
 	@Override
-	public ArrayList<ItemState> getWeapons(){
+	public ArrayList<ItemState> getWeapons() {
 		ArrayList<ItemState> states = new ArrayList<>();
-		for(Weapon w : weapons) {
+		for (Weapon w : weapons) {
 			states.add(new ItemState(w.getX(), w.getY()));
 		}
 		return states;
 	}
+
 	@Override
-	public ArrayList<ItemState> getClothes(){
+	public ArrayList<ItemState> getClothes() {
 		ArrayList<ItemState> states = new ArrayList<>();
-		for(Clothes c : clothes) {
+		for (Clothes c : clothes) {
 			states.add(new ItemState(c.getX(), c.getY()));
 		}
 		return states;
 	}
+
 	@Override
-	public ArrayList<ItemState> getManas(){
+	public ArrayList<ItemState> getManas() {
 		ArrayList<ItemState> states = new ArrayList<>();
-		for(Mana m : manas) {
+		for (Mana m : manas) {
 			states.add(new ItemState(m.getX(), m.getY()));
 		}
 		return states;
 	}
+
 	@Override
-	public ArrayList<ItemState> getBloods(){
+	public ArrayList<ItemState> getBloods() {
 		ArrayList<ItemState> states = new ArrayList<>();
-		for(Blood b : bloods) {
+		for (Blood b : bloods) {
 			states.add(new ItemState(b.getX(), b.getY()));
 		}
 		return states;
 	}
-	
+
 	@Override
 	public void PlayerMove(Direction dir) {
 		this.player.setDx(0);

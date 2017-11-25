@@ -10,11 +10,7 @@ public class Assets {
 	public static final int WIDTH_TILE = 48;
 	public static final int HEIGHT_TILE = 48;
 
-<<<<<<< HEAD
 	public static ArrayList<ArrayList<BufferedImage>> tileImages;
-=======
-	public static ArrayList<BufferedImage> tileImages;
->>>>>>> 45b136c7dbd85bd5510319b4f37f4325ec86746e
 
 	public static BufferedImage[] playerUp;
 	public static BufferedImage[] playerDown;
@@ -25,9 +21,18 @@ public class Assets {
 	public static BufferedImage[] dragonDown;
 	public static BufferedImage[] dragonRight;
 	public static BufferedImage[] dragonLeft;
-<<<<<<< HEAD
 	public static BufferedImage gate;
 
+	public static BufferedImage[] stoneHumanUp;
+	public static BufferedImage[] stoneHumanDown;
+	public static BufferedImage[] stoneHumanLeft;
+	public static BufferedImage[] stoneHumanRight;
+	
+	public static ArrayList<BufferedImage> clothes;
+	public static ArrayList<BufferedImage> weapons;
+	public static BufferedImage blood;
+	public static BufferedImage mana;
+	
 	public static void init() {
 		
 		int nbTileSet = 0;
@@ -58,27 +63,6 @@ public class Assets {
 		
 		gate = ImageLoader.loadImage("/textures/gate.png");
 
-=======
-
-	public static BufferedImage[] stoneHumanUp;
-	public static BufferedImage[] stoneHumanDown;
-	public static BufferedImage[] stoneHumanLeft;
-	public static BufferedImage[] stoneHumanRight;
-
-	public static ArrayList<BufferedImage> clothes;
-	public static ArrayList<BufferedImage> weapons;
-	public static BufferedImage blood;
-	public static BufferedImage mana;
-
-	public static void init() {
-
-		tileImages = new ArrayList<>();
-		SpriteSheet sheetTiles = new SpriteSheet(ImageLoader.loadImage("/textures/tile0.png"), WIDTH_TILE, HEIGHT_TILE);// Not
-																														// file
-		for (int i = 0; i < sheetTiles.getHeight() / 48; i++) {
-			tileImages.add(sheetTiles.crop(0, i * 48));
-		}
->>>>>>> 45b136c7dbd85bd5510319b4f37f4325ec86746e
 
 		playerUp = new BufferedImage[3];
 		playerDown = new BufferedImage[3];
@@ -121,8 +105,6 @@ public class Assets {
 			dragonUp[i] = sheetMonster.crop(48 * i, 144);
 		}
 
-<<<<<<< HEAD
-=======
 		stoneHumanDown = new BufferedImage[4];
 		stoneHumanUp = new BufferedImage[4];
 		stoneHumanRight = new BufferedImage[4];
@@ -142,20 +124,19 @@ public class Assets {
 			stoneHumanUp[i] = sheetStoneHuman.crop(48 * i, 144);
 		}
 
-		SpriteSheet sheetItems = new SpriteSheet(ImageLoader.loadImage("/textures/items.png"), 48, 48);
+		SpriteSheet sheetItems = new SpriteSheet(ImageLoader.loadImage("/textures/item.png"), 24, 24);
 
 		clothes = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {
-			clothes.add(sheetItems.crop(48 * i, 0));
+			clothes.add(sheetItems.crop(24 * i, 0));
 		}
 
 		weapons = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
-			weapons.add(sheetItems.crop(48 * i, 48));
+			weapons.add(sheetItems.crop(24 * i, 24));
 		}
 
-		blood = sheetItems.crop(48, 96);
-		mana = sheetItems.crop(0, 96);
->>>>>>> 45b136c7dbd85bd5510319b4f37f4325ec86746e
+		blood = sheetItems.crop(24, 48);
+		mana = sheetItems.crop(0, 48);
 	}
 }
