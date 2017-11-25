@@ -1,5 +1,6 @@
 package gfx;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,6 +21,7 @@ public class Assets {
 	public static BufferedImage[] dragonDown;
 	public static BufferedImage[] dragonRight;
 	public static BufferedImage[] dragonLeft;
+	public static BufferedImage gate;
 
 	public static void init() {
 		
@@ -32,7 +34,7 @@ public class Assets {
 			BufferedReader br = new BufferedReader(fr);
 			nbTileSet = Integer.parseInt(br.readLine());
 			while(br.ready()) {
-				listResource.add(listName + br.readLine());
+				listResource.add("/textures/" + br.readLine());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,15 +43,15 @@ public class Assets {
 		tileImages = new ArrayList<>();
 		for (int i = 0; i < nbTileSet; i++) {
 			ArrayList<BufferedImage> images = new ArrayList<>();
-			System.out.println(listResource.get(i));
-			String link = listResource.get(i);
-			SpriteSheet sheetTiles = new SpriteSheet(ImageLoader.loadImage("/textures/tile0.png"), WIDTH_TILE,
+			SpriteSheet sheetTiles = new SpriteSheet(ImageLoader.loadImage(listResource.get(i)), WIDTH_TILE,
 					HEIGHT_TILE);// Not file
 			for (int j = 0; j < sheetTiles.getHeight() / 48; j++) {
 				images.add(sheetTiles.crop(0, j * 48));
 			}
 			tileImages.add(images);
 		}
+		
+		gate = ImageLoader.loadImage("/textures/gate.png");
 
 
 		playerUp = new BufferedImage[3];
