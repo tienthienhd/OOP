@@ -70,11 +70,11 @@ public class Assets {
 		
 		gate = ImageLoader.loadImage("/textures/gate.png");
 		
-		SpriteSheet sheetHpMpBar = new SpriteSheet(ImageLoader.loadImage("textures/color_hp_mpback.png"), 124, 18);
+		SpriteSheet sheetHpMpBar = new SpriteSheet(ImageLoader.loadImage("/textures/color_hp_mpback.png"), 124, 18);
 		hpBar = sheetHpMpBar.crop(0, 0);
 		mpBar = sheetHpMpBar.crop(0, 18);
 		
-		SpriteSheet sheetHpMpState = new SpriteSheet(ImageLoader.loadImage("textures/color_hp_mp.png"), 120, 14);
+		SpriteSheet sheetHpMpState = new SpriteSheet(ImageLoader.loadImage("/textures/color_hp_mp.png"), 120, 14);
 		hpState = sheetHpMpState.crop(0, 0);
 		mpState = sheetHpMpState.crop(0, 14);
 		

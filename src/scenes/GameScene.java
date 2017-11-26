@@ -11,6 +11,7 @@ import gfx.Animation;
 import gfx.Assets;
 import gfx.GameCamera;
 import manager.EntityManager.CreatureState;
+import manager.EntityManager.EntityState;
 import manager.EntityManager.ItemState;
 import manager.IEntityManager;
 import manager.IMapManager;
@@ -31,7 +32,6 @@ public class GameScene extends Scene {
 	ArrayList<Animation> monstersDown;
 	ArrayList<Animation> monstersLeft;
 	ArrayList<Animation> monstersRight;
-	
 
 	public GameScene(GameCamera gameCamera, IMapManager map, IEntityManager entities) {
 		this.gameCamera = gameCamera;
@@ -53,7 +53,7 @@ public class GameScene extends Scene {
 				this.monstersUp.add(new Animation(Assets.dragonUp, 300));
 				this.monstersRight.add(new Animation(Assets.dragonRight, 300));
 				this.monstersLeft.add(new Animation(Assets.dragonLeft, 300));
-				
+
 			}
 		}
 
@@ -68,10 +68,10 @@ public class GameScene extends Scene {
 			playerUp.update();
 			playerDown.update();
 		}
-		
+
 		ArrayList<Boolean> isMonstersMoving = entities.isMonstersMoving();
-		for(int i = 0; i < isMonstersMoving.size(); i++) {
-			if(isMonstersMoving.get(i)) {
+		for (int i = 0; i < isMonstersMoving.size(); i++) {
+			if (isMonstersMoving.get(i)) {
 				monstersDown.get(i).update();
 				monstersUp.get(i).update();
 				monstersRight.get(i).update();
@@ -87,12 +87,10 @@ public class GameScene extends Scene {
 		drawMonster(g);
 		drawPlayer(g);
 		drawGUI(g);
-		if(this.entities.getPlayerState().getHp() <= 0) {
-			//drawGameOver(g);
+		if (this.entities.getPlayerState().getHp() <= 0) {
+			// drawGameOver(g);
 		}
 	}
-	
-	
 
 	private void drawGameOver(Graphics g) {
 		g.setColor(Color.ORANGE);
@@ -103,26 +101,25 @@ public class GameScene extends Scene {
 
 	public void drawItem(Graphics g) {
 		ArrayList<ItemState> states = this.entities.getItemState();
-		for(ItemState state: states) {
+		for (ItemState state : states) {
 			int x = state.getX() - gameCamera.getxOffset();
 			int y = state.getY() - gameCamera.getyOffset();
-			if(state.getType() == 1) {
+			if (state.getType() == 1) {
 				g.drawImage(Assets.blood, x, y, null);
-			} else if(state.getType() == 2) {
+			} else if (state.getType() == 2) {
 				g.drawImage(Assets.mana, x, y, null);
-			} else if(state.getType() == 3) {
+			} else if (state.getType() == 3) {
 				g.drawImage(Assets.clothes.get(0), x, y, null);
-			} else if(state.getType() == 4) {
+			} else if (state.getType() == 4) {
 				g.drawImage(Assets.weapons.get(0), x, y, null);
 			}
 		}
 	}
-	
-	
+
 	private void drawPlayer(Graphics g) {
 		CreatureState state = this.entities.getPlayerState();
 		BufferedImage buffer = null;
-		if(state.getHp() <= 0) {
+		if (state.getHp() <= 0) {
 			g.drawImage(Assets.playerDie, state.getX(), state.getY(), null);
 			return;
 		}
@@ -142,8 +139,9 @@ public class GameScene extends Scene {
 
 		}
 
-//		g.setColor(Color.blue);
-//		g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), 48, 96);
+		// g.setColor(Color.blue);
+		// g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() -
+		// gameCamera.getyOffset(), 48, 96);
 
 		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
@@ -169,18 +167,16 @@ public class GameScene extends Scene {
 				break;
 
 			}
-			
-			
-//			g.setColor(Color.RED);
-//			g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), 48, 48);
 
-			
-			g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(),
-					null);
-			
+			// g.setColor(Color.RED);
+			// g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() -
+			// gameCamera.getyOffset(), 48, 48);
+
+			g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
+
 			g.setColor(Color.RED);
 			g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5,
-					(int)((float)state.getHp() / (float)Monster.HP_MAX * 40), 3, 5, 5);
+					(int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
 
 		}
 	}
@@ -203,8 +199,6 @@ public class GameScene extends Scene {
 				Tile t = map.getCurrentMap().getTile(y, x);
 				g.drawImage(t.getImage(), (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
 						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()), null);
-				
-				
 
 				// g.setColor(Color.red);
 				// g.drawString(t.getX()/48 + "," + t.getY()/48,
@@ -229,27 +223,28 @@ public class GameScene extends Scene {
 				// (int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()) + 48);
 			}
 		}
-		
-		if(xStart == 0 && yStart == 0) {
+
+		if (xStart == 0 && yStart == 0) {
 			g.drawImage(Assets.gate, 48 - gameCamera.getxOffset(), 48 - gameCamera.getyOffset(), null);
-		} else if(xEnd == map.getCurrentMap().getWidthMap() && 
-				yEnd == map.getCurrentMap().getHeightMap()) {
-			g.drawImage(Assets.gate,
-					map.getXEnd() - gameCamera.getxOffset(), 
-					map.getYEnd() - gameCamera.getyOffset(), null);
+		} else if (xEnd == map.getCurrentMap().getWidthMap() && yEnd == map.getCurrentMap().getHeightMap()) {
+			g.drawImage(Assets.gate, map.getXEnd() - gameCamera.getxOffset(), map.getYEnd() - gameCamera.getyOffset(),
+					null);
 		}
 	}
-	
-	private void drawGUI(Graphics g) {
-//		g.setColor(Color.gray);
-//		g.fillRoundRect(11, 11, 150, 13, 10, 10);
-//		g.setColor(Color.RED);
-//		g.fillRoundRect(12, 12, (int)((float)entities.getPlayerState().getHp()/(float)Player.HP_MAX * 150), 12, 10, 10);
-		
-		g.drawImage(Assets.hpBar, 11, 11, null);
-		g.drawImage(Assets.hpState, 13, 13, 
-				(int)((float)entities.getPlayerState().getHp()/(float)Player.HP_MAX * 150), 14, null);
-	}
 
+	private void drawGUI(Graphics g) {
+		// g.setColor(Color.gray);
+		// g.fillRoundRect(11, 11, 150, 13, 10, 10);
+		// g.setColor(Color.RED);
+		// g.fillRoundRect(12, 12,
+		// (int)((float)entities.getPlayerState().getHp()/(float)Player.HP_MAX * 150),
+		// 12, 10, 10);
+
+		g.drawImage(Assets.hpBar, 11, 11, null);
+		if (this.entities.getPlayerState().getHp() >= 0) {
+			g.drawImage(Assets.hpState, 13, 13,
+					(int) ((float) entities.getPlayerState().getHp() / (float) Player.HP_MAX * 120), 14, null);
+		}
+	}
 
 }
