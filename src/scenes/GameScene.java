@@ -11,6 +11,7 @@ import gfx.Animation;
 import gfx.Assets;
 import gfx.GameCamera;
 import manager.EntityManager.CreatureState;
+import manager.EntityManager.ItemState;
 import manager.IEntityManager;
 import manager.IMapManager;
 import map.Tile;
@@ -30,7 +31,7 @@ public class GameScene extends Scene {
 	ArrayList<Animation> monstersDown;
 	ArrayList<Animation> monstersLeft;
 	ArrayList<Animation> monstersRight;
-
+	
 
 	public GameScene(GameCamera gameCamera, IMapManager map, IEntityManager entities) {
 		this.gameCamera = gameCamera;
@@ -82,11 +83,24 @@ public class GameScene extends Scene {
 	@Override
 	public void draw(Graphics g) {
 		drawMap(g);
+		drawItem(g);
 		drawMonster(g);
 		drawPlayer(g);
 		drawGUI(g);
+		
 	}
 
+	public void drawItem(Graphics g) {
+		ArrayList<ItemState> stateMana = this.entities.getManas();
+		for(ItemState it : stateMana) {
+			g.drawImage(Assets.mana, it.getX() - gameCamera.getxOffset(), it.getY() - gameCamera.getyOffset(), null);	
+		}
+		ArrayList<ItemState> stateBlood = this.entities.getBloods();
+		for(ItemState it : stateBlood) {
+			g.drawImage(Assets.blood, it.getX() - gameCamera.getxOffset(), it.getY() - gameCamera.getyOffset(), null);
+		}
+	}
+	
 	private void drawPlayer(Graphics g) {
 		CreatureState state = this.entities.getPlayerState();
 		BufferedImage buffer = null;
@@ -167,6 +181,8 @@ public class GameScene extends Scene {
 				Tile t = map.getCurrentMap().getTile(y, x);
 				g.drawImage(t.getImage(), (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
 						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()), null);
+				
+				
 
 				// g.setColor(Color.red);
 				// g.drawString(t.getX()/48 + "," + t.getY()/48,
@@ -191,6 +207,15 @@ public class GameScene extends Scene {
 				// (int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()) + 48);
 			}
 		}
+		
+		if(xStart == 0 && yStart == 0) {
+			g.drawImage(Assets.gate, 48 - gameCamera.getxOffset(), 48 - gameCamera.getyOffset(), null);
+		} else if(xEnd == map.getCurrentMap().getWidthMap() && 
+				yEnd == map.getCurrentMap().getHeightMap()) {
+			g.drawImage(Assets.gate,
+					map.getXEnd() - gameCamera.getxOffset(), 
+					map.getYEnd() - gameCamera.getyOffset(), null);
+		}
 	}
 	
 	private void drawGUI(Graphics g) {
@@ -199,5 +224,6 @@ public class GameScene extends Scene {
 		g.setColor(Color.RED);
 		g.fillRoundRect(12, 12, (int)((float)entities.getPlayerState().getHp()/(float)Player.HP_MAX * 150), 12, 10, 10);
 	}
+
 
 }

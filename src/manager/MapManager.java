@@ -41,14 +41,15 @@ public class MapManager extends Manager implements IMapManager {
 		String filepath = listmap.get(indexOfMap);
 		ArrayList<int[]> matrix = new ArrayList<>();
 		
-		if(Utils.loadMapFromFile(filepath, matrix)) {
+		int tileSet;
+		if((tileSet = Utils.loadMapFromFile(filepath, matrix)) >= 0) {
 			int[][] tileId = new int[matrix.size()][matrix.get(0).length];
 			for(int i = 0; i < matrix.size(); i ++) {
 				for(int j = 0; j < matrix.get(0).length; j++) {
 					tileId[i][j] = matrix.get(i)[j];
 				}
 			}
-			this.currentMap = new Map(tileId, 0, 0, 2304, 1000);
+			this.currentMap = new Map(tileSet, tileId, 0, 0, 2400 - 96, 1344 - 96);
 //			System.out.print(filepath+"    "+indexOfMap);
 		}
 	}
