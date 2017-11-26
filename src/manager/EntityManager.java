@@ -11,6 +11,7 @@ import enity.creature.Monster;
 import enity.creature.Player;
 import enity.item.Blood;
 import enity.item.Clothes;
+import enity.item.Item;
 import enity.item.Mana;
 import enity.item.Weapon;
 import gfx.Assets;
@@ -19,15 +20,18 @@ import gfx.GameCamera;
 public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
 	private Player player;
-	private int xPlayerLast, yPlayerLast;
+	private int xPlayerLast, yPlayerLast; // storage old position of player after move
 	private ArrayList<Monster> monsters;
-	private ArrayList<Weapon> weapons;
-	private ArrayList<Clothes> clothes;
-	private ArrayList<Mana> manas;
-	private ArrayList<Blood> bloods;
 
-	private ArrayList<Integer> xMonsterLast;
-	private ArrayList<Integer> yMonsterLast;
+//	private ArrayList<Weapon> weapons;
+//	private ArrayList<Clothes> clothes;
+//	private ArrayList<Mana> manas;
+//	private ArrayList<Blood> bloods;
+	
+	private ArrayList<Item> items;
+
+	private ArrayList<Integer> xMonsterLast; // storage old x position of monster after move
+	private ArrayList<Integer> yMonsterLast; // storage old y position of monster after move
 
 	private GameCamera gameCamera;
 
@@ -40,24 +44,25 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		xMonsterLast = new ArrayList<>();
 		yMonsterLast = new ArrayList<>();
 		Random r = new Random();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			Monster m = new Monster("", r.nextInt(2400), r.nextInt(1344));
 			monsters.add(m);
 			this.xMonsterLast.add(m.getX());
 			this.yMonsterLast.add(m.getY());
 		}
 
-		weapons = new ArrayList<>();
-		clothes = new ArrayList<>();
-		manas = new ArrayList<>();
-		bloods = new ArrayList<>();
-
+//		weapons = new ArrayList<>();
+//		clothes = new ArrayList<>();
+//		manas = new ArrayList<>();
+//		bloods = new ArrayList<>();
+		
+		items = new ArrayList<>();
 	}
 
 	@Override
 	public void update() {
 		if (player.getHp() <= 0) {
-			System.out.println("Ngu thì chết");
+			System.out.println("game over");
 		}
 		this.checkCollisionWithTile(player);
 		player.update();
@@ -65,8 +70,14 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		for (int i = 0; i < monsters.size(); i++) {
 			Monster m = monsters.get(i);
 			if (m.getHp() <= 0) {
-				Mana mana = new Mana("", m.getX(), m.getY(), 24, 24);
-				manas.add(mana);
+				// Mana mana = new Mana("", m.getX(), m.getY());
+				// manas.add(mana);
+				Item item = getRandomItem(m);
+				if(item != null) {
+					items.add(item);
+					System.out.println("ok");
+					System.out.println(item.getId());
+				}
 				monsters.remove(m);
 			}
 			this.checkCollisionWithTile(m);
@@ -81,6 +92,22 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 
 		}
 
+	}
+
+	private Item getRandomItem(Monster m) {
+		int itemType = (int) (Math.random() * 5);
+		double rateDrop = Math.random();
+		if (itemType == 4 && rateDrop < 0.3d) {
+			return new Weapon(m.getX(), m.getY(), 6);
+		} else if (itemType == 3 && rateDrop < 0.3d) {
+			return new Clothes(m.getX(), m.getY(), 6);
+		} else if (itemType == 1 && rateDrop < 0.5d) {
+			return new Blood(m.getX(), m.getY());
+		} else if (itemType == 2 && rateDrop < 0.5d) {
+			return new Mana(m.getX(), m.getY());
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -187,42 +214,51 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		}
 		return states;
 	}
-
+	
 	@Override
-	public ArrayList<ItemState> getWeapons() {
+	public ArrayList<ItemState> getItemState() {
 		ArrayList<ItemState> states = new ArrayList<>();
-		for (Weapon w : weapons) {
-			states.add(new ItemState(w.getX(), w.getY()));
+		for(Item item : items) {
+			states.add(new ItemState(item.getX(), item.getY(), item.getId()));
 		}
 		return states;
 	}
 
-	@Override
-	public ArrayList<ItemState> getClothes() {
-		ArrayList<ItemState> states = new ArrayList<>();
-		for (Clothes c : clothes) {
-			states.add(new ItemState(c.getX(), c.getY()));
-		}
-		return states;
-	}
-
-	@Override
-	public ArrayList<ItemState> getManas() {
-		ArrayList<ItemState> states = new ArrayList<>();
-		for (Mana m : manas) {
-			states.add(new ItemState(m.getX(), m.getY()));
-		}
-		return states;
-	}
-
-	@Override
-	public ArrayList<ItemState> getBloods() {
-		ArrayList<ItemState> states = new ArrayList<>();
-		for (Blood b : bloods) {
-			states.add(new ItemState(b.getX(), b.getY()));
-		}
-		return states;
-	}
+//	@Override
+//	public ArrayList<ItemState> getWeapons() {
+//		ArrayList<ItemState> states = new ArrayList<>();
+//		for (Weapon w : weapons) {
+//			states.add(new ItemState(w.getX(), w.getY()));
+//		}
+//		return states;
+//	}
+//
+//	@Override
+//	public ArrayList<ItemState> getClothes() {
+//		ArrayList<ItemState> states = new ArrayList<>();
+//		for (Clothes c : clothes) {
+//			states.add(new ItemState(c.getX(), c.getY()));
+//		}
+//		return states;
+//	}
+//
+//	@Override
+//	public ArrayList<ItemState> getManas() {
+//		ArrayList<ItemState> states = new ArrayList<>();
+//		for (Mana m : manas) {
+//			states.add(new ItemState(m.getX(), m.getY()));
+//		}
+//		return states;
+//	}
+//
+//	@Override
+//	public ArrayList<ItemState> getBloods() {
+//		ArrayList<ItemState> states = new ArrayList<>();
+//		for (Blood b : bloods) {
+//			states.add(new ItemState(b.getX(), b.getY()));
+//		}
+//		return states;
+//	}
 
 	@Override
 	public void PlayerMove(Direction dir) {
@@ -307,33 +343,16 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		this.gameCamera = gameCamera;
 	}
 
-	public static class CreatureState {
-		private int x, y;
+	public static class CreatureState extends EntityState{
 		private Direction direction;
 		private int hp;
 
 		public CreatureState(int x, int y, Direction direction, int hp) {
-			this.x = x;
-			this.y = y;
+			super(x, y);
 			this.direction = direction;
 			this.hp = hp;
 		}
 
-		public int getX() {
-			return x;
-		}
-
-		public void setX(int x) {
-			this.x = x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setY(int y) {
-			this.y = y;
-		}
 
 		public Direction getDirection() {
 			return direction;
@@ -353,11 +372,11 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 
 	}
 
-	public static class ItemState {
-		private int x;
-		private int y;
+	public static class EntityState {
+		protected int x;
+		protected int y;
 
-		public ItemState(int x, int y) {
+		public EntityState(int x, int y) {
 			this.x = x;
 			this.y = y;
 		}
@@ -377,6 +396,25 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		public void setY(int y) {
 			this.y = y;
 		}
+	}
+	
+	public static class ItemState extends EntityState {
 
+		private int type;
+		
+		public ItemState(int x, int y, int type) {
+			super(x, y);
+			this.type = type;
+		}
+
+		public int getType() {
+			return type;
+		}
+
+		public void setType(int type) {
+			this.type = type;
+		}
+		
+		
 	}
 }

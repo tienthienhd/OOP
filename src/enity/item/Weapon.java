@@ -3,9 +3,9 @@ package enity.item;
 public class Weapon extends Item {
 
 	private int damage;	
-	
-	public Weapon(String name, int x, int y, int width, int height, int damage) {
-		super(name, x, y, width, height);
+	private static final int ID = 4;
+	public Weapon(int x, int y, int damage) {
+		super(ID, x, y);
 		this.damage = damage;
 	}
 
