@@ -32,6 +32,13 @@ public class Assets {
 	public static ArrayList<BufferedImage> weapons;
 	public static BufferedImage blood;
 	public static BufferedImage mana;
+	public static BufferedImage playerDie;
+	
+	public static BufferedImage hpBar;
+	public static BufferedImage hpState;
+	public static BufferedImage mpBar;
+	public static BufferedImage mpState;
+	
 	
 	public static void init() {
 		
@@ -62,6 +69,15 @@ public class Assets {
 		}
 		
 		gate = ImageLoader.loadImage("/textures/gate.png");
+		
+		SpriteSheet sheetHpMpBar = new SpriteSheet(ImageLoader.loadImage("textures/color_hp_mpback.png"), 124, 18);
+		hpBar = sheetHpMpBar.crop(0, 0);
+		mpBar = sheetHpMpBar.crop(0, 18);
+		
+		SpriteSheet sheetHpMpState = new SpriteSheet(ImageLoader.loadImage("textures/color_hp_mp.png"), 120, 14);
+		hpState = sheetHpMpState.crop(0, 0);
+		mpState = sheetHpMpState.crop(0, 14);
+		
 
 
 		playerUp = new BufferedImage[3];
@@ -85,6 +101,8 @@ public class Assets {
 		playerUp[0] = sheetPlayer.crop(0, 288);
 		playerUp[1] = sheetPlayer.crop(48, 288);
 		playerUp[2] = sheetPlayer.crop(96, 288);
+		
+		playerDie = ImageLoader.loadImage("/textures/player_die.png");
 
 		dragonUp = new BufferedImage[4];
 		dragonDown = new BufferedImage[4];

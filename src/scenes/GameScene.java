@@ -87,7 +87,18 @@ public class GameScene extends Scene {
 		drawMonster(g);
 		drawPlayer(g);
 		drawGUI(g);
-		
+		if(this.entities.getPlayerState().getHp() <= 0) {
+			//drawGameOver(g);
+		}
+	}
+	
+	
+
+	private void drawGameOver(Graphics g) {
+		g.setColor(Color.ORANGE);
+		g.fillRoundRect(400, 200, 300, 150, 20, 20);
+		g.setColor(Color.red);
+		g.drawString("Game Over", 450, 250);
 	}
 
 	public void drawItem(Graphics g) {
@@ -111,6 +122,10 @@ public class GameScene extends Scene {
 	private void drawPlayer(Graphics g) {
 		CreatureState state = this.entities.getPlayerState();
 		BufferedImage buffer = null;
+		if(state.getHp() <= 0) {
+			g.drawImage(Assets.playerDie, state.getX(), state.getY(), null);
+			return;
+		}
 		switch (this.entities.getPlayerState().getDirection()) {
 		case UP:
 			buffer = playerUp.getCurrentFrame();
@@ -226,10 +241,14 @@ public class GameScene extends Scene {
 	}
 	
 	private void drawGUI(Graphics g) {
-		g.setColor(Color.gray);
-		g.fillRoundRect(11, 11, 150, 13, 10, 10);
-		g.setColor(Color.RED);
-		g.fillRoundRect(12, 12, (int)((float)entities.getPlayerState().getHp()/(float)Player.HP_MAX * 150), 12, 10, 10);
+//		g.setColor(Color.gray);
+//		g.fillRoundRect(11, 11, 150, 13, 10, 10);
+//		g.setColor(Color.RED);
+//		g.fillRoundRect(12, 12, (int)((float)entities.getPlayerState().getHp()/(float)Player.HP_MAX * 150), 12, 10, 10);
+		
+		g.drawImage(Assets.hpBar, 11, 11, null);
+		g.drawImage(Assets.hpState, 13, 13, 
+				(int)((float)entities.getPlayerState().getHp()/(float)Player.HP_MAX * 150), 14, null);
 	}
 
 
