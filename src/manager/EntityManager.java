@@ -19,6 +19,7 @@ import gfx.GameCamera;
 
 public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
+	
 	private Player player;
 	private int xPlayerLast, yPlayerLast; // storage old position of player after move
 	private ArrayList<Monster> monsters;
@@ -62,7 +63,9 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	@Override
 	public void update() {
 		if (player.getHp() <= 0) {
-			System.out.println("game over");
+			player.setDx(0);
+			player.setDy(0);
+			player.setDamage(0);
 		}
 		this.checkCollisionWithTile(player);
 		player.update();
