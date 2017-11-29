@@ -1,5 +1,6 @@
 package manager;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,6 +13,7 @@ import enity.creature.Player;
 import enity.item.Blood;
 import enity.item.Clothes;
 import enity.item.Item;
+import enity.item.ItemType;
 import enity.item.Mana;
 import enity.item.Weapon;
 import gfx.Assets;
@@ -22,6 +24,8 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	
 	private Player player;
 	private int xPlayerLast, yPlayerLast; // storage old position of player after move
+	private boolean isPlayerAttacking;
+	
 	private ArrayList<Monster> monsters;
 
 //	private ArrayList<Weapon> weapons;
@@ -41,6 +45,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	public EntityManager(IMapManager map) {
 		this.map = map;
 		player = new Player("", 0, 0);
+		this.isPlayerAttacking = false;
 		monsters = new ArrayList<>();
 		xMonsterLast = new ArrayList<>();
 		yMonsterLast = new ArrayList<>();
@@ -60,8 +65,13 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		items = new ArrayList<>();
 	}
 
+	long begin = System.currentTimeMillis();
+	long lastTime = 0;
+	long delta = 0;
 	@Override
 	public void update() {
+		lastTime = System.currentTimeMillis();
+		delta += lastTime - begin;
 		if (player.getHp() <= 0) {
 			player.setDx(0);
 			player.setDy(0);
@@ -69,6 +79,10 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		}
 		this.checkCollisionWithTile(player);
 		player.update();
+		if(isPlayerAttacking && delta > 300) {
+			delta -= 300;
+			this.player.attack();
+		}
 		gameCamera.centerOnEntity(player);
 		for (int i = 0; i < monsters.size(); i++) {
 			Monster m = monsters.get(i);
@@ -78,8 +92,8 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 				Item item = getRandomItem(m);
 				if(item != null) {
 					items.add(item);
-					System.out.println("ok");
-					System.out.println(item.getId());
+//					System.out.println("ok");
+//					System.out.println(item.getId());
 				}
 				monsters.remove(m);
 			}
@@ -94,6 +108,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			m.update();
 
 		}
+		begin = lastTime;
 
 	}
 
@@ -222,46 +237,11 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	public ArrayList<ItemState> getItemState() {
 		ArrayList<ItemState> states = new ArrayList<>();
 		for(Item item : items) {
-			states.add(new ItemState(item.getX(), item.getY(), item.getId()));
+			states.add(new ItemState(item.getX(), item.getY(), item.getType()));
 		}
 		return states;
 	}
 
-//	@Override
-//	public ArrayList<ItemState> getWeapons() {
-//		ArrayList<ItemState> states = new ArrayList<>();
-//		for (Weapon w : weapons) {
-//			states.add(new ItemState(w.getX(), w.getY()));
-//		}
-//		return states;
-//	}
-//
-//	@Override
-//	public ArrayList<ItemState> getClothes() {
-//		ArrayList<ItemState> states = new ArrayList<>();
-//		for (Clothes c : clothes) {
-//			states.add(new ItemState(c.getX(), c.getY()));
-//		}
-//		return states;
-//	}
-//
-//	@Override
-//	public ArrayList<ItemState> getManas() {
-//		ArrayList<ItemState> states = new ArrayList<>();
-//		for (Mana m : manas) {
-//			states.add(new ItemState(m.getX(), m.getY()));
-//		}
-//		return states;
-//	}
-//
-//	@Override
-//	public ArrayList<ItemState> getBloods() {
-//		ArrayList<ItemState> states = new ArrayList<>();
-//		for (Blood b : bloods) {
-//			states.add(new ItemState(b.getX(), b.getY()));
-//		}
-//		return states;
-//	}
 
 	@Override
 	public void PlayerMove(Direction dir) {
@@ -289,13 +269,14 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	}
 
 	@Override
-	public void playerAttack() {
-		for (Monster m : monsters) {
-			if (checkCollisionWithEntity(player, m)) {
-				player.attack(m);
-				// System.out.println("player attack : monster's hp: " + m.getHp());
-			}
-		}
+	public void playerAttack(boolean isAttacking) {
+//		for (Monster m : monsters) {
+//			if (checkCollisionWithEntity(player, m)) {
+//				player.attack(m);
+//				// System.out.println("player attack : monster's hp: " + m.getHp());
+//			}
+//		}
+		this.isPlayerAttacking = isAttacking;
 	}
 
 	public static Rectangle getBound(Entity entity) {
@@ -403,21 +384,46 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	
 	public static class ItemState extends EntityState {
 
-		private int type;
+		private ItemType type;
 		
-		public ItemState(int x, int y, int type) {
+		public ItemState(int x, int y, ItemType type) {
 			super(x, y);
 			this.type = type;
 		}
 
-		public int getType() {
+		public ItemType getType() {
 			return type;
 		}
 
-		public void setType(int type) {
+		public void setType(ItemType type) {
 			this.type = type;
 		}
 		
 		
+	}
+
+	@Override
+	public Entity chooseEntity(int x, int y) {
+		for(Monster m: monsters) {
+			if(new Point(m.getX() + 24 - gameCamera.getxOffset(), 
+					m.getY() + 24 - gameCamera.getyOffset()).distance(new Point(x, y)) < 24) {
+				this.player.setTarget(m);
+				return m;
+			}
+		}
+		
+		for(Item i : items) {
+			if(new Point(i.getX() + 18 - gameCamera.getxOffset(), 
+					i.getY() + 18 - gameCamera.getyOffset()).distance(new Point(x, y)) < 24) {//FIXME: fix item
+				this.player.setTarget(i);
+				return i;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isPlayerAttacking() {
+		return this.isPlayerAttacking;
 	}
 }

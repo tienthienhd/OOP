@@ -3,9 +3,8 @@ package enity.item;
 public class Weapon extends Item {
 
 	private int damage;	
-	private static final int ID = 4;
 	public Weapon(int x, int y, int damage) {
-		super(ID, x, y);
+		super(ItemType.WEAPON, x, y);
 		this.damage = damage;
 	}
 

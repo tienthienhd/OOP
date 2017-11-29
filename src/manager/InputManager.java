@@ -2,6 +2,7 @@ package manager;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import enity.creature.Direction;
 import input.KeyManager;
@@ -11,6 +12,7 @@ public class InputManager extends Manager {
 	private KeyManager keyManager;
 	private MouseManager mouseManager;
 	private InputHandler handler;
+	private boolean isEnter;
 
 	public InputManager(Component target, InputHandler handler) {
 		this.handler = handler;
@@ -51,11 +53,16 @@ public class InputManager extends Manager {
 		} else if (isKeyPressed(KeyEvent.VK_S)) {
 			handler.PlayerMove(Direction.DOWN);
 		} else if (isKeyPressed(KeyEvent.VK_ENTER)) {
-			handler.playerAttack();
+			isEnter = !isEnter;
+			handler.playerAttack(isEnter);
 			keyManager.setKeyReleased(KeyEvent.VK_ENTER);
 		} else if(isKeyPressed(KeyEvent.VK_M)) {
 			handler.switchMap();
 			keyManager.setKeyReleased(KeyEvent.VK_M);
+		}
+		
+		if(isMousePressed(MouseEvent.BUTTON1)) {
+			this.handler.chooseEntity(getX(), getY());
 		}
 	}
 }

@@ -9,11 +9,8 @@ public interface IEntityManager {
 
 	public CreatureState getPlayerState();
 	public ArrayList<CreatureState> getMonsterState();
-//	public ArrayList<ItemState> getWeapons();
-//	public ArrayList<ItemState> getClothes();
-//	public ArrayList<ItemState> getManas();
-//	public ArrayList<ItemState> getBloods();
 	public boolean isPlayerMoving();
+	public boolean isPlayerAttacking();
 	public ArrayList<Boolean> isMonstersMoving();
 	ArrayList<ItemState> getItemState();
 }

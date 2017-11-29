@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import enity.creature.Monster;
 import enity.creature.Player;
+import enity.item.ItemType;
 import gfx.Animation;
 import gfx.Assets;
 import gfx.GameCamera;
@@ -104,13 +105,13 @@ public class GameScene extends Scene {
 		for (ItemState state : states) {
 			int x = state.getX() - gameCamera.getxOffset();
 			int y = state.getY() - gameCamera.getyOffset();
-			if (state.getType() == 1) {
+			if (state.getType() == ItemType.BLOOD) {
 				g.drawImage(Assets.blood, x, y, null);
-			} else if (state.getType() == 2) {
+			} else if (state.getType() == ItemType.MANA) {
 				g.drawImage(Assets.mana, x, y, null);
-			} else if (state.getType() == 3) {
+			} else if (state.getType() == ItemType.CLOTHES) {
 				g.drawImage(Assets.clothes.get(0), x, y, null);
-			} else if (state.getType() == 4) {
+			} else if (state.getType() == ItemType.WEAPON) {
 				g.drawImage(Assets.weapons.get(0), x, y, null);
 			}
 		}
@@ -120,7 +121,8 @@ public class GameScene extends Scene {
 		CreatureState state = this.entities.getPlayerState();
 		BufferedImage buffer = null;
 		if (state.getHp() <= 0) {
-			g.drawImage(Assets.playerDie, state.getX(), state.getY(), null);
+			g.drawImage(Assets.playerDie, state.getX() - this.gameCamera.getxOffset(), 
+					state.getY() - this.gameCamera.getyOffset(), null);
 			return;
 		}
 		switch (this.entities.getPlayerState().getDirection()) {
@@ -166,7 +168,7 @@ public class GameScene extends Scene {
 				buffer = monstersLeft.get(i).getCurrentFrame();
 				break;
 
-			}
+			} 
 
 			// g.setColor(Color.RED);
 			// g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() -
