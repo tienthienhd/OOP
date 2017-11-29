@@ -120,7 +120,7 @@ public class GameScene extends Scene {
 		CreatureState state = this.entities.getPlayerState();
 		BufferedImage buffer = null;
 		if (state.getHp() <= 0) {
-			g.drawImage(Assets.playerDie, state.getX(), state.getY(), null);
+			g.drawImage(Assets.playerDie, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 			return;
 		}
 		switch (this.entities.getPlayerState().getDirection()) {
@@ -225,7 +225,7 @@ public class GameScene extends Scene {
 		}
 
 		if (xStart == 0 && yStart == 0) {
-			g.drawImage(Assets.gate, 48 - gameCamera.getxOffset(), 48 - gameCamera.getyOffset(), null);
+			g.drawImage(Assets.gate, map.getXStart() - gameCamera.getxOffset(), map.getYStart() - gameCamera.getyOffset(), null);
 		} else if (xEnd == map.getCurrentMap().getWidthMap() && yEnd == map.getCurrentMap().getHeightMap()) {
 			g.drawImage(Assets.gate, map.getXEnd() - gameCamera.getxOffset(), map.getYEnd() - gameCamera.getyOffset(),
 					null);
