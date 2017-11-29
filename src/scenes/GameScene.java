@@ -120,7 +120,7 @@ public class GameScene extends Scene {
 		CreatureState state = this.entities.getPlayerState();
 		BufferedImage buffer = null;
 		if (state.getHp() <= 0) {
-			g.drawImage(Assets.playerDie, state.getX(), state.getY(), null);
+			g.drawImage(Assets.playerDie, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 			return;
 		}
 		switch (this.entities.getPlayerState().getDirection()) {
