@@ -1,3 +1,5 @@
-2
+4
 tile0.png
 tile1.png
+tile2.png
+tile3.png

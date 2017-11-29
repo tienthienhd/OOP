@@ -50,7 +50,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		xMonsterLast = new ArrayList<>();
 		yMonsterLast = new ArrayList<>();
 		Random r = new Random();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			Monster m = new Monster("", r.nextInt(2400), r.nextInt(1344));
 			monsters.add(m);
 			this.xMonsterLast.add(m.getX());
