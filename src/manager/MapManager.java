@@ -49,7 +49,7 @@ public class MapManager extends Manager implements IMapManager {
 					tileId[i][j] = matrix.get(i)[j];
 				}
 			}
-			this.currentMap = new Map(tileSet, tileId, 0, 0, 2400 - 96, 1344 - 96);
+			this.currentMap = new Map(tileSet, tileId, 0, 0 + 24, 2400 - 96, 1344 - 96);
 //			System.out.print(filepath+"    "+indexOfMap);
 		}
 	}
