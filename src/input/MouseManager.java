@@ -39,5 +39,9 @@ public class MouseManager implements MouseListener{
 	public boolean isMousePressed(int mouseBtn) {
 		return mouses.get(mouseBtn);
 	}
+	
+	public void setMouse(int mouseBtn, boolean isPressed) {
+		mouses.replace(mouseBtn, isPressed);
+	}
 }
 

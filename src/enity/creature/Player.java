@@ -17,7 +17,7 @@ public class Player extends Creature {
 	private static final int DEFAULT_SPEED = 10;
 	private static final int DEFAULT_DAMAGE = 20;
 	private static final int DEFAULT_DEFENSE = 10;
-	private static final int DEFAULT_ATTACK_RADIUS = 96;
+	private static final int DEFAULT_ATTACK_RADIUS = 120;
 
 	// private int mp;
 	private Inventory inventory;
@@ -31,15 +31,21 @@ public class Player extends Creature {
 	@Override
 	public void update() {
 		move();
-		if (target != null && new Point(target.getX(), target.getY()).distance(this.x + 24, this.y + 48) > attackRadius) {
+
+		if (this.target instanceof Monster && ((Monster) this.target).getHp() <= 0) {
 			this.target = null;
 		}
 	}
 
 	public void attack() {
+		if (target != null
+				&& new Point(target.getX(), target.getY()).distance(this.x + 24, this.y + 48) > attackRadius) {
+			return;
+		}
 		if (target instanceof Creature) {
 			super.attack((Creature) target);
 		}
+
 	}
 
 	public void getItem(Item item) {
@@ -48,6 +54,10 @@ public class Player extends Creature {
 
 	public void setTarget(Entity target) {
 		this.target = target;
-//		 System.out.println("muc tieu cua tao la co ve dep");
+		// System.out.println("muc tieu cua tao la co ve dep");
+	}
+
+	public Entity getTarget() {
+		return this.target;
 	}
 }

@@ -39,11 +39,18 @@ public class Assets {
 	public static BufferedImage mpBar;
 	public static BufferedImage mpState;
 	
+	public static ArrayList<BufferedImage> newFocus;
+	public static BufferedImage imghpsmall;
+	public static BufferedImage imghpsmall_back;
+	public static BufferedImage hpString;
+	public static BufferedImage mpString;
+	
+	
 	
 	public static void init() {
 		
 		int nbTileSet = 0;
-		String listName = System.getProperty("user.dir") + "\\resource\\textures\\";
+		String listName = System.getProperty("user.dir") + "/resource/textures/";
 		ArrayList<String> listResource = new ArrayList<>();
 		FileReader fr;
 		try {
@@ -156,5 +163,18 @@ public class Assets {
 
 		blood = sheetItems.crop(24, 48);
 		mana = sheetItems.crop(0, 48);
+		
+		newFocus = new ArrayList<>();
+		SpriteSheet focusSheet = new SpriteSheet(ImageLoader.loadImage("/textures/newfocus.png"), 18, 12);
+		for(int i = 0; i < 10; i++) {
+			newFocus.add(focusSheet.crop(0, 12 * i));
+		}
+		
+		imghpsmall = ImageLoader.loadImage("/textures/imghpsmall.png");
+		imghpsmall_back = ImageLoader.loadImage("/textures/imghpsmall_back.png");
+		
+		SpriteSheet hpMpString = new SpriteSheet(ImageLoader.loadImage("/textures/hp_mp.png"), 32, 21);
+		hpString = hpMpString.crop(0, 0);
+		mpString = hpMpString.crop(0, 21);
 	}
 }

@@ -89,7 +89,25 @@ public class GameScene extends Scene {
 		drawPlayer(g);
 		drawGUI(g);
 		if (this.entities.getPlayerState().getHp() <= 0) {
-			// drawGameOver(g);
+			 drawGameOver(g);
+		}
+		drawPointer(g);
+	}
+
+	private void drawPointer(Graphics g) {
+		EntityState stateTarget = this.entities.getPlayerState().getTarget();
+		if (stateTarget != null) {
+			g.drawImage(Assets.newFocus.get(0), stateTarget.getX() + 15 - gameCamera.getxOffset(),
+					stateTarget.getY() - 20 - gameCamera.getyOffset(), null);
+
+			if (stateTarget instanceof CreatureState) {
+				CreatureState target = (CreatureState) stateTarget;
+				g.drawImage(Assets.imghpsmall_back, 880, 20, null);
+				if (target.getHp() >= 0) {
+					g.drawImage(Assets.imghpsmall, 880, 20,
+							(int) ((float) target.getHp() / (float) Monster.HP_MAX * 104), 14, null);
+				}
+			}
 		}
 	}
 
@@ -121,7 +139,7 @@ public class GameScene extends Scene {
 		CreatureState state = this.entities.getPlayerState();
 		BufferedImage buffer = null;
 		if (state.getHp() <= 0) {
-			g.drawImage(Assets.playerDie, state.getX() - this.gameCamera.getxOffset(), 
+			g.drawImage(Assets.playerDie, state.getX() - this.gameCamera.getxOffset(),
 					state.getY() - this.gameCamera.getyOffset(), null);
 			return;
 		}
@@ -168,7 +186,7 @@ public class GameScene extends Scene {
 				buffer = monstersLeft.get(i).getCurrentFrame();
 				break;
 
-			} 
+			}
 
 			// g.setColor(Color.RED);
 			// g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() -
@@ -176,9 +194,11 @@ public class GameScene extends Scene {
 
 			g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
-			g.setColor(Color.RED);
-			g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5,
-					(int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
+//			g.setColor(Color.RED);
+//			g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5,
+//					(int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
+			g.setColor(Color.LIGHT_GRAY);
+			g.drawString(state.getName(), state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5);
 
 		}
 	}
@@ -227,7 +247,8 @@ public class GameScene extends Scene {
 		}
 
 		if (xStart == 0 && yStart == 0) {
-			g.drawImage(Assets.gate, map.getXStart() - gameCamera.getxOffset(), map.getYStart() - gameCamera.getyOffset(), null);
+			g.drawImage(Assets.gate, map.getXStart() - gameCamera.getxOffset(),
+					map.getYStart() - gameCamera.getyOffset(), null);
 		} else if (xEnd == map.getCurrentMap().getWidthMap() && yEnd == map.getCurrentMap().getHeightMap()) {
 			g.drawImage(Assets.gate, map.getXEnd() - gameCamera.getxOffset(), map.getYEnd() - gameCamera.getyOffset(),
 					null);
@@ -241,12 +262,21 @@ public class GameScene extends Scene {
 		// g.fillRoundRect(12, 12,
 		// (int)((float)entities.getPlayerState().getHp()/(float)Player.HP_MAX * 150),
 		// 12, 10, 10);
-
-		g.drawImage(Assets.hpBar, 11, 11, null);
-		if (this.entities.getPlayerState().getHp() >= 0) {
-			g.drawImage(Assets.hpState, 13, 13,
-					(int) ((float) entities.getPlayerState().getHp() / (float) Player.HP_MAX * 120), 14, null);
+		CreatureState playerState = this.entities.getPlayerState();
+		g.drawImage(Assets.hpString, 0, 11, null);
+		g.drawImage(Assets.hpBar, 35, 11, null);
+		if (playerState.getHp() >= 0) {
+			g.drawImage(Assets.hpState, 37, 13,
+					(int) ((float) playerState.getHp() / (float) Player.HP_MAX * 120), 14, null);
 		}
+		g.drawString(playerState.getHp() + "/" + Player.HP_MAX , 60, 25);
+		
+		g.drawImage(Assets.mpString, 0, 35, null);
+		g.drawImage(Assets.mpBar, 35, 35, null);
+		if (this.entities.getPlayerState().getHp() >= 0) {
+			g.drawImage(Assets.mpState, 37, 37,
+					(int) ((float) entities.getPlayerState().getHp() / (float) Player.HP_MAX * 120), 14, null);
+		} //FIXME: hp to mp
 	}
 
 }

@@ -33,6 +33,10 @@ public class InputManager extends Manager {
 	public boolean isMousePressed(int mouseBtn) {
 		return mouseManager.isMousePressed(mouseBtn);
 	}
+	
+	public void setMouse(int mouseBtn, boolean isPressed) {
+		this.mouseManager.setMouse(mouseBtn, isPressed);
+	}
 
 	public int getX() {
 		return mouseManager.x;
@@ -63,6 +67,7 @@ public class InputManager extends Manager {
 		
 		if(isMousePressed(MouseEvent.BUTTON1)) {
 			this.handler.chooseEntity(getX(), getY());
+			this.setMouse(MouseEvent.BUTTON1, false);
 		}
 	}
 }
