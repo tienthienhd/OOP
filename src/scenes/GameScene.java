@@ -302,10 +302,10 @@ public class GameScene extends Scene {
 						g.drawImage(Assets.mn, 23 + indexX * 35, 353 + indexY * 35, null);
 						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
 					} else if(type == ItemType.WEAPON) {
-						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawImage(Assets.weapon, 23 + indexX * 35, 353 + indexY * 35, null);
 						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
 					} else if(type == ItemType.CLOTHES) {
-						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawImage(Assets.clothe, 23 + indexX * 35, 353 + indexY * 35, null);
 						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
 					}
 					indexX++;

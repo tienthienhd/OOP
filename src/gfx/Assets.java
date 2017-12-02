@@ -47,6 +47,8 @@ public class Assets {
 	
 	public static BufferedImage hp;
 	public static BufferedImage mn;
+	public static BufferedImage weapon;
+	public static BufferedImage clothe;
 	
 	public static BufferedImage table;
 	
@@ -184,5 +186,7 @@ public class Assets {
 		
 		hp = ImageLoader.loadImage("/textures/hp.png");
 		mn = ImageLoader.loadImage("/textures/mana.png");
+		weapon = ImageLoader.loadImage("/textures/weapon.png");
+		clothe = ImageLoader.loadImage("/textures/clothe.png");
 	}
 }
