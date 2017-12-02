@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		this.mapManager = new MapManager("map/listmap.txt");
 		this.gameCamera = new GameCamera(mapManager, 0, 0);
-		mapManager.loadMap(4);
+		mapManager.loadMap(0);
 
 		this.entityManager = new EntityManager(this.mapManager);
 		this.entityManager.setGameCamera(gameCamera);
@@ -117,6 +117,7 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		init();
+		Assets.open.start();
 		while(running) {
 			update();
 			render();

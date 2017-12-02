@@ -43,6 +43,11 @@ public class GameScene extends Scene {
 		this.playerRight = new Animation(Assets.playerRight, 300);
 		this.playerLeft = new Animation(Assets.playerLeft, 300);
 
+		createAnimationMonster();
+
+	}
+	
+	public void createAnimationMonster() {
 		this.monstersDown = new ArrayList<>();
 		this.monstersUp = new ArrayList<>();
 		this.monstersLeft = new ArrayList<>();
@@ -50,11 +55,11 @@ public class GameScene extends Scene {
 
 		for (int i = 0; i < entities.getMonsterState().size(); i++) {
 			if (true) {// TODO: for each monster
-				if(this.entities.getMonsterState().get(0).getName().equals("dragon")){
-				this.monstersDown.add(new Animation(Assets.dragonDown, 300));
-				this.monstersUp.add(new Animation(Assets.dragonUp, 300));
-				this.monstersRight.add(new Animation(Assets.dragonRight, 300));
-				this.monstersLeft.add(new Animation(Assets.dragonLeft, 300));
+				if (this.entities.getMonsterState().get(0).getName().equals("dragon")) {
+					this.monstersDown.add(new Animation(Assets.dragonDown, 300));
+					this.monstersUp.add(new Animation(Assets.dragonUp, 300));
+					this.monstersRight.add(new Animation(Assets.dragonRight, 300));
+					this.monstersLeft.add(new Animation(Assets.dragonLeft, 300));
 				} else {
 					this.monstersDown.add(new Animation(Assets.stoneHumanDown, 300));
 					this.monstersUp.add(new Animation(Assets.stoneHumanUp, 300));
@@ -64,11 +69,13 @@ public class GameScene extends Scene {
 
 			}
 		}
-
 	}
 
 	@Override
 	public void update() {
+		if(this.entities.isSwitchMap()) {
+			this.createAnimationMonster();
+		}
 		if (entities.isPlayerMoving()) {
 			// update animation
 			playerRight.update();
@@ -96,7 +103,7 @@ public class GameScene extends Scene {
 		drawPlayer(g);
 		drawGUI(g);
 		if (this.entities.getPlayerState().getHp() <= 0) {
-			 drawGameOver(g);
+			drawGameOver(g);
 		}
 		drawPointer(g);
 	}
@@ -201,11 +208,13 @@ public class GameScene extends Scene {
 
 			g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
-//			g.setColor(Color.RED);
-//			g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5,
-//					(int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
+			// g.setColor(Color.RED);
+			// g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() -
+			// gameCamera.getyOffset() - 5,
+			// (int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawString(state.getName(), state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5);
+			g.drawString(state.getName(), state.getX() - gameCamera.getxOffset() + 4,
+					state.getY() - gameCamera.getyOffset() - 5);
 
 		}
 	}
@@ -273,17 +282,17 @@ public class GameScene extends Scene {
 		g.drawImage(Assets.hpString, 0, 11, null);
 		g.drawImage(Assets.hpBar, 35, 11, null);
 		if (playerState.getHp() >= 0) {
-			g.drawImage(Assets.hpState, 37, 13,
-					(int) ((float) playerState.getHp() / (float) Player.HP_MAX * 120), 14, null);
+			g.drawImage(Assets.hpState, 37, 13, (int) ((float) playerState.getHp() / (float) Player.HP_MAX * 120), 14,
+					null);
 		}
-		g.drawString(playerState.getHp() + "/" + Player.HP_MAX , 60, 25);
-		
+		g.drawString(playerState.getHp() + "/" + Player.HP_MAX, 60, 25);
+
 		g.drawImage(Assets.mpString, 0, 35, null);
 		g.drawImage(Assets.mpBar, 35, 35, null);
 		if (this.entities.getPlayerState().getHp() >= 0) {
 			g.drawImage(Assets.mpState, 37, 37,
 					(int) ((float) entities.getPlayerState().getHp() / (float) Player.HP_MAX * 120), 14, null);
-		} //FIXME: hp to mp
+		} // FIXME: hp to mp
 	}
 
 }

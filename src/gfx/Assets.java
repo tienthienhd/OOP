@@ -6,6 +6,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+import game.Main;
+
 public class Assets {
 	public static final int WIDTH_TILE = 48;
 	public static final int HEIGHT_TILE = 48;
@@ -45,7 +51,8 @@ public class Assets {
 	public static BufferedImage hpString;
 	public static BufferedImage mpString;
 	
-	
+	public static Clip open;
+	public static Clip gameover;
 	
 	public static void init() {
 		
@@ -176,5 +183,19 @@ public class Assets {
 		SpriteSheet hpMpString = new SpriteSheet(ImageLoader.loadImage("/textures/hp_mp.png"), 32, 21);
 		hpString = hpMpString.crop(0, 0);
 		mpString = hpMpString.crop(0, 21);
+		
+		try {
+			open = AudioSystem.getClip();
+			AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+					Main.class.getResourceAsStream("/sound/Open.mid"));
+			open.open(inputStream);
+			
+			gameover = AudioSystem.getClip();
+			inputStream = AudioSystem.getAudioInputStream(
+					Main.class.getResourceAsStream("/sound/monument.wav"));
+			gameover.open(inputStream);
+		} catch (Exception e){
+			System.err.println(e.getMessage());
+		}
 	}
 }
