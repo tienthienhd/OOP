@@ -38,6 +38,8 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	private GameCamera gameCamera;
 
 	private IMapManager map;
+	
+	private boolean isSwitchMap;
 	private boolean showInventory;
 
 	public EntityManager(IMapManager map) {
@@ -73,6 +75,8 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			player.setDx(0);
 			player.setDy(0);
 			player.setDamage(0);
+			Assets.open.stop();
+			Assets.gameover.start();
 		}
 		this.checkCollisionWithTile(player);
 		player.update();
@@ -138,10 +142,12 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			player.setX(map.getXStart());
 			player.setY(map.getYStart());
 			setEntityNewMap(); 
+			this.isSwitchMap = true;
 		} else if (map.switchPrevMap(player.getX(), player.getY())) {
 			player.setX(map.getXEnd());
 			player.setY(map.getYEnd());
 			setEntityNewMap();
+			this.isSwitchMap = true;
 		}
 	}
 
@@ -446,6 +452,14 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	}
 
 	@Override
+	public boolean isSwitchMap() {
+		if(this.isSwitchMap == true) {
+			this.isSwitchMap = false;
+			return true;
+		}
+		return false;
+	}
+	
 	public void showInventory(Boolean isShow) {
 		this.showInventory = isShow;
 	}

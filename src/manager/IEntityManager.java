@@ -14,6 +14,7 @@ public interface IEntityManager {
 	public boolean isPlayerAttacking();
 	public ArrayList<Boolean> isMonstersMoving();
 	ArrayList<ItemState> getItemState();
+	public boolean isSwitchMap();
 	public boolean isShowInventory();
 	public Inventory getPlayerInventory();
 }
