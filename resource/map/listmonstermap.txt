@@ -1,6 +1,0 @@
-5
-monster_map0.txt
-monster_map1.txt
-monster_map2.txt
-monster_map3.txt
-monster_map4.txt
