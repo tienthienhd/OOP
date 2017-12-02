@@ -42,8 +42,7 @@ public class Utils {
 			
 			typeOfMonster = sc.nextInt();
 			numberOfMonster = sc.nextInt();
-			points = new ArrayList<>();
-			for (int i = 0; i <= numberOfMonster; i++) {
+			for (int i = 0; i < numberOfMonster; i++) {
 				int xMonster = sc.nextInt();
 				int yMonster = sc.nextInt();
 				Point p = new Point(xMonster, yMonster);

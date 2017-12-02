@@ -8,20 +8,23 @@ import map.Map;
 import utils.Utils;
 
 public class MapManager extends Manager implements IMapManager {
-	private ArrayList<String> listmap;
+	private ArrayList<String> listMap;
+	private ArrayList<String> listMonsters;
 	private Map currentMap;
 	private int indexCurrentMap;
 	
 	public MapManager(String listName) {
 		
 		listName = System.getProperty("user.dir") + "/resource/" + listName;
-		this.listmap = new ArrayList<>();
+		this.listMap = new ArrayList<>();
+		this.listMonsters = new ArrayList<>();
 		FileReader fr;
 		try {
 			fr = new FileReader(listName);
 			BufferedReader br = new BufferedReader(fr);
 			while(br.ready()) {
-				listmap.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
+				listMap.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
+				listMonsters.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,7 +32,7 @@ public class MapManager extends Manager implements IMapManager {
 	}
 
 	public boolean changeMap(int indexOfMap) {
-		if(indexOfMap < 0 || indexOfMap >= listmap.size()) {
+		if(indexOfMap < 0 || indexOfMap >= listMap.size()) {
 			return false;
 		}
 		loadMap(indexOfMap);
@@ -38,7 +41,7 @@ public class MapManager extends Manager implements IMapManager {
 	
 	public void loadMap(int indexOfMap) {
 		this.indexCurrentMap = indexOfMap;
-		String filepath = listmap.get(indexOfMap);
+		String filepath = listMap.get(indexOfMap);
 		ArrayList<int[]> matrix = new ArrayList<>();
 		
 		int tileSet;
@@ -106,5 +109,14 @@ public class MapManager extends Manager implements IMapManager {
 		return currentMap.getYEnd();
 	}
 	
-	
+	@Override
+	public ArrayList<String> getMonsterMap() {
+		return this.listMonsters;
+	}
+
+	@Override
+	public int getCurrentMapIndex() {
+		return this.indexCurrentMap;
+	}
 }
+

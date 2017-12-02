@@ -1,10 +1,6 @@
-map0.txt
+5
+monster_map0.txt
 monster_map1.txt
-map1.txt
-monster_map1.txt
-map2.txt
 monster_map2.txt
-map3.txt
 monster_map3.txt
-map4.txt
 monster_map4.txt

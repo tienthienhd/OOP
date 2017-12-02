@@ -24,21 +24,6 @@ public class Map {
 		}
 	}
 
-//	// draw map
-//	public void draw(Graphics g) {
-//
-//		int xStart = (int) Math.max(0, gameCamera.getxOffset() / Tile.WIDTH_TILE);
-//		int xEnd = (int) Math.min(tiles[0].length, (gameCamera.getxOffset() + gameCamera.CAMERA_WIDTH ) / Tile.WIDTH_TILE + 1);
-//		int yStart = (int) Math.max(0, gameCamera.getyOffset() / Tile.HEIGHT_TILE);
-//		int yEnd = (int) Math.min(tiles.length, (gameCamera.getyOffset() + gameCamera.CAMERA_HEIGHT) / Tile.HEIGHT_TILE + 1);
-//		
-//		for(int y = yStart;y < yEnd;y++){
-//			for(int x = xStart;x < xEnd;x++){
-//				tiles[y][x].draw(g, (int) (x * Tile.WIDTH_TILE - gameCamera.getxOffset()),
-//						(int) (y * Tile.HEIGHT_TILE - gameCamera.getyOffset()));
-//			}
-//		}
-//	}
 	
 	public boolean checkOnGateNext(int x, int y) {
 		Point p = new Point(x, y);
