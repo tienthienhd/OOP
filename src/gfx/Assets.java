@@ -54,6 +54,11 @@ public class Assets {
 	public static Clip open;
 	public static Clip gameover;
 	
+	public static BufferedImage hp;
+	public static BufferedImage mn;
+	
+	public static BufferedImage table;
+	
 	public static void init() {
 		
 		int nbTileSet = 0;
@@ -197,5 +202,9 @@ public class Assets {
 		} catch (Exception e){
 			System.err.println(e.getMessage());
 		}
+		table = ImageLoader.loadImage("/textures/table.png");
+		
+		hp = ImageLoader.loadImage("/textures/hp.png");
+		mn = ImageLoader.loadImage("/textures/mana.png");
 	}
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import enity.creature.Monster;
 import enity.creature.Player;
+import enity.item.Inventory;
 import enity.item.ItemType;
 import gfx.Animation;
 import gfx.Assets;
@@ -293,6 +294,35 @@ public class GameScene extends Scene {
 			g.drawImage(Assets.mpState, 37, 37,
 					(int) ((float) entities.getPlayerState().getHp() / (float) Player.HP_MAX * 120), 14, null);
 		} // FIXME: hp to mp
+
+		if (this.entities.isShowInventory()) {
+			Inventory inventory = this.entities.getPlayerInventory();
+			g.drawImage(Assets.table, 20, 350, null);
+			int indexX = 0, indexY = 0;
+			for(ItemType type : ItemType.values()) {
+				int nb = inventory.getNbItem(type);
+				if(nb > 0) {
+					if(type == ItemType.BLOOD) {
+						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
+					} else if(type == ItemType.MANA) {
+						g.drawImage(Assets.mn, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
+					} else if(type == ItemType.WEAPON) {
+						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
+					} else if(type == ItemType.CLOTHES) {
+						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
+					}
+					indexX++;
+				}
+			}
+//			g.drawImage(Assets.hp,23,352,null);
+//			g.drawString("1", 25, 380);
+			
+			
+		}
 	}
 
 }

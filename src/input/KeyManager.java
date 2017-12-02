@@ -19,6 +19,12 @@ public class KeyManager implements KeyListener {
 		keys.put(KeyEvent.VK_S, false);
 		keys.put(KeyEvent.VK_ENTER, false);
 		keys.put(KeyEvent.VK_M, false);
+		keys.put(KeyEvent.VK_I, false);
+		
+		keys.put(KeyEvent.VK_1,false);
+		keys.put(KeyEvent.VK_2,false);
+		keys.put(KeyEvent.VK_3,false);
+		keys.put(KeyEvent.VK_4,false);
 	}
 
 	@Override

@@ -10,11 +10,12 @@ public abstract class Creature extends Entity {
 	protected int damage;
 	protected int attackRadius;
 	protected int dx, dy;
+	protected int speedAttack;
 
 	protected Direction direction;
 
 	public Creature(String name, int x, int y, int width, int height, int hp, int speed, int defense, int damage,
-			int attackRadius) {
+			int attackRadius, int speedAttack) {
 		super(name, x, y, width, height);
 		this.hp = hp;
 		this.speed = speed;
@@ -22,13 +23,14 @@ public abstract class Creature extends Entity {
 		this.damage = damage;
 		this.attackRadius = attackRadius;
 		this.direction = Direction.RIGHT;
+		this.speedAttack = speedAttack;
 	}
 
 	public void move() {
 		// TODO: xu ly va cham voi map
 		if (this.dx > 0) {
 			this.direction = Direction.RIGHT;
-			if(Math.abs(this.dx) < this.speed) {
+			if (Math.abs(this.dx) < this.speed) {
 				this.x += this.dx;
 				this.dx = 0;
 				return;
@@ -37,7 +39,7 @@ public abstract class Creature extends Entity {
 			this.dx -= speed;
 		} else if (this.dx < 0) {
 			this.direction = Direction.LEFT;
-			if(Math.abs(this.dx) < this.speed) {
+			if (Math.abs(this.dx) < this.speed) {
 				this.x += this.dx;
 				this.dx = 0;
 				return;
@@ -48,7 +50,7 @@ public abstract class Creature extends Entity {
 
 		if (this.dy > 0) {
 			this.direction = Direction.DOWN;
-			if(Math.abs(this.dy) < this.speed) {
+			if (Math.abs(this.dy) < this.speed) {
 				this.y += this.dy;
 				this.dy = 0;
 				return;
@@ -57,7 +59,7 @@ public abstract class Creature extends Entity {
 			this.dy -= speed;
 		} else if (this.dy < 0) {
 			this.direction = Direction.UP;
-			if(Math.abs(this.dy) < this.speed) {
+			if (Math.abs(this.dy) < this.speed) {
 				this.y += this.dy;
 				this.dy = 0;
 				return;
@@ -67,12 +69,34 @@ public abstract class Creature extends Entity {
 		}
 	}
 
+	@Override
+	public void update() {
+		move();
+		lastTime = System.currentTimeMillis();
+		delta += lastTime - begin;
+		if (delta > 2*this.speedAttack) {
+			delta -= this.speedAttack;
+		}
+		begin = lastTime;
+	}
+
+	private long begin = System.currentTimeMillis();
+	private long lastTime = 0;
+	private long delta = 0;
+
 	public void attack(Creature target) {
-		target.beHurted(this.damage);
+//		System.out.println(delta);
+		if (delta > this.speedAttack) {
+			delta -= this.speedAttack;
+			target.beHurted(this.damage);
+		}
 	}
 
 	public void beHurted(int damage) {
-		if(this.hp <= 0) {
+		if (this.hp <= 0)
+			return;
+		if (this.hp < damage - this.defense) {
+			this.hp = 0;
 			return;
 		}
 		if (damage <= this.defense) {
@@ -105,7 +129,7 @@ public abstract class Creature extends Entity {
 	public void setDy(int dy) {
 		this.dy = dy;
 	}
-	
+
 	public int getSpeed() {
 		return this.speed;
 	}
@@ -121,6 +145,5 @@ public abstract class Creature extends Entity {
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
-	
-	
+
 }
