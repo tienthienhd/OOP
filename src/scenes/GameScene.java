@@ -51,10 +51,17 @@ public class GameScene extends Scene {
 
 		for (int i = 0; i < entities.getMonsterState().size(); i++) {
 			if (true) {// TODO: for each monster
+				if(this.entities.getMonsterState().get(0).getName().equals("dragon")){
 				this.monstersDown.add(new Animation(Assets.dragonDown, 300));
 				this.monstersUp.add(new Animation(Assets.dragonUp, 300));
 				this.monstersRight.add(new Animation(Assets.dragonRight, 300));
 				this.monstersLeft.add(new Animation(Assets.dragonLeft, 300));
+				} else {
+					this.monstersDown.add(new Animation(Assets.stoneHumanDown, 300));
+					this.monstersUp.add(new Animation(Assets.stoneHumanUp, 300));
+					this.monstersRight.add(new Animation(Assets.stoneHumanRight, 300));
+					this.monstersLeft.add(new Animation(Assets.stoneHumanLeft, 300));
+				}
 
 			}
 		}
