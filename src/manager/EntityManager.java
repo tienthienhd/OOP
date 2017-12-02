@@ -2,6 +2,7 @@ package manager;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,6 +20,7 @@ import enity.item.Mana;
 import enity.item.Weapon;
 import gfx.Assets;
 import gfx.GameCamera;
+import utils.Utils;
 
 public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
@@ -45,9 +47,18 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		monsters = new ArrayList<>();
 		xMonsterLast = new ArrayList<>();
 		yMonsterLast = new ArrayList<>();
-		Random r = new Random();
-		for (int i = 0; i < 100; i++) {
-			Monster m = new Monster("Nghĩa béo", r.nextInt(2400), r.nextInt(1344));
+		// Random r = new Random();
+		// for (int i = 0; i < 100; i++) {
+		// Monster m = new Monster("Nghĩa béo", r.nextInt(2400), r.nextInt(1344));
+		// monsters.add(m);
+		// this.xMonsterLast.add(m.getX());
+		// this.yMonsterLast.add(m.getY());
+		// }
+		ArrayList<Point> monsterPoints = new ArrayList<>();
+		int typeOfMoster = Utils.loadMonsterFromFile(map.getMonsterMap().get(map.getCurrentMapIndex()),monsterPoints);
+		System.out.println(monsterPoints.size());
+		for (int i = 0; i < monsterPoints.size(); i++) {
+			Monster m = new Monster("A Thiến", monsterPoints.get(i).x, monsterPoints.get(i).y);
 			monsters.add(m);
 			this.xMonsterLast.add(m.getX());
 			this.yMonsterLast.add(m.getY());
@@ -425,9 +436,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 				return i;
 			}
 		}
-		// this.player.setTarget(null);
-		// Rectangle r = new Rectangle(0, 0, 100, 100);
-		// System.out.println(r.contains(50, 50));
 		return null;
 	}
 
