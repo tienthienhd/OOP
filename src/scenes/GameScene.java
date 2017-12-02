@@ -44,6 +44,11 @@ public class GameScene extends Scene {
 		this.playerRight = new Animation(Assets.playerRight, 300);
 		this.playerLeft = new Animation(Assets.playerLeft, 300);
 
+		createAnimationMonster();
+
+	}
+	
+	public void createAnimationMonster() {
 		this.monstersDown = new ArrayList<>();
 		this.monstersUp = new ArrayList<>();
 		this.monstersLeft = new ArrayList<>();
@@ -51,11 +56,11 @@ public class GameScene extends Scene {
 
 		for (int i = 0; i < entities.getMonsterState().size(); i++) {
 			if (true) {// TODO: for each monster
-				if(this.entities.getMonsterState().get(0).getName().equals("dragon")){
-				this.monstersDown.add(new Animation(Assets.dragonDown, 300));
-				this.monstersUp.add(new Animation(Assets.dragonUp, 300));
-				this.monstersRight.add(new Animation(Assets.dragonRight, 300));
-				this.monstersLeft.add(new Animation(Assets.dragonLeft, 300));
+				if (this.entities.getMonsterState().get(0).getName().equals("dragon")) {
+					this.monstersDown.add(new Animation(Assets.dragonDown, 300));
+					this.monstersUp.add(new Animation(Assets.dragonUp, 300));
+					this.monstersRight.add(new Animation(Assets.dragonRight, 300));
+					this.monstersLeft.add(new Animation(Assets.dragonLeft, 300));
 				} else {
 					this.monstersDown.add(new Animation(Assets.stoneHumanDown, 300));
 					this.monstersUp.add(new Animation(Assets.stoneHumanUp, 300));
@@ -65,11 +70,13 @@ public class GameScene extends Scene {
 
 			}
 		}
-
 	}
 
 	@Override
 	public void update() {
+		if(this.entities.isSwitchMap()) {
+			this.createAnimationMonster();
+		}
 		if (entities.isPlayerMoving()) {
 			// update animation
 			playerRight.update();
