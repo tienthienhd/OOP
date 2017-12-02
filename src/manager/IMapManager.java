@@ -1,5 +1,7 @@
 package manager;
 
+import java.util.ArrayList;
+
 import map.Map;
 
 public interface IMapManager {
@@ -11,4 +13,7 @@ public interface IMapManager {
 	public int getYStart();
 	public int getXEnd();
 	public int getYEnd();
+	public ArrayList<String> getMonsterMap();
+	public int getCurrentMapIndex();
+	
 }

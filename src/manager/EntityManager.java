@@ -2,6 +2,7 @@ package manager;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,6 +19,7 @@ import enity.item.Mana;
 import enity.item.Weapon;
 import gfx.Assets;
 import gfx.GameCamera;
+import utils.Utils;
 
 public class EntityManager extends Manager implements IEntityManager, InputHandler {
 
@@ -48,18 +50,22 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		monsters = new ArrayList<>();
 		xMonsterLast = new ArrayList<>();
 		yMonsterLast = new ArrayList<>();
-		Random r = new Random();
-		for (int i = 0; i < 100; i++) {
-			Monster m = new Monster("Nghĩa béo", r.nextInt(2400), r.nextInt(1344));
+		// Random r = new Random();
+		// for (int i = 0; i < 100; i++) {
+		// Monster m = new Monster("Nghĩa béo", r.nextInt(2400), r.nextInt(1344));
+		// monsters.add(m);
+		// this.xMonsterLast.add(m.getX());
+		// this.yMonsterLast.add(m.getY());
+		// }
+		ArrayList<Point> monsterPoints = new ArrayList<>();
+		int typeOfMoster = Utils.loadMonsterFromFile(map.getMonsterMap().get(map.getCurrentMapIndex()),monsterPoints);
+		System.out.println(monsterPoints.size());
+		for (int i = 0; i < monsterPoints.size(); i++) {
+			Monster m = new Monster("A Thiến", monsterPoints.get(i).x, monsterPoints.get(i).y);
 			monsters.add(m);
 			this.xMonsterLast.add(m.getX());
 			this.yMonsterLast.add(m.getY());
 		}
-
-		// weapons = new ArrayList<>();
-		// clothes = new ArrayList<>();
-		// manas = new ArrayList<>();
-		// bloods = new ArrayList<>();
 
 		items = new ArrayList<>();
 	}
@@ -129,9 +135,9 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		} else if (itemType == 3 && rateDrop < 0.5d) {
 			return new Clothes(m.getX() + 10, m.getY() - 10, 6);
 		} else if (itemType == 1 && rateDrop < 0.7d) {
-			return new Blood(m.getX() + 10, m.getY()- 10);
+			return new Blood(m.getX() + 10, m.getY() - 10);
 		} else if (itemType == 2 && rateDrop < 0.7d) {
-			return new Mana(m.getX()+ 10, m.getY()- 10);
+			return new Mana(m.getX() + 10, m.getY() - 10);
 		} else {
 			return null;
 		}
@@ -235,16 +241,17 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			if (target instanceof Monster) {
 				CreatureState targetState = new CreatureState(target.getName(), target.getX(), target.getY(),
 						((Creature) target).getDirection(), ((Creature) target).getHp(), null);
-				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(), player.getHp(),
-						targetState);
+				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
+						player.getHp(), targetState);
 			} else {
-				ItemState targetState = new ItemState(target.getName(), target.getX(), target.getY(), ((Item) target).getType());
-				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(), player.getHp(),
-						targetState);
+				ItemState targetState = new ItemState(target.getName(), target.getX(), target.getY(),
+						((Item) target).getType());
+				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
+						player.getHp(), targetState);
 			}
 		} else {
-			state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(), player.getHp(),
-					null);
+			state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
+					player.getHp(), null);
 		}
 		return state;
 	}
@@ -368,11 +375,9 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			return direction;
 		}
 
-
 		public int getHp() {
 			return hp;
 		}
-
 
 		public EntityState getTarget() {
 			return this.target;
@@ -395,7 +400,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			return x;
 		}
 
-
 		public int getY() {
 			return y;
 		}
@@ -417,8 +421,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		public ItemType getType() {
 			return type;
 		}
-
-
 
 	}
 
@@ -443,7 +445,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 				return i;
 			}
 		}
-//		this.player.setTarget(null);
+		// this.player.setTarget(null);
 		return null;
 	}
 
