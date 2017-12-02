@@ -47,27 +47,26 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		this.map = map;
 		player = new Player("", 0, 0);
 		this.isPlayerAttacking = false;
+		setEntityNewMap();
+		
+		
+	}
+	
+	public void setEntityNewMap() {
 		monsters = new ArrayList<>();
 		xMonsterLast = new ArrayList<>();
 		yMonsterLast = new ArrayList<>();
-		// Random r = new Random();
-		// for (int i = 0; i < 100; i++) {
-		// Monster m = new Monster("Nghĩa béo", r.nextInt(2400), r.nextInt(1344));
-		// monsters.add(m);
-		// this.xMonsterLast.add(m.getX());
-		// this.yMonsterLast.add(m.getY());
-		// }
 		ArrayList<Point> monsterPoints = new ArrayList<>();
 		int typeOfMoster = Utils.loadMonsterFromFile(map.getMonsterMap().get(map.getCurrentMapIndex()),monsterPoints);
 		System.out.println(monsterPoints.size());
 		for (int i = 0; i < monsterPoints.size(); i++) {
-			Monster m = new Monster("A Thiến", monsterPoints.get(i).x, monsterPoints.get(i).y);
+			Monster m = new Monster(typeOfMoster == 0 ? "dragon" : "zombie", monsterPoints.get(i).x, monsterPoints.get(i).y);
 			monsters.add(m);
 			this.xMonsterLast.add(m.getX());
 			this.yMonsterLast.add(m.getY());
 		}
-
 		items = new ArrayList<>();
+		
 	}
 
 	long begin = System.currentTimeMillis();
@@ -148,9 +147,11 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		if (map.switchNextMap(player.getX(), player.getY())) {
 			player.setX(map.getXStart());
 			player.setY(map.getYStart());
+			setEntityNewMap(); 
 		} else if (map.switchPrevMap(player.getX(), player.getY())) {
 			player.setX(map.getXEnd());
 			player.setY(map.getYEnd());
+			setEntityNewMap();
 		}
 	}
 
