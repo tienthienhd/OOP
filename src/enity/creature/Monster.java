@@ -13,12 +13,13 @@ public class Monster extends Creature {
 	private static final int DEFAULT_DAMAGE = 10;
 	private static final int DEFAULT_DEFENSE = 5;
 	private static final int DEFAULT_ATTACK_RADIUS = 180;
+	private static final int DEFAULT_SPEED_ATTACK = 300;
 
 	private final int xOrigin;
 	private final int yOrigin;
 
 	public Monster(String name, int x, int y) {
-		super(name, x, y, WIDTH, HEIGHT, HP_MAX, DEFAULT_SPEED, DEFAULT_DEFENSE, DEFAULT_DAMAGE, DEFAULT_ATTACK_RADIUS);
+		super(name, x, y, WIDTH, HEIGHT, HP_MAX, DEFAULT_SPEED, DEFAULT_DEFENSE, DEFAULT_DAMAGE, DEFAULT_ATTACK_RADIUS, DEFAULT_SPEED_ATTACK );
 		this.xOrigin = x;
 		this.yOrigin = y;
 	}
@@ -29,7 +30,8 @@ public class Monster extends Creature {
 			this.dx = xOrigin - this.x;
 			this.dy = yOrigin - this.y;
 		}
-		move();
+//		move();
+		super.update();
 	}
 
 	public synchronized void playerHasMoved(int x, int y) {

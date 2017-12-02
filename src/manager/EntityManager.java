@@ -12,6 +12,7 @@ import enity.creature.Monster;
 import enity.creature.Player;
 import enity.item.Blood;
 import enity.item.Clothes;
+import enity.item.Inventory;
 import enity.item.Item;
 import enity.item.ItemType;
 import enity.item.Mana;
@@ -27,11 +28,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 
 	private ArrayList<Monster> monsters;
 
-	// private ArrayList<Weapon> weapons;
-	// private ArrayList<Clothes> clothes;
-	// private ArrayList<Mana> manas;
-	// private ArrayList<Blood> bloods;
-
 	private ArrayList<Item> items;
 
 	private ArrayList<Integer> xMonsterLast; // storage old x position of monster after move
@@ -40,6 +36,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	private GameCamera gameCamera;
 
 	private IMapManager map;
+	private boolean showInventory;
 
 	public EntityManager(IMapManager map) {
 		this.map = map;
@@ -56,22 +53,12 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			this.yMonsterLast.add(m.getY());
 		}
 
-		// weapons = new ArrayList<>();
-		// clothes = new ArrayList<>();
-		// manas = new ArrayList<>();
-		// bloods = new ArrayList<>();
-
 		items = new ArrayList<>();
 	}
 
-	long begin = System.currentTimeMillis();
-	long lastTime = 0;
-	long delta = 0;
-
 	@Override
 	public void update() {
-		lastTime = System.currentTimeMillis();
-		delta += lastTime - begin;
+
 		if (player.getHp() <= 0) {
 			player.setDx(0);
 			player.setDy(0);
@@ -86,8 +73,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			player.setTarget(null);
 		}
 
-		if (isPlayerAttacking && delta > 500) {
-			delta -= 500;
+		if (isPlayerAttacking) {
 			this.player.attack();
 		}
 		gameCamera.centerOnEntity(player);
@@ -117,7 +103,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			m.update();
 
 		}
-		begin = lastTime;
 
 	}
 
@@ -129,9 +114,9 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		} else if (itemType == 3 && rateDrop < 0.5d) {
 			return new Clothes(m.getX() + 10, m.getY() - 10, 6);
 		} else if (itemType == 1 && rateDrop < 0.7d) {
-			return new Blood(m.getX() + 10, m.getY()- 10);
+			return new Blood(m.getX() + 10, m.getY() - 10);
 		} else if (itemType == 2 && rateDrop < 0.7d) {
-			return new Mana(m.getX()+ 10, m.getY()- 10);
+			return new Mana(m.getX() + 10, m.getY() - 10);
 		} else {
 			return null;
 		}
@@ -235,16 +220,17 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			if (target instanceof Monster) {
 				CreatureState targetState = new CreatureState(target.getName(), target.getX(), target.getY(),
 						((Creature) target).getDirection(), ((Creature) target).getHp(), null);
-				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(), player.getHp(),
-						targetState);
+				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
+						player.getHp(), targetState);
 			} else {
-				ItemState targetState = new ItemState(target.getName(), target.getX(), target.getY(), ((Item) target).getType());
-				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(), player.getHp(),
-						targetState);
+				ItemState targetState = new ItemState(target.getName(), target.getX(), target.getY(),
+						((Item) target).getType());
+				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
+						player.getHp(), targetState);
 			}
 		} else {
-			state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(), player.getHp(),
-					null);
+			state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
+					player.getHp(), null);
 		}
 		return state;
 	}
@@ -368,11 +354,9 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			return direction;
 		}
 
-
 		public int getHp() {
 			return hp;
 		}
-
 
 		public EntityState getTarget() {
 			return this.target;
@@ -394,7 +378,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		public int getX() {
 			return x;
 		}
-
 
 		public int getY() {
 			return y;
@@ -418,15 +401,14 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			return type;
 		}
 
-
-
 	}
 
 	@Override
 	public Entity chooseEntity(int x, int y) {
 		for (Monster m : monsters) {
-			if (new Point(m.getX() + 24 - gameCamera.getxOffset(), m.getY() + 24 - gameCamera.getyOffset())
-					.distance(new Point(x, y)) < 24) {
+			System.out.println();
+			m.setBound(m.getX() - gameCamera.getxOffset(), m.getY() - gameCamera.getyOffset());
+			if (m.getBound().contains(new Point(x, y))) {
 				this.player.setTarget(m);
 				this.player.setDx(m.getX() - this.player.getX());
 				this.player.setDy(m.getY() - this.player.getY());
@@ -435,20 +417,45 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		}
 
 		for (Item i : items) {
-			if (new Point(i.getX() + 18 - gameCamera.getxOffset(), i.getY() + 18 - gameCamera.getyOffset())
-					.distance(new Point(x, y)) < 24) {// FIXME: fix item
+			i.setBound(i.getX() - gameCamera.getxOffset(), i.getY() - gameCamera.getyOffset());
+			if (i.getBound().contains(new Point(x, y))) {
 				this.player.setTarget(i);
 				this.player.setDx(i.getX() - this.player.getX());
 				this.player.setDy(i.getY() - this.player.getY());
 				return i;
 			}
 		}
-//		this.player.setTarget(null);
+		// this.player.setTarget(null);
+		// Rectangle r = new Rectangle(0, 0, 100, 100);
+		// System.out.println(r.contains(50, 50));
 		return null;
 	}
 
 	@Override
 	public boolean isPlayerAttacking() {
 		return this.isPlayerAttacking;
+	}
+
+	@Override
+	public void showInventory(Boolean isShow) {
+		this.showInventory = isShow;
+	}
+
+	@Override
+	public boolean isShowInventory() {
+		return this.showInventory;
+	}
+
+	@Override
+	public Inventory getPlayerInventory() {
+		return this.player.getInventory();
+	}
+
+	@Override
+	public void useItems(ItemType type) {
+		if (this.player.getInventory().getNbItem(type) > 0) {
+			this.player.useItem(this.player.getInventory().getItem(type));
+			this.player.getInventory().reduceAmount(type);
+		}
 	}
 }

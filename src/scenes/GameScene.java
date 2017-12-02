@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import enity.creature.Monster;
 import enity.creature.Player;
+import enity.item.Inventory;
 import enity.item.ItemType;
 import gfx.Animation;
 import gfx.Assets;
@@ -89,7 +90,7 @@ public class GameScene extends Scene {
 		drawPlayer(g);
 		drawGUI(g);
 		if (this.entities.getPlayerState().getHp() <= 0) {
-			 drawGameOver(g);
+			drawGameOver(g);
 		}
 		drawPointer(g);
 	}
@@ -194,11 +195,13 @@ public class GameScene extends Scene {
 
 			g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
-//			g.setColor(Color.RED);
-//			g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5,
-//					(int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
+			// g.setColor(Color.RED);
+			// g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() -
+			// gameCamera.getyOffset() - 5,
+			// (int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawString(state.getName(), state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5);
+			g.drawString(state.getName(), state.getX() - gameCamera.getxOffset() + 4,
+					state.getY() - gameCamera.getyOffset() - 5);
 
 		}
 	}
@@ -266,17 +269,46 @@ public class GameScene extends Scene {
 		g.drawImage(Assets.hpString, 0, 11, null);
 		g.drawImage(Assets.hpBar, 35, 11, null);
 		if (playerState.getHp() >= 0) {
-			g.drawImage(Assets.hpState, 37, 13,
-					(int) ((float) playerState.getHp() / (float) Player.HP_MAX * 120), 14, null);
+			g.drawImage(Assets.hpState, 37, 13, (int) ((float) playerState.getHp() / (float) Player.HP_MAX * 120), 14,
+					null);
 		}
-		g.drawString(playerState.getHp() + "/" + Player.HP_MAX , 60, 25);
-		
+		g.drawString(playerState.getHp() + "/" + Player.HP_MAX, 60, 25);
+
 		g.drawImage(Assets.mpString, 0, 35, null);
 		g.drawImage(Assets.mpBar, 35, 35, null);
 		if (this.entities.getPlayerState().getHp() >= 0) {
 			g.drawImage(Assets.mpState, 37, 37,
 					(int) ((float) entities.getPlayerState().getHp() / (float) Player.HP_MAX * 120), 14, null);
-		} //FIXME: hp to mp
+		} // FIXME: hp to mp
+
+		if (this.entities.isShowInventory()) {
+			Inventory inventory = this.entities.getPlayerInventory();
+			g.drawImage(Assets.table, 20, 350, null);
+			int indexX = 0, indexY = 0;
+			for(ItemType type : ItemType.values()) {
+				int nb = inventory.getNbItem(type);
+				if(nb > 0) {
+					if(type == ItemType.BLOOD) {
+						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
+					} else if(type == ItemType.MANA) {
+						g.drawImage(Assets.mn, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
+					} else if(type == ItemType.WEAPON) {
+						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
+					} else if(type == ItemType.CLOTHES) {
+						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
+						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
+					}
+					indexX++;
+				}
+			}
+//			g.drawImage(Assets.hp,23,352,null);
+//			g.drawString("1", 25, 380);
+			
+			
+		}
 	}
 
 }

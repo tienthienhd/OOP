@@ -45,7 +45,10 @@ public class Assets {
 	public static BufferedImage hpString;
 	public static BufferedImage mpString;
 	
+	public static BufferedImage hp;
+	public static BufferedImage mn;
 	
+	public static BufferedImage table;
 	
 	public static void init() {
 		
@@ -176,5 +179,10 @@ public class Assets {
 		SpriteSheet hpMpString = new SpriteSheet(ImageLoader.loadImage("/textures/hp_mp.png"), 32, 21);
 		hpString = hpMpString.crop(0, 0);
 		mpString = hpMpString.crop(0, 21);
+		
+		table = ImageLoader.loadImage("/textures/table.png");
+		
+		hp = ImageLoader.loadImage("/textures/hp.png");
+		mn = ImageLoader.loadImage("/textures/mana.png");
 	}
 }

@@ -2,6 +2,7 @@ package manager;
 
 import java.util.ArrayList;
 
+import enity.item.Inventory;
 import manager.EntityManager.CreatureState;
 import manager.EntityManager.ItemState;
 
@@ -13,4 +14,6 @@ public interface IEntityManager {
 	public boolean isPlayerAttacking();
 	public ArrayList<Boolean> isMonstersMoving();
 	ArrayList<ItemState> getItemState();
+	public boolean isShowInventory();
+	public Inventory getPlayerInventory();
 }
