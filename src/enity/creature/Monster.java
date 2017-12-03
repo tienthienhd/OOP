@@ -9,7 +9,7 @@ public class Monster extends Creature {
 
 	public static final int HP_MAX = 50;
 
-	private static final int DEFAULT_SPEED = 5;
+	private static final int DEFAULT_SPEED = 3;
 	private static final int DEFAULT_DAMAGE = 10;
 	private static final int DEFAULT_DEFENSE = 5;
 	private static final int DEFAULT_ATTACK_RADIUS = 180;

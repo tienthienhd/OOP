@@ -323,6 +323,10 @@ public class GameScene extends Scene {
 			g.drawImage(Assets.gate, map.getXEnd() - gameCamera.getxOffset(), map.getYEnd() - gameCamera.getyOffset(),
 					null);
 		}
+		if (map.getCurrentMapIndex() == 5) {
+			g.drawImage(Assets.home, 1250 - this.gameCamera.getxOffset(), 236 - this.gameCamera.getyOffset(), null);
+			g.drawImage(Assets.message, this.entities.getPlayerState().getX() - this.gameCamera.getxOffset(), this.entities.getPlayerState().getY() - 100 - this.gameCamera.getyOffset(), null);
+		}
 	}
 
 	private void drawGUI(Graphics g) {
