@@ -56,14 +56,14 @@ public class GameScene extends Scene {
 		this.playerRight = new Animation(Assets.playerRight, 150);
 		this.playerLeft = new Animation(Assets.playerLeft, 150);
 
-		this.playerRunUp = new Animation(Assets.playerRunUp, 300);
-		this.playerRunRight = new Animation(Assets.playerRunRight, 300);
-		this.playerRunDown = new Animation(Assets.playerRunDown, 300);
-		this.playerRunLeft = new Animation(Assets.playerRunLeft, 300);
-		this.playerStandUp = new Animation(Assets.playerStandUp, 300);
-		this.playerStandDown = new Animation(Assets.playerStandDown, 300);
-		this.playerStandLeft = new Animation(Assets.playerStandLeft, 300);
-		this.playerStandRight = new Animation(Assets.playerStandRight, 300);
+		this.playerRunUp = new Animation(Assets.playerRunUp, 200);
+		this.playerRunRight = new Animation(Assets.playerRunRight, 200);
+		this.playerRunDown = new Animation(Assets.playerRunDown, 200);
+		this.playerRunLeft = new Animation(Assets.playerRunLeft, 200);
+		this.playerStandUp = new Animation(Assets.playerStandUp, 200);
+		this.playerStandDown = new Animation(Assets.playerStandDown, 200);
+		this.playerStandLeft = new Animation(Assets.playerStandLeft, 200);
+		this.playerStandRight = new Animation(Assets.playerStandRight, 200);
 
 		createAnimationMonster();
 
@@ -165,7 +165,7 @@ public class GameScene extends Scene {
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRoundRect(400, 200, 300, 150, 20, 20);
 		g.setColor(Color.red);
-		g.drawString("Game Over", 450, 250);
+		g.drawString("Game Over", 550, 250);
 	}
 
 	public void drawItem(Graphics g) {

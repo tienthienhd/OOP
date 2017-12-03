@@ -16,7 +16,7 @@ public class Player extends Creature {
 	private static final int HEIGHT = 96;
 
 
-	public static final int HP_MAX = 1000;
+	public static final int HP_MAX = 10;
 	// public static final int MP_MAX = 100;
 
 	private static final int DEFAULT_SPEED = 7;

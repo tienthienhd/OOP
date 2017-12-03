@@ -60,13 +60,13 @@ public class InputManager extends Manager {
 
 	@Override
 	public void update() {
-		if (isKeyPressed(KeyEvent.VK_A)) {
+		if (isKeyPressed(KeyEvent.VK_A) || isKeyPressed(KeyEvent.VK_LEFT)) {
 			handler.PlayerMove(Direction.LEFT);
-		} else if (isKeyPressed(KeyEvent.VK_D)) {
+		} else if (isKeyPressed(KeyEvent.VK_D) || isKeyPressed(KeyEvent.VK_RIGHT)) {
 			handler.PlayerMove(Direction.RIGHT);
-		} else if (isKeyPressed(KeyEvent.VK_W)) {
+		} else if (isKeyPressed(KeyEvent.VK_W) || isKeyPressed(KeyEvent.VK_UP)) {
 			handler.PlayerMove(Direction.UP);
-		} else if (isKeyPressed(KeyEvent.VK_S)) {
+		} else if (isKeyPressed(KeyEvent.VK_S) || isKeyPressed(KeyEvent.VK_DOWN)) {
 			handler.PlayerMove(Direction.DOWN);
 		} else if (isKeyPressed(KeyEvent.VK_ENTER)) {
 			this.isKeyPressed.replace(KeyEvent.VK_ENTER, !isKeyPressed.get(KeyEvent.VK_ENTER));
