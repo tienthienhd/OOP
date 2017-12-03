@@ -71,6 +71,10 @@ public class Assets {
 	
 	public static BufferedImage table;
 	
+	public static BufferedImage btnStart;
+	public static BufferedImage btnStartPressed;
+	public static BufferedImage help;
+	
 	public static void init() {
 		
 		int nbTileSet = 0;
@@ -226,6 +230,10 @@ public class Assets {
 		weapon = ImageLoader.loadImage("/textures/weapon.png");
 		clothe = ImageLoader.loadImage("/textures/clothe.png");
 		
+
+		btnStart = ImageLoader.loadImage("/textures/start.png");
+		btnStartPressed = ImageLoader.loadImage("/textures/start_pressed.png");
+		help = ImageLoader.loadImage("/textures/help.png");
 		SpriteSheet sheetPlayerNew = new SpriteSheet(ImageLoader.loadImage("/textures/testplayer.png"), 100, 100);
 
 		playerRunUp = new BufferedImage[4];

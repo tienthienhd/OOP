@@ -19,7 +19,7 @@ public class Player extends Creature {
 	public static final int HP_MAX = 1000;
 	// public static final int MP_MAX = 100;
 
-	private static final int DEFAULT_SPEED = 10;
+	private static final int DEFAULT_SPEED = 7;
 	private static final int DEFAULT_DAMAGE = 15;
 	private static final int DEFAULT_DEFENSE = 10;
 	private static final int DEFAULT_ATTACK_RADIUS = 120;

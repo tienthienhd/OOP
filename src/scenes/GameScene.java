@@ -1,7 +1,9 @@
 package scenes;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -44,14 +46,15 @@ public class GameScene extends Scene {
 	ArrayList<Animation> monstersLeft;
 	ArrayList<Animation> monstersRight;
 
+
 	public GameScene(GameCamera gameCamera, IMapManager map, IEntityManager entities) {
 		this.gameCamera = gameCamera;
 		this.map = map;
 		this.entities = entities;
-		this.playerDown = new Animation(Assets.playerDown, 300);
-		this.playerUp = new Animation(Assets.playerUp, 300);
-		this.playerRight = new Animation(Assets.playerRight, 300);
-		this.playerLeft = new Animation(Assets.playerLeft, 300);
+		this.playerDown = new Animation(Assets.playerDown, 150);
+		this.playerUp = new Animation(Assets.playerUp, 150);
+		this.playerRight = new Animation(Assets.playerRight, 150);
+		this.playerLeft = new Animation(Assets.playerLeft, 150);
 
 		this.playerRunUp = new Animation(Assets.playerRunUp, 300);
 		this.playerRunRight = new Animation(Assets.playerRunRight, 300);
@@ -75,15 +78,15 @@ public class GameScene extends Scene {
 		for (int i = 0; i < entities.getMonsterState().size(); i++) {
 			if (true) {// TODO: for each monster
 				if (this.entities.getMonsterState().get(0).getName().equals("dragon")) {
-					this.monstersDown.add(new Animation(Assets.dragonDown, 300));
-					this.monstersUp.add(new Animation(Assets.dragonUp, 300));
-					this.monstersRight.add(new Animation(Assets.dragonRight, 300));
-					this.monstersLeft.add(new Animation(Assets.dragonLeft, 300));
+					this.monstersDown.add(new Animation(Assets.dragonDown, 200));
+					this.monstersUp.add(new Animation(Assets.dragonUp, 200));
+					this.monstersRight.add(new Animation(Assets.dragonRight, 200));
+					this.monstersLeft.add(new Animation(Assets.dragonLeft, 200));
 				} else {
-					this.monstersDown.add(new Animation(Assets.stoneHumanDown, 300));
-					this.monstersUp.add(new Animation(Assets.stoneHumanUp, 300));
-					this.monstersRight.add(new Animation(Assets.stoneHumanRight, 300));
-					this.monstersLeft.add(new Animation(Assets.stoneHumanLeft, 300));
+					this.monstersDown.add(new Animation(Assets.stoneHumanDown, 200));
+					this.monstersUp.add(new Animation(Assets.stoneHumanUp, 200));
+					this.monstersRight.add(new Animation(Assets.stoneHumanRight, 200));
+					this.monstersLeft.add(new Animation(Assets.stoneHumanLeft, 200));
 				}
 
 			}
@@ -134,6 +137,7 @@ public class GameScene extends Scene {
 		drawMonster(g);
 		drawPlayer(g);
 		drawGUI(g);
+		//drawMenu(g);
 		if (this.entities.getPlayerState().getHp() <= 0) {
 			drawGameOver(g);
 		}
@@ -158,7 +162,7 @@ public class GameScene extends Scene {
 	}
 
 	private void drawGameOver(Graphics g) {
-		g.setColor(Color.ORANGE);
+		g.setColor(Color.LIGHT_GRAY);
 		g.fillRoundRect(400, 200, 300, 150, 20, 20);
 		g.setColor(Color.red);
 		g.drawString("Game Over", 450, 250);
@@ -333,6 +337,7 @@ public class GameScene extends Scene {
 			g.drawImage(Assets.hpState, 37, 13, (int) ((float) playerState.getHp() / (float) Player.HP_MAX * 120), 14,
 					null);
 		}
+		g.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		g.drawString(playerState.getHp() + "/" + Player.HP_MAX, 60, 25);
 
 		g.drawImage(Assets.mpString, 0, 35, null);
@@ -370,5 +375,7 @@ public class GameScene extends Scene {
 
 		}
 	}
+
+	
 
 }
