@@ -8,7 +8,6 @@ import enity.item.Clothes;
 import enity.item.Inventory;
 import enity.item.Item;
 import enity.item.ItemType;
-import enity.item.Mana;
 import enity.item.Weapon;
 
 public class Player extends Creature {

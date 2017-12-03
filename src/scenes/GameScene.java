@@ -27,6 +27,15 @@ public class GameScene extends Scene {
 	IEntityManager entities;
 	GameCamera gameCamera;
 
+	Animation playerRunUp;
+	Animation playerRunDown;
+	Animation playerRunLeft;
+	Animation playerRunRight;
+	Animation playerStandUp;
+	Animation playerStandDown;
+	Animation playerStandLeft;
+	Animation playerStandRight;
+
 	Animation playerUp;
 	Animation playerDown;
 	Animation playerRight;
@@ -46,6 +55,15 @@ public class GameScene extends Scene {
 		this.playerUp = new Animation(Assets.playerUp, 150);
 		this.playerRight = new Animation(Assets.playerRight, 150);
 		this.playerLeft = new Animation(Assets.playerLeft, 150);
+
+		this.playerRunUp = new Animation(Assets.playerRunUp, 300);
+		this.playerRunRight = new Animation(Assets.playerRunRight, 300);
+		this.playerRunDown = new Animation(Assets.playerRunDown, 300);
+		this.playerRunLeft = new Animation(Assets.playerRunLeft, 300);
+		this.playerStandUp = new Animation(Assets.playerStandUp, 300);
+		this.playerStandDown = new Animation(Assets.playerStandDown, 300);
+		this.playerStandLeft = new Animation(Assets.playerStandLeft, 300);
+		this.playerStandRight = new Animation(Assets.playerStandRight, 300);
 
 		createAnimationMonster();
 
@@ -82,10 +100,21 @@ public class GameScene extends Scene {
 		}
 		if (entities.isPlayerMoving()) {
 			// update animation
-			playerRight.update();
-			playerLeft.update();
-			playerUp.update();
-			playerDown.update();
+			moving = true;
+//			playerRight.update();
+//			playerLeft.update();
+//			playerUp.update();
+//			playerDown.update();
+			playerRunRight.update();
+			playerRunLeft.update();
+			playerRunUp.update();
+			playerRunDown.update();
+		} else {
+			moving = false;
+			playerStandDown.update();
+			playerStandRight.update();
+			playerStandLeft.update();
+			playerStandUp.update();
 		}
 
 		ArrayList<Boolean> isMonstersMoving = entities.isMonstersMoving();
@@ -98,6 +127,8 @@ public class GameScene extends Scene {
 			}
 		}
 	}
+
+	boolean moving = false;
 
 	@Override
 	public void draw(Graphics g) {
@@ -164,16 +195,32 @@ public class GameScene extends Scene {
 		}
 		switch (this.entities.getPlayerState().getDirection()) {
 		case UP:
-			buffer = playerUp.getCurrentFrame();
-			break;
+			if (moving) {
+				buffer = playerRunUp.getCurrentFrame();
+			} else {
+				buffer = playerStandUp.getCurrentFrame();
+			}
+				break;
 		case DOWN:
-			buffer = playerDown.getCurrentFrame();
+			if (moving) {
+				buffer = playerRunDown.getCurrentFrame();
+			} else {
+				buffer = playerStandDown.getCurrentFrame();
+			}
 			break;
 		case RIGHT:
-			buffer = playerRight.getCurrentFrame();
+			if (moving) {
+				buffer = playerRunRight.getCurrentFrame();
+			} else {
+				buffer = playerStandRight.getCurrentFrame();
+			}
 			break;
 		case LEFT:
-			buffer = playerLeft.getCurrentFrame();
+			if (moving) {
+				buffer = playerRunLeft.getCurrentFrame();
+			} else {
+				buffer = playerStandLeft.getCurrentFrame();
+			}
 			break;
 
 		}

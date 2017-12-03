@@ -145,7 +145,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public void run() {
 		init();
 		Assets.open.start();
-		while (running) {
+
+		Assets.open.loop(100);
+		while(running) {
 			update();
 			render();
 			paintScreen();

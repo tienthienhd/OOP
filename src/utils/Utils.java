@@ -25,6 +25,7 @@ public class Utils {
 				}
 				matrix.add(row);
 			}
+			scanner.close();
 			return tileSet;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,6 +49,7 @@ public class Utils {
 				Point p = new Point(xMonster, yMonster);
 				points.add(p);
 			}
+			sc.close();
 			return typeOfMonster;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

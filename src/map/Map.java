@@ -11,7 +11,7 @@ public class Map {
 	private int yEnd;
 	
 
-	public Map(int nbTileSet, int[][] tilesId, int xStart, int yStart, int xEnd, int yEnd) {
+	public Map(int tileSetIndex, int[][] tilesId, int xStart, int yStart, int xEnd, int yEnd) {
 		this.xStart = xStart;
 		this.yStart = yStart;
 		this.xEnd = xEnd;
@@ -19,7 +19,7 @@ public class Map {
 		tiles = new Tile[tilesId.length][tilesId[0].length];
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[0].length; j++) {
-				tiles[i][j] = new Tile(nbTileSet, tilesId[i][j], j * Tile.WIDTH_TILE, i * Tile.HEIGHT_TILE);
+				tiles[i][j] = new Tile(tileSetIndex, tilesId[i][j], j * Tile.WIDTH_TILE, i * Tile.HEIGHT_TILE);
 			}
 		}
 	}

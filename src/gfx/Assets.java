@@ -1,6 +1,5 @@
 package gfx;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,6 +16,17 @@ public class Assets {
 	public static final int HEIGHT_TILE = 48;
 
 	public static ArrayList<ArrayList<BufferedImage>> tileImages;
+	public static ArrayList<Integer> collisionTile;
+	
+	public static BufferedImage[] playerRunUp;
+	public static BufferedImage[] playerRunDown;
+	public static BufferedImage[] playerRunLeft;
+	public static BufferedImage[] playerRunRight;
+
+	public static BufferedImage[] playerStandUp;
+	public static BufferedImage[] playerStandDown;
+	public static BufferedImage[] playerStandRight;
+	public static BufferedImage[] playerStandLeft;
 
 	public static BufferedImage[] playerUp;
 	public static BufferedImage[] playerDown;
@@ -70,6 +80,7 @@ public class Assets {
 		int nbTileSet = 0;
 		String listName = System.getProperty("user.dir") + "/resource/textures/";
 		ArrayList<String> listResource = new ArrayList<>();
+		collisionTile = new ArrayList<>();
 		FileReader fr;
 		try {
 			fr = new FileReader(listName + "listtile.txt");
@@ -77,7 +88,9 @@ public class Assets {
 			nbTileSet = Integer.parseInt(br.readLine());
 			while(br.ready()) {
 				listResource.add("/textures/" + br.readLine());
+				collisionTile.add(Integer.parseInt(br.readLine()));
 			}
+			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -207,7 +220,9 @@ public class Assets {
 			gameover.open(inputStream);
 		} catch (Exception e){
 			System.err.println(e.getMessage());
+//			e.printStackTrace();
 		}
+		
 		table = ImageLoader.loadImage("/textures/table.png");
 		
 		hp = ImageLoader.loadImage("/textures/hp.png");
@@ -215,8 +230,60 @@ public class Assets {
 		weapon = ImageLoader.loadImage("/textures/weapon.png");
 		clothe = ImageLoader.loadImage("/textures/clothe.png");
 		
+
 		btnStart = ImageLoader.loadImage("/textures/start.png");
 		btnStartPressed = ImageLoader.loadImage("/textures/start_pressed.png");
 		help = ImageLoader.loadImage("/textures/help.png");
+		SpriteSheet sheetPlayerNew = new SpriteSheet(ImageLoader.loadImage("/textures/testplayer.png"), 100, 100);
+
+		playerRunUp = new BufferedImage[4];
+		playerRunDown = new BufferedImage[4];
+		playerRunLeft = new BufferedImage[4];
+		playerRunRight = new BufferedImage[4];
+
+		playerStandUp = new BufferedImage[4];
+		playerStandDown = new BufferedImage[4];
+		playerStandRight = new BufferedImage[4];
+		playerStandLeft = new BufferedImage[4];
+		
+		playerRunUp[0] = sheetPlayerNew.crop(11, 1287, 92, 78);
+		playerRunUp[1] = sheetPlayerNew.crop(105, 1285, 94, 75);
+		playerRunUp[2] = sheetPlayerNew.crop(205, 1288, 91, 76);
+		playerRunUp[3] = sheetPlayerNew.crop(301, 1286, 93, 75);
+		
+		playerRunDown[0] =sheetPlayerNew.crop(8, 950, 86, 76);
+		playerRunDown[1] =sheetPlayerNew.crop(96, 947, 84, 76);
+		playerRunDown[2] =sheetPlayerNew.crop(186, 949, 83, 77);
+		playerRunDown[3] =sheetPlayerNew.crop(272, 947, 84, 76);
+		
+		playerRunLeft[0] =sheetPlayerNew.crop(11, 1120, 65, 74);
+		playerRunLeft[1] =sheetPlayerNew.crop(78, 1117, 58, 80);
+		playerRunLeft[2] =sheetPlayerNew.crop(140, 1119, 67, 79);
+		playerRunLeft[3] =sheetPlayerNew.crop(210, 1116, 61, 82);
+		
+		playerRunRight[0] =sheetPlayerNew.crop(13, 1459, 66, 75);
+		playerRunRight[1] =sheetPlayerNew.crop(84, 1456, 60, 79);
+		playerRunRight[2] =sheetPlayerNew.crop(147, 1458, 64, 80);
+		playerRunRight[3] =sheetPlayerNew.crop(219, 1457, 64, 84);
+		
+		playerStandRight[0] = sheetPlayerNew.crop(9, 772, 53, 79);
+		playerStandRight[1] = sheetPlayerNew.crop(65, 772, 53, 79);
+		playerStandRight[2] = sheetPlayerNew.crop(125, 771, 52, 80);
+		playerStandRight[3] = sheetPlayerNew.crop(180, 771, 57, 79);
+		
+		playerStandLeft[0] = sheetPlayerNew.crop(7, 423, 53, 80);
+		playerStandLeft[1] = sheetPlayerNew.crop(67, 422, 51, 80);
+		playerStandLeft[2] = sheetPlayerNew.crop(126, 422, 50, 80);
+		playerStandLeft[3] = sheetPlayerNew.crop(180, 423, 57, 78);
+		
+		playerStandUp[0] = sheetPlayerNew.crop(6, 597, 60, 81);
+		playerStandUp[1] = sheetPlayerNew.crop(69, 596, 58, 79);
+		playerStandUp[2] = sheetPlayerNew.crop(132, 595, 57, 79);
+		playerStandUp[3] = sheetPlayerNew.crop(190, 596, 61, 80);
+		
+		playerStandDown[0] = sheetPlayerNew.crop(6, 249, 51, 80);
+		playerStandDown[1] = sheetPlayerNew.crop(67, 249, 48, 80);
+		playerStandDown[2] = sheetPlayerNew.crop(124, 247, 50, 81);
+		playerStandDown[3] = sheetPlayerNew.crop(181, 249, 54, 79);
 	}
 }

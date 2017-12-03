@@ -2,9 +2,7 @@ package manager;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Random;
 
 import enity.Entity;
 import enity.creature.Creature;
