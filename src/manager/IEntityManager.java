@@ -17,4 +17,5 @@ public interface IEntityManager {
 	public boolean isSwitchMap();
 	public boolean isShowInventory();
 	public Inventory getPlayerInventory();
+	public boolean isCheckCollisionWithMonster();
 }

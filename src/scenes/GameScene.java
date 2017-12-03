@@ -36,6 +36,11 @@ public class GameScene extends Scene {
 	Animation playerStandLeft;
 	Animation playerStandRight;
 
+	Animation playerAttackUp;
+	Animation playerAttackDown;
+	Animation playerAttackLeft;
+	Animation playerAttackRight;
+
 	Animation playerUp;
 	Animation playerDown;
 	Animation playerRight;
@@ -45,7 +50,6 @@ public class GameScene extends Scene {
 	ArrayList<Animation> monstersDown;
 	ArrayList<Animation> monstersLeft;
 	ArrayList<Animation> monstersRight;
-
 
 	public GameScene(GameCamera gameCamera, IMapManager map, IEntityManager entities) {
 		this.gameCamera = gameCamera;
@@ -60,10 +64,16 @@ public class GameScene extends Scene {
 		this.playerRunRight = new Animation(Assets.playerRunRight, 200);
 		this.playerRunDown = new Animation(Assets.playerRunDown, 200);
 		this.playerRunLeft = new Animation(Assets.playerRunLeft, 200);
+
 		this.playerStandUp = new Animation(Assets.playerStandUp, 200);
 		this.playerStandDown = new Animation(Assets.playerStandDown, 200);
 		this.playerStandLeft = new Animation(Assets.playerStandLeft, 200);
 		this.playerStandRight = new Animation(Assets.playerStandRight, 200);
+
+		this.playerAttackDown = new Animation(Assets.playerAttackDown, 150);
+		this.playerAttackUp = new Animation(Assets.playerAttackUp, 150);
+		this.playerAttackLeft = new Animation(Assets.playerAttackLeft, 150);
+		this.playerAttackRight = new Animation(Assets.playerAttackRight, 150);
 
 		createAnimationMonster();
 
@@ -99,22 +109,31 @@ public class GameScene extends Scene {
 			this.createAnimationMonster();
 		}
 		if (entities.isPlayerMoving()) {
-			// update animation
 			moving = true;
-//			playerRight.update();
-//			playerLeft.update();
-//			playerUp.update();
-//			playerDown.update();
-			playerRunRight.update();
-			playerRunLeft.update();
+			// update animation
 			playerRunUp.update();
 			playerRunDown.update();
+			playerRunRight.update();
+			playerRunLeft.update();
+			// //playerRight.update();
+			// playerLeft.update();
+			// playerUp.update();
+			// playerDown.update();
 		} else {
 			moving = false;
 			playerStandDown.update();
 			playerStandRight.update();
 			playerStandLeft.update();
 			playerStandUp.update();
+		}
+		if (entities.isPlayerAttacking()) {
+			playerAttackDown.update();
+			playerAttackRight.update();
+			playerAttackLeft.update();
+			playerAttackUp.update();
+			playerAttack = true;
+		} else {
+			playerAttack = false;
 		}
 
 		ArrayList<Boolean> isMonstersMoving = entities.isMonstersMoving();
@@ -129,6 +148,7 @@ public class GameScene extends Scene {
 	}
 
 	boolean moving = false;
+	boolean playerAttack = false;
 
 	@Override
 	public void draw(Graphics g) {
@@ -137,10 +157,10 @@ public class GameScene extends Scene {
 		drawMonster(g);
 		drawPlayer(g);
 		drawGUI(g);
-		//drawMenu(g);
-//		if (this.entities.getPlayerState().getHp() <= 0) {
-//			drawGameOver(g);
-//		}
+		// drawMenu(g);
+		// if (this.entities.getPlayerState().getHp() <= 0) {
+		// drawGameOver(g);
+		// }
 		drawPointer(g);
 	}
 
@@ -199,29 +219,41 @@ public class GameScene extends Scene {
 		case UP:
 			if (moving) {
 				buffer = playerRunUp.getCurrentFrame();
-			} else {
+			} else if (!moving) {
 				buffer = playerStandUp.getCurrentFrame();
 			}
-				break;
+			if (playerAttack && this.entities.isCheckCollisionWithMonster()) {
+				buffer = playerAttackUp.getCurrentFrame();
+			}
+			break;
 		case DOWN:
 			if (moving) {
 				buffer = playerRunDown.getCurrentFrame();
-			} else {
+			} else if (!moving) {
 				buffer = playerStandDown.getCurrentFrame();
+			}
+			if (playerAttack && this.entities.isCheckCollisionWithMonster()) {
+				buffer = playerAttackDown.getCurrentFrame();
 			}
 			break;
 		case RIGHT:
 			if (moving) {
 				buffer = playerRunRight.getCurrentFrame();
-			} else {
+			} else if (!moving) {
 				buffer = playerStandRight.getCurrentFrame();
+			}
+			if (playerAttack && this.entities.isCheckCollisionWithMonster()) {
+				buffer = playerAttackRight.getCurrentFrame();
 			}
 			break;
 		case LEFT:
 			if (moving) {
 				buffer = playerRunLeft.getCurrentFrame();
-			} else {
+			} else if (!moving) {
 				buffer = playerStandLeft.getCurrentFrame();
+			}
+			if (playerAttack && this.entities.isCheckCollisionWithMonster()) {
+				buffer = playerAttackLeft.getCurrentFrame();
 			}
 			break;
 
@@ -230,7 +262,8 @@ public class GameScene extends Scene {
 		// g.setColor(Color.blue);
 		// g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() -
 		// gameCamera.getyOffset(), 48, 96);
-
+		g.setColor(Color.WHITE);
+		g.drawString("Jinkaraz", state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset());
 		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
 	}
@@ -262,13 +295,13 @@ public class GameScene extends Scene {
 
 			g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
-			// g.setColor(Color.RED);
-			// g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() -
-			// gameCamera.getyOffset() - 5,
-			// (int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
+			 g.setColor(Color.RED);
+			 g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() -
+			 gameCamera.getyOffset() - 5,
+			 (int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
 			g.setColor(Color.LIGHT_GRAY);
 			g.drawString(state.getName(), state.getX() - gameCamera.getxOffset() + 4,
-					state.getY() - gameCamera.getyOffset() - 5);
+					state.getY() - gameCamera.getyOffset() - 10);
 
 		}
 	}
@@ -325,7 +358,8 @@ public class GameScene extends Scene {
 		}
 		if (map.getCurrentMapIndex() == 5) {
 			g.drawImage(Assets.home, 1250 - this.gameCamera.getxOffset(), 236 - this.gameCamera.getyOffset(), null);
-			g.drawImage(Assets.message, this.entities.getPlayerState().getX() - this.gameCamera.getxOffset(), this.entities.getPlayerState().getY() - 100 - this.gameCamera.getyOffset(), null);
+			g.drawImage(Assets.message, this.entities.getPlayerState().getX() - this.gameCamera.getxOffset(),
+					this.entities.getPlayerState().getY() - 100 - this.gameCamera.getyOffset(), null);
 		}
 	}
 
@@ -381,7 +415,5 @@ public class GameScene extends Scene {
 
 		}
 	}
-
-	
 
 }

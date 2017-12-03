@@ -479,4 +479,15 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 			this.player.getInventory().reduceAmount(type);
 		}
 	}
+
+	@Override
+	public boolean isCheckCollisionWithMonster() {
+		for (Monster m : monsters) {
+			if (checkCollisionWithEntity(this.player, m)) {
+				player.attack(m);
+				return true;
+			}
+		}
+		return false;
+	}
 }

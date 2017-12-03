@@ -18,7 +18,7 @@ public class Assets {
 
 	public static ArrayList<ArrayList<BufferedImage>> tileImages;
 	public static ArrayList<Integer> collisionTile;
-	
+
 	public static BufferedImage[] playerRunUp;
 	public static BufferedImage[] playerRunDown;
 	public static BufferedImage[] playerRunLeft;
@@ -28,6 +28,11 @@ public class Assets {
 	public static BufferedImage[] playerStandDown;
 	public static BufferedImage[] playerStandRight;
 	public static BufferedImage[] playerStandLeft;
+
+	public static BufferedImage[] playerAttackUp;
+	public static BufferedImage[] playerAttackDown;
+	public static BufferedImage[] playerAttackRight;
+	public static BufferedImage[] playerAttackLeft;
 
 	public static BufferedImage[] playerUp;
 	public static BufferedImage[] playerDown;
@@ -44,43 +49,43 @@ public class Assets {
 	public static BufferedImage[] stoneHumanDown;
 	public static BufferedImage[] stoneHumanLeft;
 	public static BufferedImage[] stoneHumanRight;
-	
+
 	public static ArrayList<BufferedImage> clothes;
 	public static ArrayList<BufferedImage> weapons;
 	public static BufferedImage blood;
 	public static BufferedImage mana;
 	public static BufferedImage playerDie;
-	
+
 	public static BufferedImage hpBar;
 	public static BufferedImage hpState;
 	public static BufferedImage mpBar;
 	public static BufferedImage mpState;
-	
+
 	public static ArrayList<BufferedImage> newFocus;
 	public static BufferedImage imghpsmall;
 	public static BufferedImage imghpsmall_back;
 	public static BufferedImage hpString;
 	public static BufferedImage mpString;
-	
+
 	public static Clip open;
 	public static Clip gameover;
-	
+
 	public static BufferedImage hp;
 	public static BufferedImage mn;
 	public static BufferedImage weapon;
 	public static BufferedImage clothe;
-	
+
 	public static BufferedImage table;
-	
+
 	public static BufferedImage btnStart;
 	public static BufferedImage btnStartPressed;
 	public static BufferedImage help;
 	public static BufferedImage eyesDie;
 	public static BufferedImage home;
 	public static BufferedImage message;
-	
+
 	public static void init() {
-		
+
 		int nbTileSet = 0;
 		String listName = System.getProperty("user.dir") + "/resource/textures/";
 		ArrayList<String> listResource = new ArrayList<>();
@@ -90,7 +95,7 @@ public class Assets {
 			fr = new FileReader(listName + "listtile.txt");
 			BufferedReader br = new BufferedReader(fr);
 			nbTileSet = Integer.parseInt(br.readLine());
-			while(br.ready()) {
+			while (br.ready()) {
 				listResource.add("/textures/" + br.readLine());
 				collisionTile.add(Integer.parseInt(br.readLine()));
 			}
@@ -109,18 +114,16 @@ public class Assets {
 			}
 			tileImages.add(images);
 		}
-		
+
 		gate = ImageLoader.loadImage("/textures/gate.png");
-		
+
 		SpriteSheet sheetHpMpBar = new SpriteSheet(ImageLoader.loadImage("/textures/color_hp_mpback.png"), 124, 18);
 		hpBar = sheetHpMpBar.crop(0, 0);
 		mpBar = sheetHpMpBar.crop(0, 18);
-		
+
 		SpriteSheet sheetHpMpState = new SpriteSheet(ImageLoader.loadImage("/textures/color_hp_mp.png"), 120, 14);
 		hpState = sheetHpMpState.crop(0, 0);
 		mpState = sheetHpMpState.crop(0, 14);
-		
-
 
 		playerUp = new BufferedImage[3];
 		playerDown = new BufferedImage[3];
@@ -143,7 +146,7 @@ public class Assets {
 		playerUp[0] = sheetPlayer.crop(0, 288);
 		playerUp[1] = sheetPlayer.crop(48, 288);
 		playerUp[2] = sheetPlayer.crop(96, 288);
-		
+
 		playerDie = ImageLoader.loadImage("/textures/player_die.png");
 		eyesDie = ImageLoader.loadImage("/textures/eyedie.png");
 
@@ -199,42 +202,40 @@ public class Assets {
 
 		blood = sheetItems.crop(24, 48);
 		mana = sheetItems.crop(0, 48);
-		
+
 		newFocus = new ArrayList<>();
 		SpriteSheet focusSheet = new SpriteSheet(ImageLoader.loadImage("/textures/newfocus.png"), 18, 12);
-		for(int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			newFocus.add(focusSheet.crop(0, 12 * i));
 		}
-		
+
 		imghpsmall = ImageLoader.loadImage("/textures/imghpsmall.png");
 		imghpsmall_back = ImageLoader.loadImage("/textures/imghpsmall_back.png");
-		
+
 		SpriteSheet hpMpString = new SpriteSheet(ImageLoader.loadImage("/textures/hp_mp.png"), 32, 21);
 		hpString = hpMpString.crop(0, 0);
 		mpString = hpMpString.crop(0, 21);
-		
+
 		try {
 			open = AudioSystem.getClip();
-			AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-					Main.class.getResourceAsStream("/sound/Open.mid"));
+			AudioInputStream inputStream = AudioSystem
+					.getAudioInputStream(Main.class.getResourceAsStream("/sound/Open.mid"));
 			open.open(inputStream);
-			
+
 			gameover = AudioSystem.getClip();
-			inputStream = AudioSystem.getAudioInputStream(
-					Main.class.getResourceAsStream("/sound/monument.wav"));
+			inputStream = AudioSystem.getAudioInputStream(Main.class.getResourceAsStream("/sound/monument.wav"));
 			gameover.open(inputStream);
-		} catch (Exception e){
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
-//			e.printStackTrace();
+			// e.printStackTrace();
 		}
-		
+
 		table = ImageLoader.loadImage("/textures/table.png");
-		
+
 		hp = ImageLoader.loadImage("/textures/hp.png");
 		mn = ImageLoader.loadImage("/textures/mana.png");
 		weapon = ImageLoader.loadImage("/textures/weapon.png");
 		clothe = ImageLoader.loadImage("/textures/clothe.png");
-		
 
 		btnStart = ImageLoader.loadImage("/textures/start.png");
 		btnStartPressed = ImageLoader.loadImage("/textures/start_pressed.png");
@@ -250,47 +251,72 @@ public class Assets {
 		playerStandDown = new BufferedImage[4];
 		playerStandRight = new BufferedImage[4];
 		playerStandLeft = new BufferedImage[4];
-		
+
 		playerRunUp[0] = sheetPlayerNew.crop(11, 1287, 92, 78);
 		playerRunUp[1] = sheetPlayerNew.crop(105, 1285, 94, 75);
 		playerRunUp[2] = sheetPlayerNew.crop(205, 1288, 91, 76);
 		playerRunUp[3] = sheetPlayerNew.crop(301, 1286, 93, 75);
-		
-		playerRunDown[0] =sheetPlayerNew.crop(8, 950, 86, 76);
-		playerRunDown[1] =sheetPlayerNew.crop(96, 947, 84, 76);
-		playerRunDown[2] =sheetPlayerNew.crop(186, 949, 83, 77);
-		playerRunDown[3] =sheetPlayerNew.crop(272, 947, 84, 76);
-		
-		playerRunLeft[0] =sheetPlayerNew.crop(11, 1120, 65, 74);
-		playerRunLeft[1] =sheetPlayerNew.crop(78, 1117, 58, 80);
-		playerRunLeft[2] =sheetPlayerNew.crop(140, 1119, 67, 79);
-		playerRunLeft[3] =sheetPlayerNew.crop(210, 1116, 61, 82);
-		
-		playerRunRight[0] =sheetPlayerNew.crop(13, 1459, 66, 75);
-		playerRunRight[1] =sheetPlayerNew.crop(84, 1456, 60, 79);
-		playerRunRight[2] =sheetPlayerNew.crop(147, 1458, 64, 80);
-		playerRunRight[3] =sheetPlayerNew.crop(219, 1457, 64, 84);
-		
+
+		playerRunDown[0] = sheetPlayerNew.crop(8, 950, 86, 76);
+		playerRunDown[1] = sheetPlayerNew.crop(96, 947, 84, 76);
+		playerRunDown[2] = sheetPlayerNew.crop(186, 949, 83, 77);
+		playerRunDown[3] = sheetPlayerNew.crop(272, 947, 84, 76);
+
+		playerRunLeft[0] = sheetPlayerNew.crop(11, 1120, 65, 74);
+		playerRunLeft[1] = sheetPlayerNew.crop(78, 1117, 58, 80);
+		playerRunLeft[2] = sheetPlayerNew.crop(140, 1119, 67, 79);
+		playerRunLeft[3] = sheetPlayerNew.crop(210, 1116, 61, 82);
+
+		playerRunRight[0] = sheetPlayerNew.crop(13, 1459, 66, 75);
+		playerRunRight[1] = sheetPlayerNew.crop(84, 1456, 60, 79);
+		playerRunRight[2] = sheetPlayerNew.crop(147, 1458, 64, 80);
+		playerRunRight[3] = sheetPlayerNew.crop(219, 1457, 64, 84);
+
 		playerStandRight[0] = sheetPlayerNew.crop(9, 772, 53, 79);
 		playerStandRight[1] = sheetPlayerNew.crop(65, 772, 53, 79);
 		playerStandRight[2] = sheetPlayerNew.crop(125, 771, 52, 80);
 		playerStandRight[3] = sheetPlayerNew.crop(180, 771, 57, 79);
-		
+
 		playerStandLeft[0] = sheetPlayerNew.crop(7, 423, 53, 80);
 		playerStandLeft[1] = sheetPlayerNew.crop(67, 422, 51, 80);
 		playerStandLeft[2] = sheetPlayerNew.crop(126, 422, 50, 80);
 		playerStandLeft[3] = sheetPlayerNew.crop(180, 423, 57, 78);
-		
+
 		playerStandUp[0] = sheetPlayerNew.crop(6, 597, 60, 81);
 		playerStandUp[1] = sheetPlayerNew.crop(69, 596, 58, 79);
 		playerStandUp[2] = sheetPlayerNew.crop(132, 595, 57, 79);
 		playerStandUp[3] = sheetPlayerNew.crop(190, 596, 61, 80);
-		
+
 		playerStandDown[0] = sheetPlayerNew.crop(6, 249, 51, 80);
 		playerStandDown[1] = sheetPlayerNew.crop(67, 249, 48, 80);
 		playerStandDown[2] = sheetPlayerNew.crop(124, 247, 50, 81);
 		playerStandDown[3] = sheetPlayerNew.crop(181, 249, 54, 79);
-		
+
+		playerAttackUp = new BufferedImage[4];
+		playerAttackDown = new BufferedImage[4];
+		playerAttackRight = new BufferedImage[4];
+		playerAttackLeft = new BufferedImage[4];
+
+		playerAttackDown[0] = sheetPlayerNew.crop(6, 343, 57, 62);
+		playerAttackDown[1] = sheetPlayerNew.crop(64, 343, 57, 62);
+		playerAttackDown[2] = sheetPlayerNew.crop(129, 343, 100, 71);
+		playerAttackDown[3] = sheetPlayerNew.crop(242, 344, 104, 70);
+
+		playerAttackRight[0] = sheetPlayerNew.crop(10, 858, 67, 77);
+		playerAttackRight[1] = sheetPlayerNew.crop(96, 859, 65, 74);
+		playerAttackRight[2] = sheetPlayerNew.crop(187, 859, 67, 79);
+		playerAttackRight[3] = sheetPlayerNew.crop(273, 861, 65, 77);
+
+		playerAttackLeft[0] = sheetPlayerNew.crop(4, 512, 63, 75);
+		playerAttackLeft[1] = sheetPlayerNew.crop(71, 512, 65, 76);
+		playerAttackLeft[2] = sheetPlayerNew.crop(151, 512, 67, 80);
+		playerAttackLeft[3] = sheetPlayerNew.crop(226, 514, 63, 77);
+
+		playerAttackUp[0] = sheetPlayerNew.crop(7, 688, 60, 74);
+		playerAttackUp[1] = sheetPlayerNew.crop(73, 688, 63, 74);
+		playerAttackUp[2] = sheetPlayerNew.crop(142, 688, 79, 76);
+		playerAttackUp[3] = sheetPlayerNew.crop(230, 687, 80, 78);
+
 		home = ImageLoader.loadImage("/textures/home.png");
 		message = ImageLoader.loadImage("/textures/message.png");
 	}
