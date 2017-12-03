@@ -138,9 +138,9 @@ public class GameScene extends Scene {
 		drawPlayer(g);
 		drawGUI(g);
 		//drawMenu(g);
-		if (this.entities.getPlayerState().getHp() <= 0) {
-			drawGameOver(g);
-		}
+//		if (this.entities.getPlayerState().getHp() <= 0) {
+//			drawGameOver(g);
+//		}
 		drawPointer(g);
 	}
 
@@ -191,6 +191,8 @@ public class GameScene extends Scene {
 		if (state.getHp() <= 0) {
 			g.drawImage(Assets.playerDie, state.getX() - this.gameCamera.getxOffset(),
 					state.getY() - this.gameCamera.getyOffset(), null);
+			g.drawImage(Assets.eyesDie, state.getX() - this.gameCamera.getxOffset() + 18,
+					state.getY() - this.gameCamera.getyOffset() + 32, null);
 			return;
 		}
 		switch (this.entities.getPlayerState().getDirection()) {

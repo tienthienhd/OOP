@@ -1,5 +1,6 @@
 package gfx;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -74,6 +75,7 @@ public class Assets {
 	public static BufferedImage btnStart;
 	public static BufferedImage btnStartPressed;
 	public static BufferedImage help;
+	public static BufferedImage eyesDie;
 	
 	public static void init() {
 		
@@ -141,6 +143,7 @@ public class Assets {
 		playerUp[2] = sheetPlayer.crop(96, 288);
 		
 		playerDie = ImageLoader.loadImage("/textures/player_die.png");
+		eyesDie = ImageLoader.loadImage("/textures/eyedie.png");
 
 		dragonUp = new BufferedImage[4];
 		dragonDown = new BufferedImage[4];
