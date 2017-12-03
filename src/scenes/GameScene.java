@@ -1,7 +1,9 @@
 package scenes;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -35,6 +37,7 @@ public class GameScene extends Scene {
 	ArrayList<Animation> monstersLeft;
 	ArrayList<Animation> monstersRight;
 
+
 	public GameScene(GameCamera gameCamera, IMapManager map, IEntityManager entities) {
 		this.gameCamera = gameCamera;
 		this.map = map;
@@ -47,7 +50,7 @@ public class GameScene extends Scene {
 		createAnimationMonster();
 
 	}
-	
+
 	public void createAnimationMonster() {
 		this.monstersDown = new ArrayList<>();
 		this.monstersUp = new ArrayList<>();
@@ -74,7 +77,7 @@ public class GameScene extends Scene {
 
 	@Override
 	public void update() {
-		if(this.entities.isSwitchMap()) {
+		if (this.entities.isSwitchMap()) {
 			this.createAnimationMonster();
 		}
 		if (entities.isPlayerMoving()) {
@@ -103,6 +106,7 @@ public class GameScene extends Scene {
 		drawMonster(g);
 		drawPlayer(g);
 		drawGUI(g);
+		//drawMenu(g);
 		if (this.entities.getPlayerState().getHp() <= 0) {
 			drawGameOver(g);
 		}
@@ -127,7 +131,7 @@ public class GameScene extends Scene {
 	}
 
 	private void drawGameOver(Graphics g) {
-		g.setColor(Color.ORANGE);
+		g.setColor(Color.LIGHT_GRAY);
 		g.fillRoundRect(400, 200, 300, 150, 20, 20);
 		g.setColor(Color.red);
 		g.drawString("Game Over", 450, 250);
@@ -286,6 +290,7 @@ public class GameScene extends Scene {
 			g.drawImage(Assets.hpState, 37, 13, (int) ((float) playerState.getHp() / (float) Player.HP_MAX * 120), 14,
 					null);
 		}
+		g.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		g.drawString(playerState.getHp() + "/" + Player.HP_MAX, 60, 25);
 
 		g.drawImage(Assets.mpString, 0, 35, null);
@@ -299,30 +304,31 @@ public class GameScene extends Scene {
 			Inventory inventory = this.entities.getPlayerInventory();
 			g.drawImage(Assets.table, 20, 350, null);
 			int indexX = 0, indexY = 0;
-			for(ItemType type : ItemType.values()) {
+			for (ItemType type : ItemType.values()) {
 				int nb = inventory.getNbItem(type);
-				if(nb > 0) {
-					if(type == ItemType.BLOOD) {
+				if (nb > 0) {
+					if (type == ItemType.BLOOD) {
 						g.drawImage(Assets.hp, 23 + indexX * 35, 353 + indexY * 35, null);
 						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
-					} else if(type == ItemType.MANA) {
+					} else if (type == ItemType.MANA) {
 						g.drawImage(Assets.mn, 23 + indexX * 35, 353 + indexY * 35, null);
 						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
-					} else if(type == ItemType.WEAPON) {
+					} else if (type == ItemType.WEAPON) {
 						g.drawImage(Assets.weapon, 23 + indexX * 35, 353 + indexY * 35, null);
 						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
-					} else if(type == ItemType.CLOTHES) {
+					} else if (type == ItemType.CLOTHES) {
 						g.drawImage(Assets.clothe, 23 + indexX * 35, 353 + indexY * 35, null);
 						g.drawString(nb + "", 25 + indexX * 35, 380 + indexY * 35);
 					}
 					indexX++;
 				}
 			}
-//			g.drawImage(Assets.hp,23,352,null);
-//			g.drawString("1", 25, 380);
-			
-			
+			// g.drawImage(Assets.hp,23,352,null);
+			// g.drawString("1", 25, 380);
+
 		}
 	}
+
+	
 
 }

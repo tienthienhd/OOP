@@ -23,6 +23,7 @@ public class InputManager extends Manager {
 		keyManager = new KeyManager();
 		mouseManager = new MouseManager();
 		target.addKeyListener(keyManager);
+		target.addMouseMotionListener(mouseManager);
 		target.addMouseListener(mouseManager);
 		this.isKeyPressed = new HashMap<>();
 		this.isKeyPressed.put(KeyEvent.VK_ENTER, false);
@@ -71,9 +72,9 @@ public class InputManager extends Manager {
 			this.isKeyPressed.replace(KeyEvent.VK_ENTER, !isKeyPressed.get(KeyEvent.VK_ENTER));
 			handler.playerAttack(isKeyPressed.get(KeyEvent.VK_ENTER));
 			keyManager.setKeyReleased(KeyEvent.VK_ENTER);
-		} else if(isKeyPressed(KeyEvent.VK_M)) {
+		} else if(isKeyPressed(KeyEvent.VK_R)) {
 			handler.switchMap();
-			keyManager.setKeyReleased(KeyEvent.VK_M);
+			keyManager.setKeyReleased(KeyEvent.VK_R);
 		} else if(isKeyPressed(KeyEvent.VK_I)) {
 			this.isKeyPressed.replace(KeyEvent.VK_I, !isKeyPressed.get(KeyEvent.VK_I));
 			handler.showInventory(isKeyPressed.get(KeyEvent.VK_I));
