@@ -1,5 +1,7 @@
-4
+3
 tile0.png
+26
 tile1.png
+44
 tile2.png
-tile3.png
+18

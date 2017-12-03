@@ -26,6 +26,7 @@ public class MapManager extends Manager implements IMapManager {
 				listMap.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
 				listMonsters.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
 			}
+			fr.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

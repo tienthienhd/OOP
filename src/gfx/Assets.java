@@ -1,6 +1,5 @@
 package gfx;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,6 +16,7 @@ public class Assets {
 	public static final int HEIGHT_TILE = 48;
 
 	public static ArrayList<ArrayList<BufferedImage>> tileImages;
+	public static ArrayList<Integer> collisionTile;
 
 	public static BufferedImage[] playerUp;
 	public static BufferedImage[] playerDown;
@@ -66,6 +66,7 @@ public class Assets {
 		int nbTileSet = 0;
 		String listName = System.getProperty("user.dir") + "/resource/textures/";
 		ArrayList<String> listResource = new ArrayList<>();
+		collisionTile = new ArrayList<>();
 		FileReader fr;
 		try {
 			fr = new FileReader(listName + "listtile.txt");
@@ -73,7 +74,9 @@ public class Assets {
 			nbTileSet = Integer.parseInt(br.readLine());
 			while(br.ready()) {
 				listResource.add("/textures/" + br.readLine());
+				collisionTile.add(Integer.parseInt(br.readLine()));
 			}
+			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -203,7 +206,9 @@ public class Assets {
 			gameover.open(inputStream);
 		} catch (Exception e){
 			System.err.println(e.getMessage());
+//			e.printStackTrace();
 		}
+		
 		table = ImageLoader.loadImage("/textures/table.png");
 		
 		hp = ImageLoader.loadImage("/textures/hp.png");
