@@ -13,10 +13,12 @@ public class KeyManager implements KeyListener {
 		keys.put(KeyEvent.VK_DOWN, false);
 		keys.put(KeyEvent.VK_LEFT, false);
 		keys.put(KeyEvent.VK_RIGHT, false);
+		
 		keys.put(KeyEvent.VK_A, false);
 		keys.put(KeyEvent.VK_W, false);
 		keys.put(KeyEvent.VK_D, false);
 		keys.put(KeyEvent.VK_S, false);
+		
 		keys.put(KeyEvent.VK_ENTER, false);
 		keys.put(KeyEvent.VK_R, false);
 		keys.put(KeyEvent.VK_I, false);
