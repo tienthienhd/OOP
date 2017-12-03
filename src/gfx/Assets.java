@@ -76,6 +76,8 @@ public class Assets {
 	public static BufferedImage btnStartPressed;
 	public static BufferedImage help;
 	public static BufferedImage eyesDie;
+	public static BufferedImage home;
+	public static BufferedImage message;
 	
 	public static void init() {
 		
@@ -288,5 +290,8 @@ public class Assets {
 		playerStandDown[1] = sheetPlayerNew.crop(67, 249, 48, 80);
 		playerStandDown[2] = sheetPlayerNew.crop(124, 247, 50, 81);
 		playerStandDown[3] = sheetPlayerNew.crop(181, 249, 54, 79);
+		
+		home = ImageLoader.loadImage("/textures/home.png");
+		message = ImageLoader.loadImage("/textures/message.png");
 	}
 }

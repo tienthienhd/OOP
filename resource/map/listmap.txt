@@ -8,3 +8,5 @@ map3.txt
 monster_map3.txt
 map4.txt
 monster_map4.txt
+home.txt
+homeview.txt
