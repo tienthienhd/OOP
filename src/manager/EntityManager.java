@@ -57,7 +57,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		yMonsterLast = new ArrayList<>();
 		ArrayList<Point> monsterPoints = new ArrayList<>();
 		int typeOfMoster = Utils.loadMonsterFromFile(map.getMonsterMap().get(map.getCurrentMapIndex()),monsterPoints);
-		System.out.println(monsterPoints.size());
+//		System.out.println(monsterPoints.size());
 		for (int i = 0; i < monsterPoints.size(); i++) {
 			Monster m = new Monster(typeOfMoster == 0 ? "dragon" : "zombie", monsterPoints.get(i).x, monsterPoints.get(i).y);
 			monsters.add(m);
