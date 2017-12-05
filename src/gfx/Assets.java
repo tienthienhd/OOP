@@ -1,9 +1,9 @@
 package gfx;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
@@ -87,13 +87,14 @@ public class Assets {
 	public static void init() {
 
 		int nbTileSet = 0;
-		String listName = System.getProperty("user.dir") + "/resource/textures/";
+		String listName = "/textures/";
 		ArrayList<String> listResource = new ArrayList<>();
 		collisionTile = new ArrayList<>();
-		FileReader fr;
+//		FileReader fr;
 		try {
-			fr = new FileReader(listName + "listtile.txt");
-			BufferedReader br = new BufferedReader(fr);
+//			fr = new FileReader(listName + "listtile.txt");
+			InputStream in = Assets.class.getResourceAsStream(listName + "listtile.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			nbTileSet = Integer.parseInt(br.readLine());
 			while (br.ready()) {
 				listResource.add("/textures/" + br.readLine());

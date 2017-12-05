@@ -3,7 +3,6 @@ package scenes;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -182,6 +181,7 @@ public class GameScene extends Scene {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void drawGameOver(Graphics g) {
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRoundRect(400, 200, 300, 150, 20, 20);

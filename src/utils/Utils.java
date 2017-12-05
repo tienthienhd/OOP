@@ -1,18 +1,21 @@
 package utils;
 
 import java.awt.Point;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Utils {
 	public static int loadMapFromFile(String filepath, ArrayList<int[]> matrix) {
-		FileReader fr;
+//		FileReader fr;
 		int tileSet = -1;
 		try {
-			fr = new FileReader(filepath);
-			Scanner scanner = new Scanner(fr);
+			InputStream in = Utils.class.getResourceAsStream(filepath);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+//			fr = new FileReader(filepath);
+			Scanner scanner = new Scanner(br);
 
 			tileSet = scanner.nextInt();
 			int width = scanner.nextInt();
@@ -34,27 +37,23 @@ public class Utils {
 	}
 
 	public static int loadMonsterFromFile(String filepath, ArrayList<Point> points) {
-		FileReader fr;
+//		FileReader fr;
 		int numberOfMonster = -1;
 		int typeOfMonster = -1;
-		try {
-			fr = new FileReader(filepath);
-			Scanner sc = new Scanner(fr);
-			
-			typeOfMonster = sc.nextInt();
-			numberOfMonster = sc.nextInt();
-			for (int i = 0; i < numberOfMonster; i++) {
-				int xMonster = sc.nextInt();
-				int yMonster = sc.nextInt();
-				Point p = new Point(xMonster, yMonster);
-				points.add(p);
-			}
-			sc.close();
-			return typeOfMonster;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		InputStream in = Utils.class.getResourceAsStream(filepath);
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+//			fr = new FileReader(filepath);
+		Scanner sc = new Scanner(br);
+		
+		typeOfMonster = sc.nextInt();
+		numberOfMonster = sc.nextInt();
+		for (int i = 0; i < numberOfMonster; i++) {
+			int xMonster = sc.nextInt();
+			int yMonster = sc.nextInt();
+			Point p = new Point(xMonster, yMonster);
+			points.add(p);
 		}
-		return -1;
+		sc.close();
+		return typeOfMonster;
 	}
 }

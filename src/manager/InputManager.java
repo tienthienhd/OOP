@@ -5,8 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
-import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
-
 import enity.creature.Direction;
 import enity.item.ItemType;
 import input.KeyManager;

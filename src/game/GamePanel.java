@@ -68,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Assets.init();
 		isStart = true;
 
-		this.mapManager = new MapManager("map/listmap.txt");
+		this.mapManager = new MapManager("/map/listmap.txt");
 		this.gameCamera = new GameCamera(mapManager, 0, 0);
 		mapManager.loadMap(0);
 

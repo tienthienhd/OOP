@@ -18,7 +18,7 @@ public class Player extends Creature {
 
 
 	public static final int HP_MAX = 1000;
-	 public static final int MP_MAX = 200;
+	public static final int MP_MAX = 200;
 
 	private static final int DEFAULT_SPEED = 7;
 	private static final int DEFAULT_DAMAGE = 15;
@@ -79,15 +79,15 @@ public class Player extends Creature {
 	public void useItem(Item item) {
 		ItemType type = item.getType();
 		if(type == ItemType.BLOOD) {
-			if(this.hp + Blood.HP > this.HP_MAX) {
-				this.hp = this.HP_MAX;
+			if(this.hp + Blood.HP > Player.HP_MAX) {
+				this.hp = Player.HP_MAX;
 			}else {
 				this.hp = this.hp + Blood.HP;
 			}
 		}
 		if(type == ItemType.MANA) {
-			if(this.mp + Mana.MP > this.MP_MAX) {
-				this.mp = this.MP_MAX;
+			if(this.mp + Mana.MP > Player.MP_MAX) {
+				this.mp = Player.MP_MAX;
 			}else {
 				this.mp = this.mp + Mana.MP;
 			}

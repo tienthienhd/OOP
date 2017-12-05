@@ -1,7 +1,8 @@
 package manager;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import map.Map;
@@ -15,18 +16,18 @@ public class MapManager extends Manager implements IMapManager {
 	
 	public MapManager(String listName) {
 		
-		listName = System.getProperty("user.dir") + "/resource/" + listName;
+//		listName = "resource/" + listName;
 		this.listMap = new ArrayList<>();
 		this.listMonsters = new ArrayList<>();
-		FileReader fr;
+//		FileReader fr;
 		try {
-			fr = new FileReader(listName);
-			BufferedReader br = new BufferedReader(fr);
+			InputStream in = MapManager.class.getResourceAsStream(listName);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			while(br.ready()) {
-				listMap.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
-				listMonsters.add(System.getProperty("user.dir") + "/resource/map/" + br.readLine());
+				listMap.add("/map/" + br.readLine());
+				listMonsters.add("/map/" + br.readLine());
 			}
-			fr.close();
+			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

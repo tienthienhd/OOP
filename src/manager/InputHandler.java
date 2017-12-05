@@ -2,7 +2,6 @@ package manager;
 
 import enity.Entity;
 import enity.creature.Direction;
-import enity.item.Item;
 import enity.item.ItemType;
 
 public interface InputHandler {
