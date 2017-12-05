@@ -31,6 +31,7 @@ public class GameScene extends Scene {
 	Animation playerRunDown;
 	Animation playerRunLeft;
 	Animation playerRunRight;
+	
 	Animation playerStandUp;
 	Animation playerStandDown;
 	Animation playerStandLeft;
@@ -42,7 +43,7 @@ public class GameScene extends Scene {
 	Animation playerAttackRight;
 
 	Animation playerUp;
-	Animation playerDown;
+	Animation playerDown;	
 	Animation playerRight;
 	Animation playerLeft;
 
@@ -263,7 +264,7 @@ public class GameScene extends Scene {
 		// g.fillRect(state.getX() - gameCamera.getxOffset(), state.getY() -
 		// gameCamera.getyOffset(), 48, 96);
 		g.setColor(Color.WHITE);
-		g.drawString("Jinkaraz", state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset());
+		g.drawString("Team 2", state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset());
 		g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
 	}
@@ -295,10 +296,9 @@ public class GameScene extends Scene {
 
 			g.drawImage(buffer, state.getX() - gameCamera.getxOffset(), state.getY() - gameCamera.getyOffset(), null);
 
-			 g.setColor(Color.RED);
-			 g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() -
-			 gameCamera.getyOffset() - 5,
-			 (int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
+			g.setColor(Color.RED);
+			g.fillRoundRect(state.getX() - gameCamera.getxOffset() + 4, state.getY() - gameCamera.getyOffset() - 5,
+					(int) ((float) state.getHp() / (float) Monster.HP_MAX * 40), 3, 5, 5);
 			g.setColor(Color.LIGHT_GRAY);
 			g.drawString(state.getName(), state.getX() - gameCamera.getxOffset() + 4,
 					state.getY() - gameCamera.getyOffset() - 10);
@@ -382,10 +382,11 @@ public class GameScene extends Scene {
 
 		g.drawImage(Assets.mpString, 0, 35, null);
 		g.drawImage(Assets.mpBar, 35, 35, null);
-		if (this.entities.getPlayerState().getHp() >= 0) {
+		if (this.entities.getPlayerState().getMp() >= 0) {
 			g.drawImage(Assets.mpState, 37, 37,
-					(int) ((float) entities.getPlayerState().getHp() / (float) Player.HP_MAX * 120), 14, null);
-		} // FIXME: hp to mp
+					(int) ((float) entities.getPlayerState().getMp() / (float) Player.MP_MAX * 120), 14, null);
+			g.drawString(playerState.getMp() + "/" + Player.MP_MAX, 65, 48);
+		}
 
 		if (this.entities.isShowInventory()) {
 			Inventory inventory = this.entities.getPlayerInventory();

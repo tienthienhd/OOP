@@ -8,6 +8,7 @@ import enity.item.Clothes;
 import enity.item.Inventory;
 import enity.item.Item;
 import enity.item.ItemType;
+import enity.item.Mana;
 import enity.item.Weapon;
 
 public class Player extends Creature {
@@ -17,7 +18,7 @@ public class Player extends Creature {
 
 
 	public static final int HP_MAX = 1000;
-	// public static final int MP_MAX = 100;
+	 public static final int MP_MAX = 200;
 
 	private static final int DEFAULT_SPEED = 7;
 	private static final int DEFAULT_DAMAGE = 15;
@@ -25,12 +26,12 @@ public class Player extends Creature {
 	private static final int DEFAULT_ATTACK_RADIUS = 120;
 	private static final int DEFAULT_SPEED_ATTACK = 700;
 
-	// private int mp;
+	 
 	private Inventory inventory;
 	private Entity target;
 
 	public Player(String name, int x, int y) {
-		super(name, x, y, WIDTH, HEIGHT, HP_MAX, DEFAULT_SPEED, DEFAULT_DEFENSE, 
+		super(name, x, y, WIDTH, HEIGHT, HP_MAX, MP_MAX, DEFAULT_SPEED, DEFAULT_DEFENSE, 
 				DEFAULT_DAMAGE, DEFAULT_ATTACK_RADIUS, DEFAULT_SPEED_ATTACK);
 		this.inventory = new Inventory();
 	}
@@ -73,7 +74,8 @@ public class Player extends Creature {
 		return this.inventory;
 	}
 	
-	//TODO: lam tiep mp
+	
+	
 	public void useItem(Item item) {
 		ItemType type = item.getType();
 		if(type == ItemType.BLOOD) {
@@ -84,7 +86,11 @@ public class Player extends Creature {
 			}
 		}
 		if(type == ItemType.MANA) {
-			//TODO
+			if(this.mp + Mana.MP > this.MP_MAX) {
+				this.mp = this.MP_MAX;
+			}else {
+				this.mp = this.mp + Mana.MP;
+			}
 		}
 		if(type == ItemType.CLOTHES) {
 			this.defense += ((Clothes)item).getDefense();

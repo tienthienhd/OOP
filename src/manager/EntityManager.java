@@ -235,18 +235,18 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		if (target != null) {
 			if (target instanceof Monster) {
 				CreatureState targetState = new CreatureState(target.getName(), target.getX(), target.getY(),
-						((Creature) target).getDirection(), ((Creature) target).getHp(), null);
+						((Creature) target).getDirection(), ((Creature) target).getHp(), ((Monster) target).getMp(), null);
 				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
-						player.getHp(), targetState);
+						player.getHp(), player.getMp(), targetState);
 			} else {
 				ItemState targetState = new ItemState(target.getName(), target.getX(), target.getY(),
 						((Item) target).getType());
 				state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
-						player.getHp(), targetState);
+						player.getHp(), player.getMp(), targetState);
 			}
 		} else {
 			state = new CreatureState(player.getName(), player.getX(), player.getY(), player.getDirection(),
-					player.getHp(), null);
+					player.getHp(), player.getMp(), null);
 		}
 		return state;
 	}
@@ -255,7 +255,7 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	public ArrayList<CreatureState> getMonsterState() {
 		ArrayList<CreatureState> states = new ArrayList<>();
 		for (Monster m : monsters) {
-			states.add(new CreatureState(m.getName(), m.getX(), m.getY(), m.getDirection(), m.getHp(),
+			states.add(new CreatureState(m.getName(), m.getX(), m.getY(), m.getDirection(), m.getHp(), m.getMp(),
 					new EntityState(player.getName(), player.getX(), player.getY())));
 		}
 		return states;
@@ -358,12 +358,14 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 		private Direction direction;
 		private int hp;
 		private EntityState target;
+		private int mp;
 
-		public CreatureState(String name, int x, int y, Direction direction, int hp, EntityState target) {
+		public CreatureState(String name, int x, int y, Direction direction, int hp, int mp, EntityState target) {
 			super(name, x, y);
 			this.direction = direction;
 			this.hp = hp;
 			this.target = target;
+			this.mp = mp;
 		}
 
 		public Direction getDirection() {
@@ -376,6 +378,10 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 
 		public EntityState getTarget() {
 			return this.target;
+		}
+
+		public int getMp() {
+			return this.mp;
 		}
 
 	}
@@ -422,7 +428,6 @@ public class EntityManager extends Manager implements IEntityManager, InputHandl
 	@Override
 	public Entity chooseEntity(int x, int y) {
 		for (Monster m : monsters) {
-			System.out.println();
 			m.setBound(m.getX() - gameCamera.getxOffset(), m.getY() - gameCamera.getyOffset());
 			if (m.getBound().contains(new Point(x, y))) {
 				this.player.setTarget(m);
